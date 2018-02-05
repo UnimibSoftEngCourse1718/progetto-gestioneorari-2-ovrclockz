@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><project name="Gestione Orari" company="" webLink="http://" view-date="2018-01-30" view-index="0" gantt-divider-location="772" resource-divider-location="300" version="2.8.5" locale="en_GB">
+    <description><![CDATA[Un sistema distribuito per la gestione dei corsi Universitari, degli orari, e delle aule ha tre classi principali di utenti: segretari, docenti e studenti.
+I segretari utilizzano il sistema per la definizione dell’orario, per la gestione delle risorse dell’università e per la condivisione delle informazioni. Ad esempio, i segretari possono inserire tutti i dati riguardanti le risorse disponibili, inclusi i docenti ed i vincoli sul loro impiego temporale. Possono inoltre inserire possibili calendari e orari didattici e verificare se le informazioni immesse sono consistenti.
+
+Il sistema può ad esempio verificare se la medesima aula è accidentalmente occupata contemporaneamente da due corsi, oppure se ad un docente sono state assegnate due lezioni sovrapposte.
+I docenti utilizzano il sistema per visionare l’orario e per prenotare le risorse dell’università, come ad esempio aule, proiettori e PC.
+Gli studenti si collegano al sistema per scaricare l’orario e verificare dove si svolgono le lezioni. Il sistema è accessibile da qualsiasi PC collegato ad Internet.
+
+Il sistema mantiene le informazioni di base sui corsi attivi e pregressi, i programmi e i docenti di ogni corso.
+I docenti ed i segretari possono pubblicare news, avvisi riguardanti i singoli corsi, oppure avvisi riguardanti un intero anno accademico.
+Infine il sistema mantiene il calendario degli esami per tutti e corsi, e verifica in modo incrociato con l’orario che non ci siano sovrapposizioni ed inconsistenze.
+Il sistema gestisce anche le iscrizioni degli studenti agli esami.
+]]></description>
+    <view zooming-state="default:2" id="gantt-chart">
+        <field id="tpd3" name="Name" width="460" order="0"/>
+        <field id="tpd4" name="Begin date" width="86" order="1"/>
+        <field id="tpd5" name="End date" width="222" order="2"/>
+        <option id="color.recent"><![CDATA[#3399ff]]></option>
+    </view>
+    <view id="resource-table">
+        <field id="0" name="Name" width="210" order="0"/>
+        <field id="1" name="Default role" width="86" order="1"/>
+    </view>
+    <!-- -->
+    <calendars>
+        <day-types>
+            <day-type id="0"/>
+            <day-type id="1"/>
+            <default-week id="1" name="default" sun="1" mon="0" tue="0" wed="0" thu="0" fri="0" sat="1"/>
+            <only-show-weekends value="true"/>
+            <overriden-day-types/>
+            <days/>
+        </day-types>
+    </calendars>
+    <tasks empty-milestones="true">
+        <taskproperties>
+            <taskproperty id="tpd0" name="type" type="default" valuetype="icon"/>
+            <taskproperty id="tpd1" name="priority" type="default" valuetype="icon"/>
+            <taskproperty id="tpd2" name="info" type="default" valuetype="icon"/>
+            <taskproperty id="tpd3" name="name" type="default" valuetype="text"/>
+            <taskproperty id="tpd4" name="begindate" type="default" valuetype="date"/>
+            <taskproperty id="tpd5" name="enddate" type="default" valuetype="date"/>
+            <taskproperty id="tpd6" name="duration" type="default" valuetype="int"/>
+            <taskproperty id="tpd7" name="completion" type="default" valuetype="int"/>
+            <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
+            <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
+        </taskproperties>
+        <task id="0" name="Analisi e progettazione" color="#8cb6ce" meeting="false" start="2018-02-03" duration="10" complete="17" expand="true">
+            <notes><![CDATA[Fase di analisi e di progettazione]]></notes>
+            <depend id="49" type="2" difference="0" hardness="Strong"/>
+            <task id="17" name="Analisi del dominio" meeting="false" start="2018-02-03" duration="4" complete="43" expand="true">
+                <depend id="21" type="2" difference="0" hardness="Strong"/>
+                <task id="10" name="Diagramma dei casi d'uso" color="#8cb6ce" meeting="false" start="2018-02-03" duration="3" complete="100" expand="true">
+                    <depend id="61" type="1" difference="1" hardness="Strong"/>
+                </task>
+                <task id="61" name="Diagrammi delle attività" color="#8cb6ce" meeting="false" start="2018-02-04" duration="2" complete="25" expand="true">
+                    <depend id="13" type="1" difference="0" hardness="Strong"/>
+                </task>
+                <task id="13" name="Diagramma delle classi al livello di dominio" color="#8cb6ce" meeting="false" start="2018-02-04" duration="3" complete="0" expand="true"/>
+            </task>
+            <task id="21" name="Analisi della soluzione" meeting="false" start="2018-02-07" duration="3" complete="0" expand="true">
+                <depend id="45" type="2" difference="0" hardness="Strong"/>
+                <task id="32" name="Diagramma delle classi a livello di progettazione" color="#8cb6ce" meeting="false" start="2018-02-07" duration="3" complete="0" expand="true">
+                    <depend id="23" type="1" difference="1" hardness="Strong"/>
+                </task>
+                <task id="23" name="Diagrammi degli stati e di sequenza" color="#8cb6ce" meeting="false" start="2018-02-08" duration="2" complete="0" expand="true"/>
+            </task>
+            <task id="45" name="Definizione strutturale e architetturale" color="#3399ff" meeting="false" start="2018-02-10" duration="3" complete="0" expand="true">
+                <task id="46" name="Scelta degli strumenti e tools per l'implementazione della soluzione" color="#8cb6ce" meeting="false" start="2018-02-10" duration="3" complete="0" expand="true">
+                    <depend id="47" type="1" difference="1" hardness="Strong"/>
+                </task>
+                <task id="47" name="Installazione e inizializazzione del worflow e ambiente base di sviluppo" color="#8cb6ce" meeting="false" start="2018-02-11" duration="2" complete="0" expand="true"/>
+            </task>
+        </task>
+        <task id="49" name="Sviluppo" color="#8cb6ce" meeting="false" start="2018-02-13" duration="17" complete="0" expand="true">
+            <task id="50" name="Realizzazione delle interfacce statiche per i vari casi d'uso" color="#8cb6ce" meeting="false" start="2018-02-13" duration="2" complete="0" expand="true">
+                <depend id="55" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="55" name="Svillupo delle funzionalità del sistema" color="#8cb6ce" meeting="false" start="2018-02-15" duration="15" complete="0" expand="true">
+                <depend id="57" type="1" difference="1" hardness="Strong"/>
+                <depend id="59" type="1" difference="1" hardness="Strong"/>
+            </task>
+            <task id="57" name="Test delle funzionalità TDD" color="#8cb6ce" meeting="false" start="2018-02-16" duration="14" complete="0" expand="true"/>
+            <task id="59" name="Analisi e miglioramenti della qualità del codice(SonarQube)" color="#8cb6ce" meeting="false" start="2018-02-16" duration="14" complete="0" expand="true"/>
+        </task>
+    </tasks>
+    <resources/>
+    <allocations/>
+    <vacations/>
+    <previous/>
+    <roles roleset-name="Default"/>
+    <roles roleset-name="SoftwareDevelopment"/>
+</project>
