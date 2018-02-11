@@ -1,19 +1,20 @@
 <?php 
 
 require "../app/Autoloader.php";
-
 App\Autoloader::register();
 
-if(isset($_GET['p'])){
-    $p = $_GET['p'];
-}else{
-    $p = "home";
+$app = App\App::getInstance();
+$app->title = "Gestione Orario";
+
+$db = $app->getDatabase();
+
+$users = $app->getTable('users');
+//$db->query("INSERT into users (username,password) VALUES ('serge','salfjb')");
+$user = $users->all();
+while ($row = $user->fetchArray()) {
+    print_r($row);
 }
 
-ob_start();
-if($p = "home"){
-    require "../pages/home.php";
-}
-$content = ob_get_clean();
 
-require "../pages/templates/default.php";
+//echo '<pre>';var_dump($app);echo '</pre>';
+
