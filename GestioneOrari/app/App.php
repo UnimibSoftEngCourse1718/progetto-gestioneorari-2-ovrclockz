@@ -11,7 +11,7 @@ class App
     private $db_instance;
     private static $_instance;
 
-    public function getInstance(){
+    public static function getInstance(){
         if(is_null(SELF::$_instance)){
             SELF::$_instance = new App;
         }

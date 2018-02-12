@@ -10,8 +10,8 @@ class Database{
 
     public function __construct()
     {
-        $this->$db = new \SQLite3(SELF::DB);
-        $this->$db->query("CREATE TABLE IF NOT EXISTS users (username STRING, password STRING)");
+        $this->db = new \SQLite3(SELF::DB);
+        $this->db->query("CREATE TABLE IF NOT EXISTS users (username STRING, password STRING)");
     }
 
     public static function getInstance(){
@@ -22,6 +22,6 @@ class Database{
     }
 
     public function query($query){
-        return $this->$db->query($query);
+        return $this->db->query($query);
     }
 }

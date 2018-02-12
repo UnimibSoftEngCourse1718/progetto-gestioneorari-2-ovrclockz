@@ -1,20 +1,24 @@
 <?php 
 
-require "../app/Autoloader.php";
-App\Autoloader::register();
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
 
-$app = App\App::getInstance();
-$app->title = "Gestione Orario";
+try{
+	require "../app/Autoloader.php";
+	App\Autoloader::register();
 
-$db = $app->getDatabase();
+	$app = App\App::getInstance();
+	$app->title = "Gestione Orario";
 
-$users = $app->getTable('users');
-//$db->query("INSERT into users (username,password) VALUES ('serge','salfjb')");
-$user = $users->all();
-while ($row = $user->fetchArray()) {
-    print_r($row);
+	$db = $app->getDatabase();
+
+	$users = $app->getTable('users');
+	//$db->query("INSERT into users (username,password) VALUES ('serge','salfjb')");
+	echo '<pre>';print_r($users->all());echo '</pre>';
+
+}catch(Ecxeption $e){
+	echo $e->getMessage();
 }
-
 
 //echo '<pre>';var_dump($app);echo '</pre>';
 

@@ -19,6 +19,10 @@ class Table
 
     public function all(){
         $result = $this->db->query("SELECT * FROM $this->table");
-        return $result;
+        $rows = array();
+        while ($row = $result->fetchArray()) {
+            $rows[] = $row;
+        }
+        return $rows;
     }
 }
