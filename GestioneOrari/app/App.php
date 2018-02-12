@@ -1,15 +1,20 @@
 <?php 
+use Core\Database\Database;
+
 //Factory
-
-namespace App;
-
-use App\Database\Database;
 
 class App
 {   
-    public $title = "";
+    public $title = "Gestione Orario";
     private $db_instance;
     private static $_instance;
+
+    public static function load(){
+        require ROOT . "/app/Autoloader.php";
+        App\Autoloader::register();
+        require ROOT . "/core/Autoloader.php";
+        Core\Autoloader::register();
+    }
 
     public static function getInstance(){
         if(is_null(SELF::$_instance)){

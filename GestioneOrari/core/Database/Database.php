@@ -1,17 +1,18 @@
 <?php
 //Singleton
 
-namespace App\Database;
+namespace Core\Database;
 
 class Database{
-    const DB = './../app/Database/gestione_orario.sqlite';
+    const DB = 'gestione_orario.sqlite';
     private static $_instance;
     private $db;
 
     public function __construct()
     {
         $this->db = new \SQLite3(SELF::DB);
-        $this->db->query("CREATE TABLE IF NOT EXISTS users (username STRING, password STRING)");
+        $this->db->query("CREATE TABLE IF NOT EXISTS user (username STRING, password STRING)");
+        //$this->db->query("INSERT into user (username,password) VALUES ('serge','salfjb')");
     }
 
     public static function getInstance(){

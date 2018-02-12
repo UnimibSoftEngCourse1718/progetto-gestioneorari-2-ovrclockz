@@ -9,9 +9,11 @@ class Autoloader{
     }
 
     static function autoload($classname){
-        $class = str_replace(__NAMESPACE__ . "\\","",$classname);
-        $class = str_replace("\\","/",$class);
-        //var_dump($class . ".php");
-        require $class . ".php";
+        if(strpos($classname, __NAMESPACE__ . '\\') === 0){
+            $class = str_replace(__NAMESPACE__ . "\\","",$classname);
+            $class = str_replace("\\","/",$class);
+            //var_dump($class . ".php");
+            require $class . ".php";
+        }
     }
 }
