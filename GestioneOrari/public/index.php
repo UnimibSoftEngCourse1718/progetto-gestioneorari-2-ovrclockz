@@ -10,12 +10,12 @@ App::load();
 if(isset($_GET['page'])){
 	$page = $_GET['page'];
 }else{
-	$page = 'home';
+	$page = 'login';
 }
 
 ob_start();
-if($page === 'home'){
-	require ROOT . '/pages/home.php';
+if($page === 'login'){
+	require ROOT . '/pages/login.php';
 }
 $content = ob_get_clean();
 

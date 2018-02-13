@@ -1,3 +1,1 @@
-<?php 
-
-var_dump(App::getInstance()->getTable('user')->all());
+<?php  //var_dump(App::getInstance()->getTable('user')->all()); ?>
