@@ -1,12 +1,12 @@
 <?php 
-namespace Tests\gestioneOrari;
+namespace Tests\Framework;
 
-use GestioneOrari\App;
+use Framework\App;
 use GuzzleHttp\Psr7\ServerRequest;
 use PHPUnit\Framework\TestCase;
 use App\Auth\AuthModule;
-use Tests\gestioneOrari\Modules\ErroredModule;
-use Tests\gestioneOrari\Modules\StringModule;
+use Tests\Framework\Modules\ErroredModule;
+use Tests\Framework\Modules\StringModule;
 use Psr\Http\Message\ResponseInterface;
 
 class Apptest extends TestCase

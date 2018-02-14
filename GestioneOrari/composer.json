@@ -9,7 +9,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "GestioneOrari\\": "src/GestioneOrari",
+            "Framework\\": "src/Framework",
             "App\\": "src",
             "Tests\\": "tests"
         }

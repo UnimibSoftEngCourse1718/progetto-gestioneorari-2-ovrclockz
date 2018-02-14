@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "977b90aa96c2e44d1755cd8af175d543",
+    "content-hash": "17422a5a6fe0c00921bed096dfeacf6a",
     "packages": [
         {
             "name": "fig/http-message-util",
@@ -61,12 +61,12 @@
             "version": "1.4.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/php-fig/http-message.git",
+                "url": "https://github.com/guzzle/psr7.git",
                 "reference": "f5b8a8512e2b58b0071a7280e39f14f72e05d87c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/http-message/zipball/f5b8a8512e2b58b0071a7280e39f14f72e05d87c",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/f5b8a8512e2b58b0071a7280e39f14f72e05d87c",
                 "reference": "f5b8a8512e2b58b0071a7280e39f14f72e05d87c",
                 "shasum": ""
             },
@@ -126,12 +126,12 @@
             "version": "0.5.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/zendframework/zend-stdlib.git",
+                "url": "https://github.com/http-interop/http-middleware.git",
                 "reference": "b49e1f9f6c584e704317b563302e566b8ce11858"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-stdlib/zipball/b49e1f9f6c584e704317b563302e566b8ce11858",
+                "url": "https://api.github.com/repos/http-interop/http-middleware/zipball/b49e1f9f6c584e704317b563302e566b8ce11858",
                 "reference": "b49e1f9f6c584e704317b563302e566b8ce11858",
                 "shasum": ""
             },
@@ -170,6 +170,7 @@
                 "request",
                 "response"
             ],
+            "abandoned": "http-interop/http-server-middleware",
             "time": "2017-09-18T15:27:03+00:00"
         },
         {
@@ -177,12 +178,12 @@
             "version": "1.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/php-fig/http-message.git",
+                "url": "https://github.com/http-interop/response-sender.git",
                 "reference": "fd63be06cd6c9216ef3c725af1a3f6b155eebc84"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/http-message/zipball/fd63be06cd6c9216ef3c725af1a3f6b155eebc84",
+                "url": "https://api.github.com/repos/http-interop/response-sender/zipball/fd63be06cd6c9216ef3c725af1a3f6b155eebc84",
                 "reference": "fd63be06cd6c9216ef3c725af1a3f6b155eebc84",
                 "shasum": ""
             },
@@ -313,12 +314,12 @@
             "version": "1.0.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/cdcchen/psr7.git",
+                "url": "https://github.com/php-fig/http-message.git",
                 "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cdcchen/psr7/zipball/f6561bf28d520154e4b0ec72be95418abe6d9363",
+                "url": "https://api.github.com/repos/php-fig/http-message/zipball/f6561bf28d520154e4b0ec72be95418abe6d9363",
                 "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363",
                 "shasum": ""
             },
@@ -409,12 +410,12 @@
             "version": "0.1.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/zendframework/zend-stdlib.git",
+                "url": "https://github.com/webimpress/http-middleware-compatibility.git",
                 "reference": "8ed1c2c7523dce0035b98bc4f3a73ca9cd1d3717"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zend-stdlib/zipball/8ed1c2c7523dce0035b98bc4f3a73ca9cd1d3717",
+                "url": "https://api.github.com/repos/webimpress/http-middleware-compatibility/zipball/8ed1c2c7523dce0035b98bc4f3a73ca9cd1d3717",
                 "reference": "8ed1c2c7523dce0035b98bc4f3a73ca9cd1d3717",
                 "shasum": ""
             },
@@ -448,6 +449,7 @@
                 "psr-15",
                 "webimpress"
             ],
+            "abandoned": "psr/http-server-middleware",
             "time": "2017-10-17T17:31:10+00:00"
         },
         {

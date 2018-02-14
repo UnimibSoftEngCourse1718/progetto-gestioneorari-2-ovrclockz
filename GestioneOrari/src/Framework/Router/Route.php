@@ -1,5 +1,5 @@
 <?php
-namespace GestioneOrari\Router;
+namespace Framework\Router;
 
 /**
  * Class Route

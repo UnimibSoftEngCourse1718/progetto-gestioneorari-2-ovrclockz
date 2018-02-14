@@ -1,9 +1,9 @@
 <?php
-namespace Tests\gestioneOrari;
+namespace Tests\Framework;
 
 use PHPUnit\Framework\TestCase;
 use GuzzleHttp\Psr7\Request;
-use GestioneOrari\Router;
+use Framework\Router;
 use GuzzleHttp\Psr7\ServerRequest;
 
 
