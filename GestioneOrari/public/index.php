@@ -1,31 +1,15 @@
 <?php 
+use GestioneOrari\App;
+use App\Auth\AuthModule;
+
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
 
-define('ROOT', dirname(__DIR__));
+require '../vendor/autoload.php';
 
-require ROOT . '/app/App.php';
-App::load();
+$app = new App([
+    AuthModule::class
+]);
 
-if(isset($_GET['page'])){
-	$page = $_GET['page'];
-}else{
-	$page = 'login';
-}
-
-ob_start();
-if($page === 'login'){
-	require ROOT . '/pages/login.php';
-}
-$content = ob_get_clean();
-
-require ROOT . '/pages/templates/default.php';
-
-/*
-$app = App::getInstance();
-$app->title = "Gestione Orario";
-$users = $app->getTable('users');
-echo '<pre>';print_r($users->all());echo '</pre>';
-*/
-//echo '<pre>';var_dump($app);echo '</pre>';
-
+$response = $app->run(\GuzzleHttp\Psr7\ServerRequest::fromGlobals());
+\Http\Response\send($response);
