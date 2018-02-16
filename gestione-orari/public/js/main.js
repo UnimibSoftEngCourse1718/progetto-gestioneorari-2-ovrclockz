@@ -41,7 +41,10 @@ const Auth = Vue.component('auth', {
                 })
                 .then(function (response) {
                     console.log(response.data);
-                        component.error = response.data.error;
+                    component.error = response.data.error;
+                    if (response.data.user){
+                        window.location.replace('/dashboard');
+                    }
                 })
                 .catch(function (error) {
                     console.log(error);

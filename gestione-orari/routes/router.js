@@ -61,7 +61,7 @@ router.get('/dashboard',function(req,res){
     if(!req.session.user){
         return res.status(401).send('Non aautorizzato');
     }
-    return res.status(401).send('Logged');
+    return res.status(200).json(req.session.user)
 })
 
 module.exports = router;
