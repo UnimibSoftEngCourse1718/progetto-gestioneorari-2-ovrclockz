@@ -2,13 +2,11 @@
 * Entry point dell'applicazione
 */
 
-/*
-* Middlewares e moduli
-*/
 //Express - Mini Framework Node.js  
 let express = require('express');
 //Middleware per il parsing del body di una richiesta http
 let bodyParser = require('body-parser');
+let session = require('express-session');
 
 let routes = require('./routes/router');
 
@@ -22,6 +20,7 @@ app.set('view engine', 'ejs');
 app.use('/assets',express.static('public'));
 app.use(bodyParser.urlencoded({ extended : false }));
 app.use(bodyParser.json());
+app.use(session({secret:"qaefoie£$£%$&£%3899132wertg",resave:false,saveUninitialized:true}));
 
 app.use('/',routes);
 

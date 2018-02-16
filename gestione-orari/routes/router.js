@@ -8,7 +8,12 @@ let User = require('../Models/User');
 */
 //Pagina principale
 router.get('/', (request, response) => {
-    response.render('pages/index', { 'test': 'Salut' });
+    if (request.session.user){
+        console.log("iwrwfrib");
+        console.log(request.session);
+        return response.redirect('/dashboard');
+    }
+    return response.render('pages/index', { 'test': 'Salut' });
 });
 
 //Effettua il login
@@ -20,8 +25,11 @@ router.post('/login', (request, response) => {
         User.find({username, password},function(err,row){
             if (err) { console.log(err); return response.status(500).send(); }
 
-            if(!user){ response.json({ error: true }); }
-            else{ response.json({ user: row.user });}
+            if(!row){ response.json({ error: true }); }
+            else{ 
+                request.session.user = row.user;
+                response.json({ user: row.user });
+            }
         });
     } else {
         response.status(200);
@@ -50,11 +58,10 @@ router.post('/register', (request, response) => {
 });
 
 router.get('/dashboard',function(req,res){
-    let logged = false;
-    if(!logged){
+    if(!req.session.user){
         return res.status(401).send('Non aautorizzato');
     }
-    return res.status(200).send('Logged');
+    return res.status(401).send('Logged');
 })
 
 module.exports = router;
