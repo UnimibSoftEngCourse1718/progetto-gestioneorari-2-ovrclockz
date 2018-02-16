@@ -2,3 +2,5 @@ php-linux/*
 php-win/*
 
 GestioneOrari/vendor/
+
+gestione-Orari/node_modules/

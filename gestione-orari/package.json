@@ -1,0 +1,20 @@
+{
+  "name": "gestione-orari",
+  "version": "1.0.0",
+  "description": "Un sistema distribuito per la gestione dei corsi Universitari, degli orari, e delle aule ",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "author": "Serge Benissanh Date <Ovrclockz@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
+    "express-session": "^1.15.6",
+    "nodemon": "^1.14.12",
+    "sqlite3": "^3.1.13"
+  }
+}
