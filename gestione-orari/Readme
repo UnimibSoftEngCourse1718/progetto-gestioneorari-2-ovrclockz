@@ -1,0 +1,2 @@
+ npm i -D webpack webpack-dev-server cross-env typescript vue-loader vue-template-compiler ts-loader
+ /*"start": "nodemon server.js"*/
