@@ -13,6 +13,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var User_1 = require("./User");
 var StudenteModel = /** @class */ (function (_super) {
     __extends(StudenteModel, _super);
+    //matricola: number;
+    //corsi: Array<CorsoModel>;
     function StudenteModel(username, password) {
         var _this = _super.call(this, username, password) || this;
         _this.usertype = "studente";

@@ -59,7 +59,8 @@ const Auth = Vue.component('auth', {
         validate: function(){
             return true;
         }
-    }
+    },
+    mounted: function(){ console.log(document.getElementById('auth').remove()); }
 });
 
 const Dashboard = Vue.component('Dashboard', {
@@ -71,7 +72,8 @@ const Dashboard = Vue.component('Dashboard', {
         }
     },
     methods:{
-    }
+    },
+    mounted: function () { console.log(document.getElementById('dashboard').remove()); }
 });
 
 /*

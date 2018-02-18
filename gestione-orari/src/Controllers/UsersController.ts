@@ -3,11 +3,13 @@ import User from '../Models/User';
 import StudenteModel from '../Models/Studente';
 import DocenteModel from '../Models/Docente';
 import SegretarioModel from '../Models/Segretario';
+import CorsoModel from '../Models/Corso';
 
 class UsersController{
 
     constructor(){
         User.createTable();
+        CorsoModel.createTable();
     }
 
     index(request: Request, response: Response):void {

@@ -39,6 +39,7 @@ var UserModel = /** @class */ (function () {
     UserModel.prototype.save = function (callback) {
         console.log("sto inserendo");
         UserModel.db('users').insert({ usertype: this.usertype, username: this.username, password: this.password }).then(function () {
+            console.log("Creata tabella users");
             callback(true);
         }).catch(function (error) {
             console.log(error);
@@ -50,8 +51,9 @@ var UserModel = /** @class */ (function () {
             table.string('usertype');
             table.string('username');
             table.string('password');
-        }).map(function (res) {
-            console.log(res);
+        }).then(function (res) {
+            console.log("Tabella users creata");
+            //console.log(res);
         });
     };
     UserModel.db = Database_1.default.db;

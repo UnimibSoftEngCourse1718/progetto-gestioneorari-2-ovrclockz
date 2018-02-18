@@ -4,9 +4,11 @@ var User_1 = require("../Models/User");
 var Studente_1 = require("../Models/Studente");
 var Docente_1 = require("../Models/Docente");
 var Segretario_1 = require("../Models/Segretario");
+var Corso_1 = require("../Models/Corso");
 var UsersController = /** @class */ (function () {
     function UsersController() {
         User_1.default.createTable();
+        Corso_1.default.createTable();
     }
     UsersController.prototype.index = function (request, response) {
         var session = request.session;
