@@ -41,4 +41,6 @@ export default abstract class UserModel {
         })
     }
 
+    abstract save(callback: Function):void;
+    abstract getAllData(callback: Function):void;
 } 

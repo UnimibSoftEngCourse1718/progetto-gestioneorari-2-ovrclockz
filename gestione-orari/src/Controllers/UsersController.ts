@@ -85,9 +85,10 @@ let Users = class UsersController{
         if (session !== undefined) {
             if (session.user) {
                 let newuser = Users.getUserType(String(session.user.usertype), session.user.username, session.user.password);
-                console.log(newuser);
-                newuser.getAllData();
-                response.json({ user: session.user });
+                newuser.getAllData(function(user: any){
+                    if(user){ return response.json({ user }); }
+                    return response.status(500);
+                });
             }
         }
     }
