@@ -60,20 +60,30 @@ const Auth = Vue.component('auth', {
             return true;
         }
     },
-    mounted: function(){ console.log(document.getElementById('auth').remove()); }
+    mounted: function(){ document.getElementById('auth').remove(); }
 });
 
 const Dashboard = Vue.component('Dashboard', {
     template: "#dashboard",
     data: function(){
         return {
+            pageHome: true,
+            pageCalendario: false,
             auth: true,
             user:{},
         }
     },
     methods:{
+        getUserData: function () {
+            axios.get('/getUserData').then(function(res){
+                console.log(res);
+            })
+        }
     },
-    mounted: function () { console.log(document.getElementById('dashboard').remove()); }
+    created: function(){
+        this.getUserData();
+    },
+    mounted: function () { document.getElementById('dashboard').remove(); }
 });
 
 /*

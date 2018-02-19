@@ -64,42 +64,14 @@ let Users = class UsersController{
                     response.json({ userExists: true });
                 }else{
                     console.log("Non trovato");
-                    let newuser: User;
-                    switch(usertype){
-                        case '3':
-                            newuser = new StudenteModel(username,password);
-                            newuser.save(function (success: Boolean) {
-                                if (!success) {
-                                    console.log("Errore nella registrazione!");
-                                    return response.status(500).send();
-                                }
-                                response.json({ success: true });
-                            });
-                            break;
-                        case "2":
-                            newuser = new DocenteModel(username, password);
-                            newuser.save(function (success: Boolean) {
-                                if (!success) {
-                                    console.log("Errore nella registrazione!");
-                                    return response.status(500).send();
-                                }
-                                response.json({ success: true });
-                            });
-                            break;
-                        case "1":
-                            newuser = new SegretarioModel(username, password);
-                            newuser.save(function (success: Boolean) {
-                                if (!success) {
-                                    console.log("Errore nella registrazione!");
-                                    return response.status(500).send();
-                                }
-                                response.json({ success: true });
-                            });
-                            break;
-                        default:
-                            response.json({ error: true });
-                            break;    
-                    }
+                    let newuser = Users.getUserType(usertype,username,password);
+                    newuser.save(function (success: Boolean) {
+                        if (!success) {
+                            console.log("Errore nella registrazione!");
+                            return response.status(500).send();
+                        }
+                        response.json({ success: true });
+                    });
                 }
             })
         } else {
@@ -107,6 +79,31 @@ let Users = class UsersController{
             response.json({ error: true })
         }
     }
+
+    getUserData(request: Request, response: Response){
+        let session = request.session;
+        if (session !== undefined) {
+            if (session.user) {
+                let newuser = Users.getUserType(String(session.user.usertype), session.user.username, session.user.password);
+                console.log(newuser);
+                newuser.getAllData();
+                response.json({ user: session.user });
+            }
+        }
+    }
+
+    static getUserType(usertype: string, username: string,password: string): any{
+        if(usertype === '3') {
+            return new StudenteModel(username, password);
+        }
+        else if(usertype === '2') {
+            return new DocenteModel(username, password);
+        }
+        else if(usertype === '1') {
+            return new SegretarioModel(username, password);
+        }
+    }
+
 } 
 
 export default Users;

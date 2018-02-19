@@ -1,7 +1,6 @@
 import Database from './../config/Database';
 
 export default abstract class UserModel {
-    usertype: string = "";
     username: string;
     password: string;
     
@@ -40,17 +39,6 @@ export default abstract class UserModel {
             found = res.length;
             callback(found,res[0]);
         })
-    }
-
-    save(callback: Function) {
-        console.log("sto inserendo")
-        Database('users').insert({ usertype: this.usertype, username: this.username, password: this.password }).then(function () {
-            console.log("Creata tabella users");
-            callback(true);
-        }).catch(function (error) {
-            console.log(error);
-            callback(false);
-        });
     }
 
 } 

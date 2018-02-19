@@ -3,20 +3,20 @@
         <%- include('menu') %>
             <form class="form-signin" v-if="registrazioneForm">
                 <h2 class="form-signin-heading">Registrazione</h2>
-
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="userType" v-model="userType" value="3">
-                    <label class="form-check-label" for="userType">Studente</label>
+                <div class="usertype">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="userType" v-model="userType" value="3">
+                        <label class="form-check-label" for="userType">Studente</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="userType" v-model="userType" value="2">
+                        <label class="form-check-label" for="userType">Docente</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="userType" v-model="userType" value="1">
+                        <label class="form-check-label" for="userType">Segretario</label>
+                    </div>
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="userType" v-model="userType" value="2">
-                    <label class="form-check-label" for="userType">Docente</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="userType" v-model="userType" value="1">
-                    <label class="form-check-label" for="userType">Segretario</label>
-                </div>
-
                 <label for="inputEmail" class="sr-only">Username</label>
                 <input type="email" class="form-control" placeholder="Username" autofocus v-model="username">
 
@@ -24,7 +24,6 @@
                 <input type="password" class="form-control" placeholder="Password" v-model="password">
 
                 <div v-show="error" class="alert alert-danger" role="alert">Username o password sbagliata!</div>
-                <div v-show="error" class="alert alert-danger" role="alert">Username o password incoretta!</div>
                 <div v-show="success" class="alert alert-success" role="alert">Registrazione effettuata!</div>
                 <div v-show="userExists" class="alert alert-danger" role="alert">Utente già presente!</div>
 
@@ -39,7 +38,7 @@
                 <label for="inputPassword" class="sr-only">Password</label>
                 <input type="password" class="form-control" placeholder="Password" v-model="password">
 
-                <div v-show="error" class="alert alert-danger" role="alert">Username o password inesistente!</div>
+                <div v-show="error" class="alert alert-danger" role="alert">Username o password sbagliata!</div>
                 <button class="btn btn-lg btn-primary btn-block" type="button" @click="login">Login</button>
             </form>
     </div>
