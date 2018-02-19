@@ -1,10 +1,9 @@
-import UserModel from "./User";
+import Database from './../config/Database'
+import UserModel from './User';
 
-export default class SegretarioModel extends UserModel {
-    usertype: string;
-
-    constructor(username: string, password: string){
+export default class SegretarioModel extends UserModel{
+    
+    constructor(username: string, password: string) {
         super(username, password);
-        this.usertype = "segretario";
     }
-}
+} 

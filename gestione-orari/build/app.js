@@ -7,9 +7,10 @@ Studente_1.default.findAll(function (res) {
     console.log("-------ALL---------");
     console.log(res);
 });
-server_1.default.get('/', function (request, response) { return UsersController_1.default.index(request, response); });
-server_1.default.get('/dashboard', function (request, response) { return UsersController_1.default.dashboard(request, response); });
-server_1.default.post('/login', function (request, response) { return UsersController_1.default.login(request, response); });
-server_1.default.post('/register', function (request, response) { return UsersController_1.default.register(request, response); });
+var User = new UsersController_1.default();
+server_1.default.get('/', function (request, response) { return User.index(request, response); });
+server_1.default.get('/dashboard', function (request, response) { return User.dashboard(request, response); });
+server_1.default.post('/login', function (request, response) { return User.login(request, response); });
+server_1.default.post('/register', function (request, response) { return User.register(request, response); });
 //Definizione porta di ascolto dell'applicazione
 server_1.default.listen(8080);

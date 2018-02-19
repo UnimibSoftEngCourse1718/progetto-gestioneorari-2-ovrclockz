@@ -14,9 +14,7 @@ var User_1 = require("./User");
 var SegretarioModel = /** @class */ (function (_super) {
     __extends(SegretarioModel, _super);
     function SegretarioModel(username, password) {
-        var _this = _super.call(this, username, password) || this;
-        _this.usertype = "segretario";
-        return _this;
+        return _super.call(this, username, password) || this;
     }
     return SegretarioModel;
 }(User_1.default));

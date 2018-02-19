@@ -1,6 +1,4 @@
-php-linux/*
-php-win/*
-
-GestioneOrari/vendor/
-
 gestione-Orari/node_modules/
+gestione-Orari/build/Controllers/
+gestione-Orari/build/Interfaces/
+gestione-Orari/build/Models/

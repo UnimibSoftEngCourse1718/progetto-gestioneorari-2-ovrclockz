@@ -9,14 +9,14 @@ var UserModel = /** @class */ (function () {
     }
     UserModel.findAll = function (callback) {
         var found;
-        UserModel.db('users').then(function (res) {
+        Database_1.default('users').then(function (res) {
             console.log(res);
             callback(res);
         });
     };
     UserModel.find = function (username, callback) {
         var found;
-        UserModel.db('users').where({
+        Database_1.default('users').where({
             username: username,
         }).then(function (res) {
             console.log(res);
@@ -27,7 +27,7 @@ var UserModel = /** @class */ (function () {
     };
     UserModel.authenticate = function (username, password, callback) {
         var found;
-        UserModel.db('users').where({
+        Database_1.default('users').where({
             username: username,
             password: password,
         }).then(function (res) {
@@ -38,7 +38,7 @@ var UserModel = /** @class */ (function () {
     };
     UserModel.prototype.save = function (callback) {
         console.log("sto inserendo");
-        UserModel.db('users').insert({ usertype: this.usertype, username: this.username, password: this.password }).then(function () {
+        Database_1.default('users').insert({ usertype: this.usertype, username: this.username, password: this.password }).then(function () {
             console.log("Creata tabella users");
             callback(true);
         }).catch(function (error) {
@@ -46,17 +46,6 @@ var UserModel = /** @class */ (function () {
             callback(false);
         });
     };
-    UserModel.createTable = function () {
-        UserModel.db.schema.createTableIfNotExists('users', function (table) {
-            table.string('usertype');
-            table.string('username');
-            table.string('password');
-        }).then(function (res) {
-            console.log("Tabella users creata");
-            //console.log(res);
-        });
-    };
-    UserModel.db = Database_1.default.db;
     return UserModel;
 }());
 exports.default = UserModel;

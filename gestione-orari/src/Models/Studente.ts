@@ -1,12 +1,9 @@
-import UserModel from "./User";
+import Database from './../config/Database'
+import UserModel from './User';
 
-export default class StudenteModel extends UserModel {
-    usertype: string;
-    //matricola: number;
-    //corsi: Array<CorsoModel>;
-
-    constructor(username: string, password: string){
+export default class StudenteModel extends UserModel{
+    
+    constructor(username: string, password: string) {
         super(username, password);
-        this.usertype = "studente";
     }
-}
+} 

@@ -1,12 +1,14 @@
 import Server from './server';
-import User from './Controllers/UsersController';
+import Database from './config/Database';
+import UsersController from './Controllers/UsersController';
 import U from './Models/Studente';
 
 U.findAll(function(res : Object) {
     console.log("-------ALL---------");
     console.log(res);
-})
+});
 
+let User = new UsersController();
 
 Server.get('/', (request, response) => { return User.index(request,response);});
 Server.get('/dashboard', (request, response) => { return User.dashboard(request,response);});
