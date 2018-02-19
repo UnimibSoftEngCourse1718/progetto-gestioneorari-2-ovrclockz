@@ -12,5 +12,6 @@ server_1.default.get('/', function (request, response) { return User.index(reque
 server_1.default.get('/dashboard', function (request, response) { return User.dashboard(request, response); });
 server_1.default.post('/login', function (request, response) { return User.login(request, response); });
 server_1.default.post('/register', function (request, response) { return User.register(request, response); });
+server_1.default.get('/getUserData', function (request, response) { return User.getUserData(request, response); });
 //Definizione porta di ascolto dell'applicazione
 server_1.default.listen(8080);

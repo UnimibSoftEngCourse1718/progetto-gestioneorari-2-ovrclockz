@@ -15,5 +15,6 @@ Server.get('/dashboard', (request, response) => { return User.dashboard(request,
 Server.post('/login', (request, response) => { return User.login(request,response);});
 Server.post('/register', (request, response) => { return User.register(request,response);});
 
+Server.get('/getUserData', (request, response) => { return User.getUserData(request, response); });
 //Definizione porta di ascolto dell'applicazione
 Server.listen(8080)
