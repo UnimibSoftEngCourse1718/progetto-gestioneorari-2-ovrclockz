@@ -67,6 +67,7 @@ const Dashboard = Vue.component('Dashboard', {
     data: function(){
         return {
             page: "pageHome",
+            prenotazioneSucces: "",
             calendar: {
                 lunedi: { '8:30 - 10:30': false, '10:30 - 12:30': false, '12:30 - 14:30': false, '14:30 - 16:30': false, '16:30 - 18:30': false},
                 martedi: { '8:30 - 10:30': false, '10:30 - 12:30': false, '12:30 - 14:30': false, '14:30 - 16:30': false, '16:30 - 18:30': false },
@@ -84,6 +85,9 @@ const Dashboard = Vue.component('Dashboard', {
             axios.get('/getUserData').then(function(res){
                 console.log(res.data);component.user = res.data.user;
                 component.createCalendar();
+                if (res.data.user.docente){
+                    axios.get('/getListaRisorse').then(function (res) { console.log(res.data); component.$set(component.user, 'risorse', res.data.value) })
+                }
                 axios.get('/getPubblicazioni').then(function (res) { console.log(res.data); component.$set(component.user,'pubblicazioni', res.data) })
             })
         },
@@ -115,6 +119,25 @@ const Dashboard = Vue.component('Dashboard', {
             .then(function (response) {
                 console.log(response.data);
                 component.getUserData();
+            })
+        },
+        prenotazioneRisorsa: function(risorsa){
+            let component = this;
+            risorsa.id_docente = this.user.docente.id
+            axios.post('/prenotazioneRisorsa', { risorsa: risorsa, })
+                .then(function (response) {
+                console.log(response.data);
+                if (response.data.value){
+                    component.prenotazioneSucces = "success";
+                    setTimeout(function(){
+                        component.prenotazioneSucces = "";
+                    }, 2000);
+                } else { 
+                    component.prenotazioneSucces = "error"; 
+                    setTimeout(function () {
+                        component.prenotazioneSucces = "";
+                    }, 2000);
+                }
             })
         }
     },

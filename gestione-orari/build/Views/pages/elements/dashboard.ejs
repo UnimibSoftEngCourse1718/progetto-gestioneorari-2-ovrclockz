@@ -38,5 +38,27 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-12" style="margin-top: 25px" v-if="page === 'pagePrenotazioneRisorse'">
+            <h1 style="margin-top: 100px">Lista Risorse</h1>
+            <div class="row" v-for="risorsa in user.risorse" style="margin: 50px auto">
+                <div class="col-md-2">{{ risorsa.nome_risorsa }}</div>
+                <div class="col-md-3">
+                    <label>Data: </label>
+                    <input type="date" v-model="risorsa.giorno_richiesta_prenotazione">
+                </div>
+                <div class="col-md-3">
+                    <label>Orario: </label>
+                    <select v-model="risorsa.orario_richiesta_prenotazione">
+                        <option value="">Seleziona</option>
+                        <option v-for="(orario,index) in calendar.lunedi" v-bind:value="index">{{ index }}</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button aria-readonly="true" class="btn btn-sm btn-block btn-primary" type="button" @click="prenotazioneRisorsa(risorsa)">Prenotare</button>
+                </div>
+            </div>
+        </div>
+        <div v-show="prenotazioneSucces === 'error'" class="alert alert-danger" role="alert">Risorsa non disponible in quel momento!</div>
+        <div v-show="prenotazioneSucces === 'success'" class="alert alert-success" role="alert">Risorsa prenotata!</div>
     </div>
 </template>
