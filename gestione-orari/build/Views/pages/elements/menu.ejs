@@ -4,18 +4,21 @@
         <a class="navbar-brand" href="#">Gestione Orari</a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav ml-auto" v-if="auth">
-                <li class="nav-item active" v-bind:class="pageHome">
+                <li class="nav-item" v-bind:class="{'active': page === 'pageHome'}" @click="page = 'pageHome'">
                     <a class="nav-link" href="#">Home</a>
                 </li>
-                <li class="nav-item" v-bind:class="pageCalendario">
+                <li class="nav-item" v-bind:class="{'active': page === 'pageCalendario'}" @click="page = 'pageCalendario'">
                     <a class="nav-link" href="#">Calendario corsi</a>
+                </li>
+                <li class="nav-item" v-bind:class="{'active': page === 'pageIscrizioneEsame'}" @click="page = 'pageIscrizioneEsame'">
+                    <a class="nav-link" href="#">Iscrisione esame</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto" v-else>
-                <li class="nav-item" v-bind:class="{'active': loginForm}" @click="loginForm = true;registrazioneForm = false">
+                <li class="nav-item" v-bind:class="{'active': page === 'loginForm'}" @click="page = 'loginForm'">
                     <a class="nav-link" href="#">Login</a>
                 </li>
-                <li class="nav-item" v-bind:class="{'active': registrazioneForm}" @click="registrazioneForm = true;loginForm = false">
+                <li class="nav-item" v-bind:class="{'active': page === 'registrazioneForm'}" @click="page = 'registrazioneForm'">
                     <a class="nav-link" href="#">Registrazione</a>
                 </li>
             </ul>

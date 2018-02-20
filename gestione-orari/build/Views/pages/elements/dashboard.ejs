@@ -1,5 +1,42 @@
 <template id="dashboard">
     <div class="row">
         <%- include('menu') %>
+        <div v-if="page === 'pageHome'">
+            <h1 style="margin-top: 100px">News/Avvisi</h1>
+            <div class="row" v-for="pubblicazione in user.pubblicazioni" style="margin-top: 25px">
+                 <div class="col-md-2">
+                     {{ (pubblicazione.usertype === 1) ? "Segreteria studenti" : pubblicazione.username }}
+                 </div>
+                 <div class="col-md-10">
+                     {{ pubblicazione.testo_pubblicazione }}
+                 </div>
+            </div>
+        </div>
+        <div class="col-md-12" style="margin-top: 25px" v-if="page === 'pageCalendario'">
+            <h1 style="margin-top: 100px">Calendario dei corsi</h1>
+            <table>
+                <tr>
+                    <th></th>
+                    <th v-for="(giorno,index) in calendar">{{ index }}</th>
+                </tr>
+                <tr v-for="(orario,key,index) in calendar.lunedi">
+                    <th>{{ key }}</th>
+                    <th>{{ calendar.lunedi[key] ? calendar.lunedi[key] : "" }}</th>
+                    <th>{{ calendar.martedi[key] ? calendar.martedi[key] : "" }}</th>
+                    <th>{{ calendar.mercoledi[key] ? calendar.mercoledi[key] : "" }}</th>
+                    <th>{{ calendar.giovedi[key] ? calendar.giovedi[key] : "" }}</th>
+                    <th>{{ calendar.venerdi[key] ? calendar.venerdi[key] : "" }}</th>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-12" style="margin-top: 25px" v-if="page === 'pageIscrizioneEsame'">
+            <h1 style="margin-top: 100px">Lista esami</h1>
+            <div class="row" v-for="corso in user.corsi" style="margin: 50px auto">
+                <div class="col-md-3">{{ corso.nome_corso }}</div>
+                <div class="col-md-2">
+                    <button class="btn btn-sm btn-block" v-bind:class="{'btn-danger': corso.studente_iscritto_esame, 'btn-primary': !corso.studente_iscritto_esame }" type="button" @click="iscrizioneEsame(corso)">{{ corso.studente_iscritto_esame ? "Annulla iscrizione" : "Iscriversi" }}</button>
+                </div>
+            </div>
+        </div>
     </div>
 </template>

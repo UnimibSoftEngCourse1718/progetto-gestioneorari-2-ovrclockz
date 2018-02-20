@@ -93,6 +93,17 @@ let Users = class UsersController{
         }
     }
 
+    getPubblicazioni(request: Request, response: Response) {
+        let session = request.session;
+        if (session !== undefined) {
+            if (session.user) {
+                    User.getPubblicazioni(function(pubblicazioni: any) {
+                        response.json(pubblicazioni);
+                    })
+            }
+        }
+    }
+
     static getUserType(usertype: string, username: string,password: string): any{
         if(usertype === '3') {
             return new StudenteModel(username, password);

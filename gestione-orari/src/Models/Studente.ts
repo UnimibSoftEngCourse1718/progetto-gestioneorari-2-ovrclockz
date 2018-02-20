@@ -41,31 +41,45 @@ export default class StudenteModel extends UserModel{
         Database.select('users.id', 'users.usertype', 'users.username').from('users')
         .where({'users.username': this.username})
         .then(function(row){
-            let user = { studente : row[0],corsi: [] };
+            let user = { studente : row[0],corsi: []};
             Database.select('lista_corsi_studente.*', 'corsi.*').from('lista_corsi_studente')
-            .join('corsi','corsi.id','lista_corsi_studente.id_corso')
+            .leftJoin('corsi','corsi.id','lista_corsi_studente.id_corso')
             .where({ 'lista_corsi_studente.id_studente': user.studente.id }).then(function(row){ 
                 user.corsi = row;
-                console.log(user);
+                //console.log(user);
                 return user;
             }).then(function(user: any) {
                 for (let index = 0; index < user.corsi.length; index++) {
                     console.log('----------- ' + index);
                     Database.select('lista_orari_corso.*', 'orari.*').from('lista_orari_corso')
-                    .join('orari', 'lista_orari_corso.id', 'orari.id')
+                    .leftJoin('orari', 'lista_orari_corso.id_orario', 'orari.id')
                     .where({'lista_orari_corso.id_corso': user.corsi[index].id_corso })
                     .then(function(orari){
                         user.corsi[index].orari = orari;
-                        console.log(user);
-                        if (index === user.corsi.length - 1){callback(user);}  
+                        //console.log(user);
+                        if (index === user.corsi.length - 1){ callback(user) }  
                     })
-                }
+                }                           
             })
         })
         .catch(function (error) {
             console.log(error);
             callback(false);
         });
+    }
 
+    static iscrizioneEsame(dati: any,callback: Function){
+        console.log(dati);
+        let value = dati.corso.studente_iscritto_esame ? 0 : 1;
+        Database('lista_corsi_studente')
+        .where({ 'id_corso': dati.corso.id_corso, 'id_studente': dati.corso.id_studente})
+        .update('studente_iscritto_esame', value)
+        .then(function(){
+            callback([true,value]);
+        })
+        .catch(function(error){
+            console.log(error)
+            callback([false, value]);
+        });
     }
 }

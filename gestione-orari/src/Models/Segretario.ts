@@ -6,7 +6,7 @@ export default class SegretarioModel extends UserModel{
 
     constructor(username: string, password: string) {
         super(username, password);
-        this.usertype = 3;
+        this.usertype = 1;
     }
 
     save(callback: Function) {
@@ -24,5 +24,18 @@ export default class SegretarioModel extends UserModel{
             console.log(error);
             callback(false);
         });
+    }
+
+    getAllData(callback: Function) {
+        Database.select('users.id', 'users.usertype', 'users.username').from('users')
+            .where({ 'users.username': this.username })
+            .then(function (row) {
+                let user = { segretario: row[0]};
+                callback(user);
+            })
+            .catch(function (error) {
+                console.log(error);
+                callback(false);
+            });
     }
 } 

@@ -1,7 +1,7 @@
 <template id="auth">
     <div class="row">
         <%- include('menu') %>
-            <form class="form-signin" v-if="registrazioneForm">
+            <form class="form-signin" v-if="page === 'registrazioneForm'">
                 <h2 class="form-signin-heading">Registrazione</h2>
                 <div class="usertype">
                     <div class="form-check">
@@ -27,9 +27,9 @@
                 <div v-show="success" class="alert alert-success" role="alert">Registrazione effettuata!</div>
                 <div v-show="userExists" class="alert alert-danger" role="alert">Utente già presente!</div>
 
-                <button class="btn btn-lg btn-primary btn-block" type="button" @click="register">Registrati</button>
+                <button class="btn btn-sm btn-primary btn-block" type="button" @click="register">Registrati</button>
             </form>
-            <form class="form-signin" v-if="loginForm">
+            <form class="form-signin" v-if="page  === 'loginForm'">
                 <h2 class="form-signin-heading">Login</h2>
 
                 <label for="inputEmail" class="sr-only">Username</label>
@@ -39,7 +39,7 @@
                 <input type="password" class="form-control" placeholder="Password" v-model="password">
 
                 <div v-show="error" class="alert alert-danger" role="alert">Username o password sbagliata!</div>
-                <button class="btn btn-lg btn-primary btn-block" type="button" @click="login">Login</button>
+                <button class="btn btn-sm btn-primary btn-block" type="button" @click="login">Login</button>
             </form>
     </div>
 </template>

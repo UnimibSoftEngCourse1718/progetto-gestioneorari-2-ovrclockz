@@ -4,8 +4,7 @@ const Auth = Vue.component('auth', {
         return {
             auth: false,
             userType: "3",
-            registrazioneForm: true,
-            loginForm: false,
+            page: 'loginForm',
             username: null,
             password: null,
             error: false,
@@ -67,16 +66,55 @@ const Dashboard = Vue.component('Dashboard', {
     template: "#dashboard",
     data: function(){
         return {
-            pageHome: true,
-            pageCalendario: false,
+            page: "pageHome",
+            calendar: {
+                lunedi: { '8:30 - 10:30': false, '10:30 - 12:30': false, '12:30 - 14:30': false, '14:30 - 16:30': false, '16:30 - 18:30': false},
+                martedi: { '8:30 - 10:30': false, '10:30 - 12:30': false, '12:30 - 14:30': false, '14:30 - 16:30': false, '16:30 - 18:30': false },
+                mercoledi: { '8:30 - 10:30': false, '10:30 - 12:30': false, '12:30 - 14:30': false, '14:30 - 16:30': false, '16:30 - 18:30': false },
+                giovedi: { '8:30 - 10:30': false, '10:30 - 12:30': false, '12:30 - 14:30': false, '14:30 - 16:30': false, '16:30 - 18:30': false },
+                venerdi: { '8:30 - 10:30': false, '10:30 - 12:30': false, '12:30 - 14:30': false, '14:30 - 16:30': false, '16:30 - 18:30': false },
+            },
             auth: true,
             user:{},
         }
     },
     methods:{
         getUserData: function () {
+            let component = this;
             axios.get('/getUserData').then(function(res){
-                console.log(res);
+                console.log(res.data);component.user = res.data.user;
+                component.createCalendar();
+                axios.get('/getPubblicazioni').then(function (res) { console.log(res.data); component.$set(component.user,'pubblicazioni', res.data) })
+            })
+        },
+        createCalendar: function(){
+            for (var key in this.calendar) {
+                // skip loop if the property is from prototype
+                if (!this.calendar.hasOwnProperty(key)) continue;
+
+                for (var i = 0; i < this.user.corsi.length; i++) {
+                    for (var j = 0; j < this.user.corsi[i].orari.length; j++) {
+                        if (this.user.corsi[i].orari[j].giorno.toLowerCase().trim() === key.toLowerCase().trim()){
+                            for (var k in this.calendar[key]) {
+                                if (!this.calendar[key].hasOwnProperty(k)) continue;
+                                if (k === this.user.corsi[i].orari[j].orario){
+                                    console.log("orario user " + this.user.corsi[i].orari[j].orario);
+                                    console.log("orario calendario " + k);
+                                    console.log(k === this.user.corsi[i].orari[j].orario);
+                                    this.$set(this.calendar[key], k, this.user.corsi[i].nome_corso);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        iscrizioneEsame: function(corso){
+            let component = this;
+            axios.post('/iscrizioneEsame', {corso: corso,})
+            .then(function (response) {
+                console.log(response.data);
+                component.getUserData();
             })
         }
     },
