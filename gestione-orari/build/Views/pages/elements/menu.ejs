@@ -7,7 +7,7 @@
                 <li class="nav-item" v-bind:class="{'active': page === 'pageHome'}" @click="page = 'pageHome'">
                     <a class="nav-link" href="#">Home</a>
                 </li>
-                <li class="nav-item" v-bind:class="{'active': page === 'pageCalendario'}" @click="page = 'pageCalendario'">
+                <li class="nav-item" v-bind:class="{'active': page === 'pageCalendario'}" @click="page = 'pageCalendario'" v-if="!user.segretario">
                     <a class="nav-link" href="#">Calendario corsi</a>
                 </li>
                 <li class="nav-item" v-bind:class="{'active': page === 'pageIscrizioneEsame'}" @click="page = 'pageIscrizioneEsame'" v-if="user.studente">
@@ -15,6 +15,9 @@
                 </li>
                 <li class="nav-item" v-bind:class="{'active': page === 'pagePrenotazioneRisorse'}" @click="page = 'pagePrenotazioneRisorse'" v-if="user.docente">
                     <a class="nav-link" href="#">Prenotazione Risorse</a>
+                </li>
+                <li class="nav-item" v-bind:class="{'active': page === 'pageGestioneRisorse'}" @click="page = 'pageGestioneRisorse'" v-if="user.segretario">
+                    <a class="nav-link" href="#">Gestione Risorse</a>
                 </li>
                 <li class="nav-item" @click="logout()">
                     <a class="nav-link" href="#">Logout</a>

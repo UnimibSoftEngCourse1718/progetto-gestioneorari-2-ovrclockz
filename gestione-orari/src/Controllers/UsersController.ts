@@ -110,8 +110,8 @@ let Users = class UsersController{
             if (session.user) {
                 let newuser = Users.getUserType(String(session.user.usertype), session.user.username, session.user.password);
                 console.log(newuser);
-                newuser.pubblicareNews(request.body.news, function (res: any) {
-                    if (res[0]) { response.json({ value: res[0] }); }
+                newuser.pubblicareNews(request.body.news, function (status: boolean) {
+                    if (status) { response.json({ status: status }); }
                     else { return response.status(500).send(); }
                 });
             }

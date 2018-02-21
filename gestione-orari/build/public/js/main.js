@@ -86,7 +86,9 @@ const Dashboard = Vue.component('Dashboard', {
             let component = this;
             axios.get('/getUserData').then(function(res){
                 console.log(res.data);component.user = res.data.user;
-                component.createCalendar();
+                if (res.data.user.docente || res.data.user.studente) {
+                    component.createCalendar();
+                }
                 if (res.data.user.docente){
                     axios.get('/getListaRisorse').then(function (res) { console.log(res.data); component.$set(component.user, 'risorse', res.data.value) })
                 }
@@ -150,7 +152,7 @@ const Dashboard = Vue.component('Dashboard', {
             axios.post('/pubblicareNews', { news: news, })
             .then(function (response) {
                 console.log(response.data);
-                if (response.data.value){
+                if (response.data.status){
                     component.getUserData();
                     component.news = "";
                 }else{

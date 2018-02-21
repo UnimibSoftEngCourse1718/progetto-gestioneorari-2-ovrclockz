@@ -43,7 +43,9 @@ export default abstract class UserModel {
 
     static getPubblicazioni(callback: Function){
         Database.select('pubblicazioni.*', 'users.usertype','users.username').from('pubblicazioni')
-            .leftJoin('users', 'pubblicazioni.id_user', 'users.id').then(function (row) {
+            .leftJoin('users', 'pubblicazioni.id_user', 'users.id')
+            .orderByRaw('pubblicazioni.id DESC')
+            .then(function (row) {
             //console.log(row);
             callback(row);
         })

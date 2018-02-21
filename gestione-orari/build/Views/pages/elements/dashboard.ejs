@@ -1,6 +1,8 @@
 <template id="dashboard">
     <div class="row">
         <%- include('menu') %>
+
+        <!-- Pagina Home/Dashboard -->
         <div v-if="page === 'pageHome'" class="col-md-12">
             <h1 style="margin-top: 100px">News/Avvisi</h1>
             <div class="row" style="margin-top: 25px" v-if="user.docente || user.segretario">
@@ -21,6 +23,8 @@
                  </div>
             </div>
         </div>
+
+        <!-- Pagina Calendario Corsi -->
         <div class="col-md-12" style="margin-top: 25px" v-if="page === 'pageCalendario'">
             <h1 style="margin-top: 100px">Calendario dei corsi</h1>
             <table>
@@ -38,6 +42,8 @@
                 </tr>
             </table>
         </div>
+
+        <!-- Pagina Iscrizione Esami -->
         <div class="col-md-12" style="margin-top: 25px" v-if="page === 'pageIscrizioneEsame'">
             <h1 style="margin-top: 100px">Lista esami</h1>
             <div class="row" v-for="corso in user.corsi" style="margin: 50px auto">
@@ -47,6 +53,8 @@
                 </div>
             </div>
         </div>
+
+        <!-- Pagina Prenotazione Risorse -->
         <div class="col-md-12" style="margin-top: 25px" v-if="page === 'pagePrenotazioneRisorse'">
             <h1 style="margin-top: 100px">Lista Risorse</h1>
             <div class="row" v-for="risorsa in user.risorse" style="margin: 50px auto">

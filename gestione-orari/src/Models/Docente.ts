@@ -90,11 +90,11 @@ export default class DocenteModel extends UserModel{
         Database('pubblicazioni').insert([{ id_user: dati.id_user, testo_pubblicazione: dati.content }])
         .then(function (res) {
                 console.log(dati);
-                callback([true]);
+                callback(true);
             })
             .catch(function (error) {
                 console.log(error);
-                callback([false]);
+                callback(false);
             })
     }
 } 
