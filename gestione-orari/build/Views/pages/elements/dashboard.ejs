@@ -1,8 +1,17 @@
 <template id="dashboard">
     <div class="row">
         <%- include('menu') %>
-        <div v-if="page === 'pageHome'">
+        <div v-if="page === 'pageHome'" class="col-md-12">
             <h1 style="margin-top: 100px">News/Avvisi</h1>
+            <div class="row" style="margin-top: 25px" v-if="user.docente || user.segretario">
+                <textarea v-model="news" rows="5" style="width:100%;resize: none;padding: 10px;margin:15px;"></textarea>
+                <div class="col-md-2 offset-md-10">
+                    <button aria-readonly="true" class="btn btn-sm btn-block btn-primary" type="button" @click="pubblicareNews()">Pubblicare</button>
+                </div>
+                <div class="col-md-6 offset-md-3" style="text-align:center">
+                    <div v-show="msgPubblicazione === 'error'" class="alert alert-danger" role="alert">Errore durante la pubblicazione!</div>
+                </div>
+            </div>
             <div class="row" v-for="pubblicazione in user.pubblicazioni" style="margin-top: 25px">
                  <div class="col-md-2">
                      {{ (pubblicazione.usertype === 1) ? "Segreteria studenti" : pubblicazione.username }}
@@ -48,7 +57,7 @@
                 </div>
                 <div class="col-md-3">
                     <label>Orario: </label>
-                    <select v-model="risorsa.orario_richiesta_prenotazione">
+                    <select class="form-control form-control-sm" v-model="risorsa.orario_richiesta_prenotazione" style="width: 45%;display: inline-block">
                         <option value="">Seleziona</option>
                         <option v-for="(orario,index) in calendar.lunedi" v-bind:value="index">{{ index }}</option>
                     </select>

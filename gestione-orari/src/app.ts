@@ -16,6 +16,7 @@ let User = new UsersController();
 Server.get('/', (request, response) => { return User.index(request,response);});
 Server.get('/dashboard', (request, response) => { return User.dashboard(request,response);});
 Server.post('/login', (request, response) => { return User.login(request,response);});
+Server.get('/logout', (request, response) => { return User.logout(request,response);});
 Server.post('/register', (request, response) => { return User.register(request,response);});
 
 //All
@@ -28,6 +29,9 @@ Server.post('/iscrizioneEsame', (request, response) => { return StudentiControll
 //Docenti
 Server.get('/getListaRisorse', (request, response) => { return DocentiController.getListaRisorse(request, response); });
 Server.post('/prenotazioneRisorsa', (request, response) => { return DocentiController.prenotazioneRisorsa(request, response); });
+
+//Docenti + Segretari
+Server.post('/pubblicareNews', (request, response) => { return User.pubblicareNews(request, response); });
 
 
 //Definizione porta di ascolto dell'applicazione

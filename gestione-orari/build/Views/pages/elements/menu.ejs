@@ -16,6 +16,9 @@
                 <li class="nav-item" v-bind:class="{'active': page === 'pagePrenotazioneRisorse'}" @click="page = 'pagePrenotazioneRisorse'" v-if="user.docente">
                     <a class="nav-link" href="#">Prenotazione Risorse</a>
                 </li>
+                <li class="nav-item" @click="logout()">
+                    <a class="nav-link" href="#">Logout</a>
+                </li>
             </ul>
             <ul class="navbar-nav ml-auto" v-else>
                 <li class="nav-item" v-bind:class="{'active': page === 'loginForm'}" @click="page = 'loginForm'">

@@ -67,6 +67,8 @@ const Dashboard = Vue.component('Dashboard', {
     data: function(){
         return {
             page: "pageHome",
+            news: "",
+            msgPubblicazione: "",
             prenotazioneSucces: "",
             calendar: {
                 lunedi: { '8:30 - 10:30': false, '10:30 - 12:30': false, '12:30 - 14:30': false, '14:30 - 16:30': false, '16:30 - 18:30': false},
@@ -139,6 +141,25 @@ const Dashboard = Vue.component('Dashboard', {
                     }, 2000);
                 }
             })
+        },
+        pubblicareNews: function(){
+            let component = this;
+            let news = {};
+            news.id_user = component.user.docente ? component.user.docente.id : component.user.segretario.id;
+            news.content = component.news;
+            axios.post('/pubblicareNews', { news: news, })
+            .then(function (response) {
+                console.log(response.data);
+                if (response.data.value){
+                    component.getUserData();
+                    component.news = "";
+                }else{
+                    component.msgPubblicazione = "error";
+                }
+            })
+        },
+        logout: function(){
+            window.location.replace('/logout');
         }
     },
     created: function(){

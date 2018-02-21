@@ -104,6 +104,20 @@ let Users = class UsersController{
         }
     }
 
+    pubblicareNews(request: Request, response: Response) {
+        let session = request.session;
+        if (session !== undefined) {
+            if (session.user) {
+                let newuser = Users.getUserType(String(session.user.usertype), session.user.username, session.user.password);
+                console.log(newuser);
+                newuser.pubblicareNews(request.body.news, function (res: any) {
+                    if (res[0]) { response.json({ value: res[0] }); }
+                    else { return response.status(500).send(); }
+                });
+            }
+        }
+    }
+
     static getUserType(usertype: string, username: string,password: string): any{
         if(usertype === '3') {
             return new StudenteModel(username, password);
@@ -116,6 +130,16 @@ let Users = class UsersController{
         }
     }
 
+    logout(request: Request, response: Response){
+        let session = request.session;
+        if (session !== undefined) {
+            if (session.user) {
+                delete session.user;
+            }
+        }
+        response.redirect('/');
+
+    }
 } 
 
 export default Users;

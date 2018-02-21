@@ -16,7 +16,7 @@ let Docenti = class DocenteController extends UsersController{
                     if (res[0]) { 
                         response.json({ value : res[1] }); 
                     }
-                    else{ return response.status(500); }
+                    else{ return response.status(500).send(); }
                 })
             }
         }
@@ -28,7 +28,7 @@ let Docenti = class DocenteController extends UsersController{
             if (session.user) {
                 new DocenteModel(session.user.username, session.user.password).getListaRisorse(function (res: any) {
                     if (res[0]) { response.json({ value : res[1] }); }
-                    else{ return response.status(500); }
+                    else{ return response.status(500).send(); }
                 })
             }
         }
