@@ -98,5 +98,75 @@
                 </div>
             </div>
         </transition>
+
+        <!-- Pagina Creazione Risorse -->
+        <transition name="fade" mode="out-in">
+            <div class="col-md-12 page" v-if="page === 'pageGestioneRisorse'">
+                <div class="wrapper">
+                    <h1>Inserire nuova risorsa</h1><br>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="inputEmail" class="sr-only">Nome Risorsa</label>
+                            <input type="email" class="form-control" placeholder="Nome risorsa" autofocus v-model="nuovaRisorsa">
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-sm btn-block btn-primary" type="button" @click="inserireRisorsa()">Inserire</button>
+                        </div>
+                        <div class="col-md-4">
+                            <div v-show="msgRisorsa === 'success'" class="alert alert-danger" role="alert">Risorsa inserita!</div>
+                            <div v-show="msgRisorsa === 'error'" class="alert alert-danger" role="alert">Inserire dato valido!</div>
+                        </div>
+                    </div><br><br>
+                    <h1>Lista risorse disponibili</h1>
+                    <div class="row" v-for="risorsa in user.risorse" style="margin: 50px auto">
+                        <div class="col-md-2">{{ risorsa.nome_risorsa }}</div>
+                    </div>
+                </div>
+            </div>
+        </transition>
+
+        <!-- Pagina Gestione Docenti -->
+        <transition name="fade" mode="out-in">
+            <div class="col-md-12 page" v-if="page === 'pageGestioneDocenti'">
+                <div class="wrapper">
+                    <h1>Inserire Docente</h1>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="inputEmail" class="sr-only">Username</label>
+                            <input type="email" class="form-control" placeholder="Username" autofocus v-model="nuovoDocente.username">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="inputEmail" class="sr-only">Password</label>
+                            <input type="password" class="form-control" placeholder="Password" v-model="nuovoDocente.password">
+                        </div>
+                        <div class="col-md-4">
+                            <div v-show="msgNuovoDocente === 'error'" class="alert alert-danger" role="alert">Username esistente!</div>
+                            <div v-show="msgNuovoDocente === 'errorInput'" class="alert alert-danger" role="alert">Inserire username e password validi!</div>
+                            <div v-show="msgNuovoDocente === 'success'" class="alert alert-success" role="alert">Docente inserito!</div>
+                        </div>
+                    </div><br><br>
+                    <div class="row">
+                        <div class="col-md-3" v-for="(corso,index) in corsi">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" v-model="nuovoDocente.corsi[index]" v-bind:value="corso" @change="bindCorsi()">
+                                <label class="form-check-label">{{ corso.nome_corso }}</label>
+                            </div>
+                        </div>
+                    </div><br><br>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <button class="btn btn-sm btn-block btn-primary" type="button" @click="inserireDocente()">Inserire</button>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <h1>Lista docenti</h1>
+                    <div class="row" v-for="docente in docenti" style="margin: 50px auto">
+                        <div class="col-md-2">{{ docente.username }}</div>
+                    </div>
+                </div>
+            </div>
+        </transition>
     </div>
 </template>

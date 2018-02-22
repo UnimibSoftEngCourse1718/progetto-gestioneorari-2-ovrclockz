@@ -3,6 +3,7 @@ import Database from './config/Database';
 import UsersController from './Controllers/UsersController';
 import StudentiController from './Controllers/StudentiController';
 import DocentiController from './Controllers/DocentiController';
+import SegretariController from './Controllers/SegretariController';
 //import U from './Models/Studente';
 /*
 U.findAll(function(res : Object) {
@@ -33,6 +34,11 @@ Server.post('/prenotazioneRisorsa', (request, response) => { return DocentiContr
 //Docenti + Segretari
 Server.post('/pubblicareNews', (request, response) => { return User.pubblicareNews(request, response); });
 
+//Segretari
+Server.post('/inserireRisorsa', (request, response) => { return SegretariController.inserireRisorsa(request, response); });
+Server.post('/inserireDocente', (request, response) => { return SegretariController.inserireDocente(request, response); });
+Server.get('/getListaDocenti', (request, response) => { return SegretariController.getListaDocenti(request, response); });
+Server.get('/getListaCorsi', (request, response) => { return SegretariController.getListaCorsi(request, response); });
 
 //Definizione porta di ascolto dell'applicazione
 Server.listen(8080)

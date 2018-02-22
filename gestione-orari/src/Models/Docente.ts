@@ -75,7 +75,7 @@ export default class DocenteModel extends UserModel{
     }
 
     getListaRisorse(callback: Function){
-        Database.select('*').from('risorse')
+        Database.select('*').from('risorse').orderByRaw('id DESC')
         .then(function (row) {
             //console.log(row);
             callback([true,row]);
@@ -89,12 +89,12 @@ export default class DocenteModel extends UserModel{
     pubblicareNews(dati: any, callback: Function) {
         Database('pubblicazioni').insert([{ id_user: dati.id_user, testo_pubblicazione: dati.content }])
         .then(function (res) {
-                console.log(dati);
-                callback(true);
-            })
-            .catch(function (error) {
-                console.log(error);
-                callback(false);
-            })
+            console.log(dati);
+            callback(true);
+        })
+        .catch(function (error) {
+            console.log(error);
+            callback(false);
+        })
     }
 } 

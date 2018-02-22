@@ -42,6 +42,11 @@ body {
   width: 100%;
   padding-top: 25px;
 }
+
+.wrapper h1{
+  font-size: 1.5rem;
+}
+
 .usertype{ margin: 25px auto; }
 
 table{width: 100%;}

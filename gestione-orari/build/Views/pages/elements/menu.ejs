@@ -19,6 +19,12 @@
                 <li class="nav-item" v-bind:class="{'active': page === 'pageGestioneRisorse'}" @click="page = 'pageGestioneRisorse'" v-if="user.segretario">
                     <a class="nav-link" href="#">Gestione Risorse</a>
                 </li>
+                <li class="nav-item" v-bind:class="{'active': page === 'pageGestioneDocenti'}" @click="page = 'pageGestioneDocenti'" v-if="user.segretario">
+                    <a class="nav-link" href="#">Gestione Docenti</a>
+                </li>
+                <li class="nav-item" v-bind:class="{'active': page === 'pageGestioneOrari'}" @click="page = 'pageGestioneOrari'" v-if="user.segretario">
+                    <a class="nav-link" href="#">Gestione Orari</a>
+                </li>
                 <li class="nav-item" @click="logout()">
                     <a class="nav-link" href="#">Logout</a>
                 </li>

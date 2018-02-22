@@ -39,6 +39,18 @@ export default class SegretarioModel extends UserModel{
             });
     }
 
+    getListaRisorse(callback: Function) {
+        Database.select('*').from('risorse').orderByRaw('id DESC')
+            .then(function (row) {
+                //console.log(row);
+                callback([true, row]);
+            })
+            .catch(function (error) {
+                console.log(error);
+                callback([false]);
+            })
+    }
+
     pubblicareNews(dati: any, callback: Function) {
         Database('pubblicazioni').insert([{ id_user: dati.id_user, testo_pubblicazione: dati.content }])
             .then(function (res) {

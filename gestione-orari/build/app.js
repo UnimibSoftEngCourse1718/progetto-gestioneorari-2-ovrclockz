@@ -4,6 +4,7 @@ var server_1 = require("./server");
 var UsersController_1 = require("./Controllers/UsersController");
 var StudentiController_1 = require("./Controllers/StudentiController");
 var DocentiController_1 = require("./Controllers/DocentiController");
+var SegretariController_1 = require("./Controllers/SegretariController");
 //import U from './Models/Studente';
 /*
 U.findAll(function(res : Object) {
@@ -27,5 +28,10 @@ server_1.default.get('/getListaRisorse', function (request, response) { return D
 server_1.default.post('/prenotazioneRisorsa', function (request, response) { return DocentiController_1.default.prenotazioneRisorsa(request, response); });
 //Docenti + Segretari
 server_1.default.post('/pubblicareNews', function (request, response) { return User.pubblicareNews(request, response); });
+//Segretari
+server_1.default.post('/inserireRisorsa', function (request, response) { return SegretariController_1.default.inserireRisorsa(request, response); });
+server_1.default.post('/inserireDocente', function (request, response) { return SegretariController_1.default.inserireDocente(request, response); });
+server_1.default.get('/getListaDocenti', function (request, response) { return SegretariController_1.default.getListaDocenti(request, response); });
+server_1.default.get('/getListaCorsi', function (request, response) { return SegretariController_1.default.getListaCorsi(request, response); });
 //Definizione porta di ascolto dell'applicazione
 server_1.default.listen(8080);

@@ -68,7 +68,10 @@ const Dashboard = Vue.component('Dashboard', {
         return {
             page: "pageHome",
             news: "",
+            nuovaRisorsa: "",
             msgPubblicazione: "",
+            msgRisorsa: "",
+            msgNuovoDocente: "",
             prenotazioneSucces: "",
             calendar: {
                 lunedi: { '8:30 - 10:30': false, '10:30 - 12:30': false, '12:30 - 14:30': false, '14:30 - 16:30': false, '16:30 - 18:30': false},
@@ -79,6 +82,9 @@ const Dashboard = Vue.component('Dashboard', {
             },
             auth: true,
             user:{},
+            nuovoDocente: { username: "", password: "", corsi: [] },
+            docenti: {},
+            corsi: {},
         }
     },
     methods:{
@@ -89,8 +95,12 @@ const Dashboard = Vue.component('Dashboard', {
                 if (res.data.user.docente || res.data.user.studente) {
                     component.createCalendar();
                 }
-                if (res.data.user.docente){
+                if (res.data.user.docente || res.data.user.segretario){
                     axios.get('/getListaRisorse').then(function (res) { console.log(res.data); component.$set(component.user, 'risorse', res.data.value) })
+                }
+                if (res.data.user.segretario) {
+                    axios.get('/getListaDocenti').then(function (res) { console.log(res.data); component.$set(component, 'docenti', res.data.value) })
+                    axios.get('/getListaCorsi').then(function (res) { console.log(res.data); component.$set(component, 'corsi', res.data.value) })
                 }
                 axios.get('/getPubblicazioni').then(function (res) { console.log(res.data); component.$set(component.user,'pubblicazioni', res.data) })
             })
@@ -159,6 +169,65 @@ const Dashboard = Vue.component('Dashboard', {
                     component.msgPubblicazione = "error";
                 }
             })
+        },
+        inserireRisorsa: function(){
+            var component = this;
+            if (component.nuovaRisorsa !== ""){
+                axios.post('/inserireRisorsa', { nome_risorsa: component.nuovaRisorsa, })
+                .then(function (response) {
+                    console.log(response.data);
+                    if (response.data.status) {
+                        component.getUserData();
+                        component.nuovaRisorsa = "";
+                        component.msgRisorsa = "success";
+                        setTimeout(function () {
+                            component.msgRisorsa = "";
+                        }, 2000);
+                    }
+                })
+            }else{
+                component.msgRisorsa = "error";
+                setTimeout(function () {
+                    component.msgRisorsa = "";
+                }, 2000);
+                
+            }
+        },
+        inserireDocente: function(){
+            var component = this;
+            let corsi = this.bindCorsi();
+            console.log(corsi);
+            if (component.nuovoDocente.username !== "" && component.nuovoDocente.password){
+                axios.post('/inserireDocente', { username: component.nuovoDocente.username, password: component.nuovoDocente.password, corsi: corsi  })
+                .then(function (response) {
+                    console.log(response.data);
+                    if (response.data.status) {
+                        component.getUserData();
+                        component.nuovoDocente.username = "";
+                        component.nuovoDocente.password = "";
+                        component.nuovoDocente.corsi = [];
+
+                        component.msgNuovoDocente = "success";
+                        setTimeout(function () {
+                            component.msgNuovoDocente = "";
+                        }, 2000);
+                    }else{
+                        component.msgNuovoDocente = "error";
+                        setTimeout(function () {
+                            component.msgNuovoDocente = "";
+                        }, 2000);
+                    }
+                })
+            }else{
+                component.msgNuovoDocente = "errorInput";
+            }
+        },
+        bindCorsi: function(){
+            let corsi = [];
+            for (var i = 0; i < this.nuovoDocente.corsi.length; i++) {
+                if (this.nuovoDocente.corsi[i]) { corsi.push(this.corsi[i]); }
+            }
+            return corsi;
         },
         logout: function(){
             window.location.replace('/logout');
