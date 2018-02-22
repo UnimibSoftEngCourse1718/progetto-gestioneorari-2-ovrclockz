@@ -1,0 +1,7 @@
+organization=ovrclockz-github
+projectKey=ofshbws34
+serverUrl=https://sonarcloud.io
+serverVersion=7.1.0.36868
+dashboardUrl=https://sonarcloud.io/dashboard/index/ofshbws34
+ceTaskId=AWG-Thv41uc8gbLrNb9A
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AWG-Thv41uc8gbLrNb9A
