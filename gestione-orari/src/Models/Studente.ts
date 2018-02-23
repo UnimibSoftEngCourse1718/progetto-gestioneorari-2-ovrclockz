@@ -38,13 +38,14 @@ export default class StudenteModel extends UserModel{
     }
 
     getAllData(callback: Function){
-        Database.select('users.id', 'users.usertype', 'users.username').from('users')
+        Database.select('users.id', 'users.usertype', 'users.username','studenti.id as id_studente').from('users')
+        .leftJoin('studenti', 'studenti.id_user', 'users.id')
         .where({'users.username': this.username})
         .then(function(row){
             let user = { studente : row[0],corsi: []};
             Database.select('lista_corsi_studente.*', 'corsi.*').from('lista_corsi_studente')
             .leftJoin('corsi','corsi.id','lista_corsi_studente.id_corso')
-            .where({ 'lista_corsi_studente.id_studente': user.studente.id }).then(function(row){ 
+            .where({ 'lista_corsi_studente.id_studente': user.studente.id_studente }).then(function(row){ 
                 user.corsi = row;
                 //console.log(user);
                 return user;

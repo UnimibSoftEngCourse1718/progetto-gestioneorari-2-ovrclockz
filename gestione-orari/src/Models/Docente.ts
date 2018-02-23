@@ -27,29 +27,33 @@ export default class DocenteModel extends UserModel{
     }
 
     getAllData(callback: Function) {
-        Database.select('users.id', 'users.usertype', 'users.username').from('users')
+        Database.select('users.id', 'users.usertype', 'users.username','docenti.id as id_docente').from('users')
+        .leftJoin('docenti','docenti.id_user','users.id')
         .where({ 'users.username': this.username })
         .then(function (row) {
             let user = { docente: row[0], corsi: {} };
             Database.select('lista_corsi_docente.*', 'corsi.*').from('lista_corsi_docente')
                 .leftJoin('corsi', 'corsi.id', 'lista_corsi_docente.id_corso')
-                .where({ 'lista_corsi_docente.id_docente': user.docente.id }).then(function (row) {
+                .where({ 'lista_corsi_docente.id_docente': user.docente.id_docente }).
+                then(function (row) {
                     user.corsi = row;
                     console.log(user);
                     return user;
                 })
                 .then(function (user: any) {
-                    for (let index = 0; index < user.corsi.length; index++) {
-                        console.log('----------- ' + index);
-                        Database.select('lista_orari_corso.*', 'orari.*').from('lista_orari_corso')
-                        .leftJoin('orari', 'lista_orari_corso.id_orario', 'orari.id')
-                        .where({ 'lista_orari_corso.id_corso': user.corsi[index].id_corso })
-                        .then(function (orari) {
-                            user.corsi[index].orari = orari;
-                            //console.log(user);
-                            if (index === user.corsi.length - 1) { callback(user) }
-                        })
-                    }
+                    if(user.corsi.length){
+                        for (let index = 0; index < user.corsi.length; index++) {
+                            console.log('----------- ' + index);
+                            Database.select('lista_orari_corso.*', 'orari.*').from('lista_orari_corso')
+                            .leftJoin('orari', 'lista_orari_corso.id_orario', 'orari.id')
+                            .where({ 'lista_orari_corso.id_corso': user.corsi[index].id_corso })
+                            .then(function (orari) {
+                                user.corsi[index].orari = orari;
+                                //console.log(user);
+                                if (index === user.corsi.length - 1) { callback(user); }
+                            })
+                        }
+                    } else { callback(user); }
                 })
         })
         .catch(function (error) {

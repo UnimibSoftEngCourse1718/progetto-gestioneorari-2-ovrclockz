@@ -168,5 +168,42 @@
                 </div>
             </div>
         </transition>
+
+        <!-- Pagina Gestione Orari -->
+        <transition name="fade" mode="out-in">
+            <div class="col-md-12 page" v-if="page === 'pageGestioneOrari'">
+                <div class="wrapper">
+                    <h1>Scegliere il corso da gestire</h1>
+                    <div class="row" style="margin: 50px auto">
+                        <div class="col-md-2 link" v-for="(corso,index) in corsi" @click="gestireCorso(index)">{{ corso.nome_corso }}</div>
+                    </div>
+                    <div v-if="corsoScelto">
+                        <h1>Aggiungere un orario per il corso scelto</h1>
+                        <div class="row" style="margin: 50px auto">
+                            <div class="col-md-3" v-if="aule">
+                                <select class="form-control form-control-sm" v-model="corsoDaGestire.id_aula" style="width: 45%;display: inline-block">
+                                    <option value="" selected>Selezionare l'aula</option>
+                                    <option v-for="(aula,index) in aule" v-bind:value="aula.id">{{ aula.nome_aula }}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3" v-if="orariDisponibili">
+                                <select class="form-control form-control-sm" v-model="corsoDaGestire.id_orario" style="width: 45%;display: inline-block">
+                                    <option value="" selected>Selezionare l'orario</option>
+                                    <option v-for="(orario,index) in orariDisponibili" v-bind:value="orario.id">{{ orario.giorno + " - " + orario.orario }}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-sm btn-block btn-primary" type="button" @click="inserireOrario()">Aggiungere orario</button>
+                            </div>
+                            <div class="col-md-4">
+                                <div v-show="msgNuovoOrario === 'error'" class="alert alert-danger" role="alert">Username esistente!</div>
+                                <div v-show="msgNuovoOrario === 'errorInput'" class="alert alert-danger" role="alert">Selezionare Dati validi!</div>
+                                <div v-show="msgNuovoOrario === 'success'" class="alert alert-success" role="alert">Orario inserito !</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </transition>
     </div>
 </template>

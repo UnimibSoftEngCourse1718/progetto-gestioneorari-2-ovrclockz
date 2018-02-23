@@ -37,8 +37,11 @@ Server.post('/pubblicareNews', (request, response) => { return User.pubblicareNe
 //Segretari
 Server.post('/inserireRisorsa', (request, response) => { return SegretariController.inserireRisorsa(request, response); });
 Server.post('/inserireDocente', (request, response) => { return SegretariController.inserireDocente(request, response); });
+Server.post('/inserireOrario', (request, response) => { return SegretariController.inserireOrario(request, response); });
 Server.get('/getListaDocenti', (request, response) => { return SegretariController.getListaDocenti(request, response); });
 Server.get('/getListaCorsi', (request, response) => { return SegretariController.getListaCorsi(request, response); });
+Server.get('/getListaOrariDisponibili', (request, response) => { return SegretariController.getListaOrariDisponibili(request, response); });
+Server.get('/getListaAule', (request, response) => { return SegretariController.getListaAule(request, response); });
 
 //Definizione porta di ascolto dell'applicazione
 Server.listen(8080)

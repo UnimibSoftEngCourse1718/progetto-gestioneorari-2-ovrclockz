@@ -32,12 +32,28 @@ let Segretari = class SegretariController extends UsersController{
                 })
                 .catch(function (error) {
                     console.log(error);
-                    return response.send(500);
+                    return response.sendStatus(500);
                 })
             }
         }
     }
 
+    static inserireOrario(request: Request,response: Response){
+        let session = request.session;
+        if (session !== undefined) {
+            if (session.user) {
+                Database('lista_orari_corso').insert([{ id_corso: request.body.dati.id_corso, id_aula: request.body.dati.id_aula, id_orario: request.body.dati.id_orario }])
+                .then(function (res) {
+                    console.log(res);
+                    return response.json({status: true});
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    return response.sendStatus(500);
+                })
+            }
+        }
+    }
     static inserireRisorsa(request: Request,response: Response){
         let session = request.session;
         if (session !== undefined) {
@@ -49,7 +65,7 @@ let Segretari = class SegretariController extends UsersController{
                 })
                 .catch(function (error) {
                     console.log(error);
-                    return response.send(500);
+                    return response.sendStatus(500);
                 })
             }
         }
@@ -84,7 +100,7 @@ let Segretari = class SegretariController extends UsersController{
                         })
                         .catch(function (error) {
                             console.log(error);
-                            return response.send(500);
+                            return response.sendStatus(500);
                         })
                     }else{
                         return response.json({ status: false });
@@ -106,7 +122,42 @@ let Segretari = class SegretariController extends UsersController{
                 })
                 .catch(function (error) {
                     console.log(error);
-                    return response.send(500);
+                    return response.sendStatus(500);
+                })
+            }
+        }
+    }
+
+    static getListaOrariDisponibili(request: Request, response: Response) {
+        let session = request.session;
+        if (session !== undefined) {
+            if (session.user) {
+                Database.select('*').from('orari')
+                .whereRaw("id not in (SELECT id_orario FROM lista_orari_corso)")
+                .then(function (row) {
+                    //console.log(row);
+                    return response.json({ value: row });
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    return response.sendStatus(500);
+                })
+            }
+        }
+    }
+
+    static getListaAule(request: Request, response: Response) {
+        let session = request.session;
+        if (session !== undefined) {
+            if (session.user) {
+                Database.select('*').from('aule')
+                .then(function (row) {
+                    //console.log(row);
+                    return response.json({ value: row });
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    return response.sendStatus(500);
                 })
             }
         }

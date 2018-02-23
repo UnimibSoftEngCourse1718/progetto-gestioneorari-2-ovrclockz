@@ -66,13 +66,8 @@ const Dashboard = Vue.component('Dashboard', {
     template: "#dashboard",
     data: function(){
         return {
+            auth: true,
             page: "pageHome",
-            news: "",
-            nuovaRisorsa: "",
-            msgPubblicazione: "",
-            msgRisorsa: "",
-            msgNuovoDocente: "",
-            prenotazioneSucces: "",
             calendar: {
                 lunedi: { '8:30 - 10:30': false, '10:30 - 12:30': false, '12:30 - 14:30': false, '14:30 - 16:30': false, '16:30 - 18:30': false},
                 martedi: { '8:30 - 10:30': false, '10:30 - 12:30': false, '12:30 - 14:30': false, '14:30 - 16:30': false, '16:30 - 18:30': false },
@@ -80,11 +75,21 @@ const Dashboard = Vue.component('Dashboard', {
                 giovedi: { '8:30 - 10:30': false, '10:30 - 12:30': false, '12:30 - 14:30': false, '14:30 - 16:30': false, '16:30 - 18:30': false },
                 venerdi: { '8:30 - 10:30': false, '10:30 - 12:30': false, '12:30 - 14:30': false, '14:30 - 16:30': false, '16:30 - 18:30': false },
             },
-            auth: true,
             user:{},
             nuovoDocente: { username: "", password: "", corsi: [] },
             docenti: {},
             corsi: {},
+            aule: {},
+            orariDisponibili: {},
+            corsoDaGestire: { id_orario: "",id_corso: "", id_aula: "" },
+            news: "",
+            nuovaRisorsa: "",
+            msgPubblicazione: "",
+            msgRisorsa: "",
+            msgNuovoDocente: "",
+            msgNuovoOrario: "",
+            prenotazioneSucces: "",
+            corsoScelto: false
         }
     },
     methods:{
@@ -101,6 +106,8 @@ const Dashboard = Vue.component('Dashboard', {
                 if (res.data.user.segretario) {
                     axios.get('/getListaDocenti').then(function (res) { console.log(res.data); component.$set(component, 'docenti', res.data.value) })
                     axios.get('/getListaCorsi').then(function (res) { console.log(res.data); component.$set(component, 'corsi', res.data.value) })
+                    axios.get('/getListaOrariDisponibili').then(function (res) { console.log(res.data); component.$set(component, 'orariDisponibili', res.data.value) })
+                    axios.get('/getListaAule').then(function (res) { console.log(res.data); component.$set(component, 'aule', res.data.value) })
                 }
                 axios.get('/getPubblicazioni').then(function (res) { console.log(res.data); component.$set(component.user,'pubblicazioni', res.data) })
             })
@@ -193,10 +200,37 @@ const Dashboard = Vue.component('Dashboard', {
                 
             }
         },
+        inserireOrario: function(){
+            var component = this;
+            if (component.corsoDaGestire.id_aula !== "" && component.corsoDaGestire.id_corso && component.corsoDaGestire.id_orario){
+                axios.post('/inserireOrario', { dati: component.corsoDaGestire })
+                .then(function (response) {
+                    console.log(response.data);
+                    if (response.data.status) {
+                        component.getUserData();
+                        component.corsoDaGestire.id_aula = "";
+                        component.corsoDaGestire.id_corso = "";
+                        component.corsoDaGestire.id_orario = "";
+
+                        component.msgNuovoOrario = "success";
+                        setTimeout(function () {
+                            component.msgNuovoOrario = "";
+                            component.corsoScelto = false;
+                        }, 2000);
+                    }else{
+                        component.msgNuovoOrario = "error";
+                        setTimeout(function () {
+                            component.msgNuovoOrario = "";
+                        }, 2000);
+                    }
+                })
+            }else{
+                component.msgNuovoOrario = "errorInput";
+            }
+        },
         inserireDocente: function(){
             var component = this;
             let corsi = this.bindCorsi();
-            console.log(corsi);
             if (component.nuovoDocente.username !== "" && component.nuovoDocente.password){
                 axios.post('/inserireDocente', { username: component.nuovoDocente.username, password: component.nuovoDocente.password, corsi: corsi  })
                 .then(function (response) {
@@ -221,6 +255,10 @@ const Dashboard = Vue.component('Dashboard', {
             }else{
                 component.msgNuovoDocente = "errorInput";
             }
+        },
+        gestireCorso: function(index){
+            this.$set(this.corsoDaGestire, 'id_corso', this.corsi[index].id);
+            this.corsoScelto = true;
         },
         bindCorsi: function(){
             let corsi = [];

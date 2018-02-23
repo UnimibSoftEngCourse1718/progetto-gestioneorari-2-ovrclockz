@@ -47,6 +47,9 @@ body {
   font-size: 1.5rem;
 }
 
+.link{ font-weight: bold;cursor: pointer; }
+.link:hover, .link.active{ text-decoration: underline; }
+
 .usertype{ margin: 25px auto; }
 
 table{width: 100%;}

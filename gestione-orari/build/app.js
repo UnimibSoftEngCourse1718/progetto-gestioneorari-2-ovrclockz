@@ -31,7 +31,10 @@ server_1.default.post('/pubblicareNews', function (request, response) { return U
 //Segretari
 server_1.default.post('/inserireRisorsa', function (request, response) { return SegretariController_1.default.inserireRisorsa(request, response); });
 server_1.default.post('/inserireDocente', function (request, response) { return SegretariController_1.default.inserireDocente(request, response); });
+server_1.default.post('/inserireOrario', function (request, response) { return SegretariController_1.default.inserireOrario(request, response); });
 server_1.default.get('/getListaDocenti', function (request, response) { return SegretariController_1.default.getListaDocenti(request, response); });
 server_1.default.get('/getListaCorsi', function (request, response) { return SegretariController_1.default.getListaCorsi(request, response); });
+server_1.default.get('/getListaOrariDisponibili', function (request, response) { return SegretariController_1.default.getListaOrariDisponibili(request, response); });
+server_1.default.get('/getListaAule', function (request, response) { return SegretariController_1.default.getListaAule(request, response); });
 //Definizione porta di ascolto dell'applicazione
 server_1.default.listen(8080);
