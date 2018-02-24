@@ -178,10 +178,10 @@
                         <div class="col-md-2 link" v-for="(corso,index) in corsi" @click="gestireCorso(index)">{{ corso.nome_corso }}</div>
                     </div>
                     <div v-if="corsoScelto">
-                        <h1>Aggiungere un orario per il corso scelto</h1>
+                        <h1>Aggiungere un orario per il corso di {{ corsoScelto }}</h1>
                         <div class="row" style="margin: 50px auto">
                             <div class="col-md-3" v-if="aule">
-                                <select class="form-control form-control-sm" v-model="corsoDaGestire.id_aula" style="width: 45%;display: inline-block">
+                                <select class="form-control form-control-sm" v-model="corsoDaGestire.id_aula" @change="getListaOrariDisponibili()" style="width: 45%;display: inline-block">
                                     <option value="" selected>Selezionare l'aula</option>
                                     <option v-for="(aula,index) in aule" v-bind:value="aula.id">{{ aula.nome_aula }}</option>
                                 </select>

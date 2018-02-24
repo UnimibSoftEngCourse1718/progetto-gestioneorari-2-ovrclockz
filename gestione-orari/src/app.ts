@@ -40,7 +40,7 @@ Server.post('/inserireDocente', (request, response) => { return SegretariControl
 Server.post('/inserireOrario', (request, response) => { return SegretariController.inserireOrario(request, response); });
 Server.get('/getListaDocenti', (request, response) => { return SegretariController.getListaDocenti(request, response); });
 Server.get('/getListaCorsi', (request, response) => { return SegretariController.getListaCorsi(request, response); });
-Server.get('/getListaOrariDisponibili', (request, response) => { return SegretariController.getListaOrariDisponibili(request, response); });
+Server.post('/getListaOrariDisponibili', (request, response) => { return SegretariController.getListaOrariDisponibili(request, response); });
 Server.get('/getListaAule', (request, response) => { return SegretariController.getListaAule(request, response); });
 
 //Definizione porta di ascolto dell'applicazione

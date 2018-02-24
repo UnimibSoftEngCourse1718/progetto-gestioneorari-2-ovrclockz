@@ -130,10 +130,11 @@ let Segretari = class SegretariController extends UsersController{
 
     static getListaOrariDisponibili(request: Request, response: Response) {
         let session = request.session;
+        let id_aula = request.body.id_aula;
         if (session !== undefined) {
             if (session.user) {
                 Database.select('*').from('orari')
-                .whereRaw("id not in (SELECT id_orario FROM lista_orari_corso)")
+                .whereRaw("id not in (SELECT id_orario FROM lista_orari_corso WHERE id_aula = ?)",[id_aula])
                 .then(function (row) {
                     //console.log(row);
                     return response.json({ value: row });

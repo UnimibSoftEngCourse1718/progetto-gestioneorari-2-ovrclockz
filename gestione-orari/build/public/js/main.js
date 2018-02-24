@@ -106,7 +106,7 @@ const Dashboard = Vue.component('Dashboard', {
                 if (res.data.user.segretario) {
                     axios.get('/getListaDocenti').then(function (res) { console.log(res.data); component.$set(component, 'docenti', res.data.value) })
                     axios.get('/getListaCorsi').then(function (res) { console.log(res.data); component.$set(component, 'corsi', res.data.value) })
-                    axios.get('/getListaOrariDisponibili').then(function (res) { console.log(res.data); component.$set(component, 'orariDisponibili', res.data.value) })
+                    //axios.get('/getListaOrariDisponibili').then(function (res) { console.log(res.data); component.$set(component, 'orariDisponibili', res.data.value) })
                     axios.get('/getListaAule').then(function (res) { console.log(res.data); component.$set(component, 'aule', res.data.value) })
                 }
                 axios.get('/getPubblicazioni').then(function (res) { console.log(res.data); component.$set(component.user,'pubblicazioni', res.data) })
@@ -258,7 +258,7 @@ const Dashboard = Vue.component('Dashboard', {
         },
         gestireCorso: function(index){
             this.$set(this.corsoDaGestire, 'id_corso', this.corsi[index].id);
-            this.corsoScelto = true;
+            this.corsoScelto = this.corsi[index].nome_corso;
         },
         bindCorsi: function(){
             let corsi = [];
@@ -266,6 +266,12 @@ const Dashboard = Vue.component('Dashboard', {
                 if (this.nuovoDocente.corsi[i]) { corsi.push(this.corsi[i]); }
             }
             return corsi;
+        },
+        getListaOrariDisponibili: function(){
+            var component = this;
+            let id_aula = component.corsoDaGestire.id_aula;
+            component.corsoDaGestire.id_orario = "";
+            axios.post('/getListaOrariDisponibili', { id_aula: id_aula }).then(function (res) { console.log(res.data); component.$set(component, 'orariDisponibili', res.data.value) })
         },
         logout: function(){
             window.location.replace('/logout');
