@@ -9,7 +9,7 @@ let Docenti = class DocenteController extends UsersController{
         super();
     }
 
-    static prenotazioneRisorsa(request: Request,response: Response){
+    prenotazioneRisorsa(request: Request,response: Response){
         let session = request.session;
         if (session !== undefined) {
             if (session.user) {
@@ -22,7 +22,8 @@ let Docenti = class DocenteController extends UsersController{
             }
         }
     }
-    static cancellarePrenotazione(request: Request,response: Response){
+    
+    cancellarePrenotazione(request: Request,response: Response){
         let session = request.session;
         if (session !== undefined) {
             if (session.user) {
@@ -40,7 +41,7 @@ let Docenti = class DocenteController extends UsersController{
         }
     }
 
-    static getListaRisorse(request: Request,response: Response){
+    getListaRisorse(request: Request,response: Response){
         let session = request.session;
         if (session !== undefined) {
             if (session.user) {
@@ -52,7 +53,7 @@ let Docenti = class DocenteController extends UsersController{
         }
     }
 
-    static getListaRisorsePrenotate(request: Request,response: Response){
+    getListaRisorsePrenotate(request: Request,response: Response){
         let session = request.session;
         if (session !== undefined) {
             if (session.user) {

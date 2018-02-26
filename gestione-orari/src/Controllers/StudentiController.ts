@@ -8,7 +8,7 @@ let Studenti = class StudentiController extends UsersController{
         super();
     }
 
-    static iscrizioneEsame(request: Request,response: Response){
+    iscrizioneEsame(request: Request,response: Response){
         let session = request.session;
         if (session !== undefined) {
             if (session.user) {

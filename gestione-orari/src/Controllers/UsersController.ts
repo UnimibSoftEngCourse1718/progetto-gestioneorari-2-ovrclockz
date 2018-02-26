@@ -6,28 +6,31 @@ import SegretarioModel from '../Models/Segretario';
 
 let Users = class UsersController{
     constructor(){
-        //User.createTable();
-        //CorsoModel.createTable();
     }
 
-    index(request: Request, response: Response):void {
+    auth(request: Request):boolean{
         let session = request.session;
-        //console.log(request.session);
         if (session !== undefined) {
-            if(session.user){
-                return response.redirect('/dashboard');
+            if (session.user) {
+                return true;
+            }else{
+                return false;
             }
+        }
+        return false;
+    }
+
+    //Renderizza la pagina di autenticazione o la home page dell'area personale
+    index(request: Request, response: Response):void {
+        if(this.auth(request)){
+            return response.redirect('/dashboard');
         }
         return response.render('pages/index');
     }
 
     dashboard(request: Request, response: Response):void {
-        let session = request.session;
-        //console.log(request.session);
-        if (session !== undefined) {
-            if(session.user){
-                return response.render('pages/dashboard');
-            }
+        if (this.auth(request)) {
+            return response.render('pages/dashboard');
         }
         return response.redirect('/');
     }
@@ -36,9 +39,8 @@ let Users = class UsersController{
         if (request.body.username && request.body.password) {
             let username = request.body.username;
             let password = request.body.password;
-
+            
             User.authenticate(username, password, function (valid: Boolean,res: Object) {
-                //if (err) { console.log(err); return response.status(500).send(); }
                 let session = request.session;
                 if (!valid) { response.json({ error: true }); }
                 else if(session !== undefined){
@@ -94,13 +96,10 @@ let Users = class UsersController{
     }
 
     getPubblicazioni(request: Request, response: Response) {
-        let session = request.session;
-        if (session !== undefined) {
-            if (session.user) {
-                    User.getPubblicazioni(function(pubblicazioni: any) {
-                        response.json(pubblicazioni);
-                    })
-            }
+        if (this.auth(request)) {
+            User.getPubblicazioni(function(pubblicazioni: any) {
+                response.json(pubblicazioni);
+            })
         }
     }
 

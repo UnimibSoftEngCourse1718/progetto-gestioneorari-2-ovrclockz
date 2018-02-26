@@ -1,16 +1,15 @@
 import Database from './../config/Database';
-import UsersController from './UsersController';
-import User from '../Models/User';
 import { Request, Response } from 'express';
-import SegretarioModel from '../Models/Segretario';
+import UsersController from './UsersController';
 import UserModel from '../Models/User';
+import SegretarioModel from '../Models/Segretario';
 
 let Segretari = class SegretariController extends UsersController{
     constructor(){
         super();
     }
 
-    static getListaRisorse(request: Request, response: Response) {
+    getListaRisorse(request: Request, response: Response) {
         let session = request.session;
         if (session !== undefined) {
             if (session.user) {
@@ -21,7 +20,8 @@ let Segretari = class SegretariController extends UsersController{
             }
         }
     }
-    static getListaCorsi(request: Request, response: Response) {
+
+    getListaCorsi(request: Request, response: Response) {
         let session = request.session;
         if (session !== undefined) {
             if (session.user) {
@@ -38,7 +38,7 @@ let Segretari = class SegretariController extends UsersController{
         }
     }
 
-    static inserireOrario(request: Request,response: Response){
+    inserireOrario(request: Request,response: Response){
         let session = request.session;
         if (session !== undefined) {
             if (session.user) {
@@ -54,7 +54,8 @@ let Segretari = class SegretariController extends UsersController{
             }
         }
     }
-    static inserireRisorsa(request: Request,response: Response){
+
+    inserireRisorsa(request: Request,response: Response){
         let session = request.session;
         if (session !== undefined) {
             if (session.user) {
@@ -71,7 +72,7 @@ let Segretari = class SegretariController extends UsersController{
         }
     }
 
-    static inserireDocente(request: Request,response: Response){
+    inserireDocente(request: Request,response: Response){
         let session = request.session;
         if (session !== undefined) {
             if (session.user) {
@@ -110,7 +111,7 @@ let Segretari = class SegretariController extends UsersController{
         }
     }
 
-    static getListaDocenti(request: Request, response: Response) {
+    getListaDocenti(request: Request, response: Response) {
         let session = request.session;
         if (session !== undefined) {
             if (session.user) {
@@ -128,7 +129,7 @@ let Segretari = class SegretariController extends UsersController{
         }
     }
 
-    static getListaOrariDisponibili(request: Request, response: Response) {
+    getListaOrariDisponibili(request: Request, response: Response) {
         let session = request.session;
         let id_aula = request.body.id_aula;
         if (session !== undefined) {
@@ -147,7 +148,7 @@ let Segretari = class SegretariController extends UsersController{
         }
     }
 
-    static getListaAule(request: Request, response: Response) {
+    getListaAule(request: Request, response: Response) {
         let session = request.session;
         if (session !== undefined) {
             if (session.user) {
