@@ -103,6 +103,9 @@ const Dashboard = Vue.component('Dashboard', {
                 if (res.data.user.docente || res.data.user.segretario){
                     axios.get('/getListaRisorse').then(function (res) { console.log(res.data); component.$set(component.user, 'risorse', res.data.value) })
                 }
+                if (res.data.user.docente){
+                    axios.post('/getListaRisorsePrenotate', { id_docente: res.data.user.docente.id_docente }).then(function (res) { console.log(res.data); component.$set(component.user, 'risorsePrenotate', res.data.value) })
+                }
                 if (res.data.user.segretario) {
                     axios.get('/getListaDocenti').then(function (res) { console.log(res.data); component.$set(component, 'docenti', res.data.value) })
                     axios.get('/getListaCorsi').then(function (res) { console.log(res.data); component.$set(component, 'corsi', res.data.value) })
@@ -144,20 +147,45 @@ const Dashboard = Vue.component('Dashboard', {
         },
         prenotazioneRisorsa: function(risorsa){
             let component = this;
-            risorsa.id_docente = this.user.docente.id
-            axios.post('/prenotazioneRisorsa', { risorsa: risorsa, })
-                .then(function (response) {
+            risorsa.id_docente = this.user.docente.id_docente;
+            date = new Date(risorsa.giorno_richiesta_prenotazione);
+            today = new Date();
+            if (date > today && risorsa.orario_richiesta_prenotazione){
+                axios.post('/prenotazioneRisorsa', { risorsa: risorsa, })
+                    .then(function (response) {
+                    console.log(response.data);
+                    if (response.data.value){
+                        component.getUserData();
+                        component.prenotazioneSucces = "success";
+                        setTimeout(function(){
+                            component.prenotazioneSucces = "";
+                        }, 2000);
+                    } else { 
+                        component.prenotazioneSucces = "error"; 
+                        setTimeout(function () {
+                            component.prenotazioneSucces = "";
+                        }, 2000);
+                    }
+                })
+            }else{
+                component.prenotazioneSucces = "dateError";
+                setTimeout(function () {
+                    component.prenotazioneSucces = "";
+                }, 2000);
+            }
+        },
+        cancellarePrenotazione: function(risorsa){
+            let component = this;
+            axios.post('/cancellarePrenotazione', { risorsa: risorsa, })
+            .then(function (response) {
                 console.log(response.data);
                 if (response.data.value){
-                    component.prenotazioneSucces = "success";
+                    component.getUserData();
+                    component.prenotazioneSucces = "successCancel";
                     setTimeout(function(){
                         component.prenotazioneSucces = "";
                     }, 2000);
-                } else { 
-                    component.prenotazioneSucces = "error"; 
-                    setTimeout(function () {
-                        component.prenotazioneSucces = "";
-                    }, 2000);
+                    this.getUserData();
                 }
             })
         },
@@ -166,16 +194,22 @@ const Dashboard = Vue.component('Dashboard', {
             let news = {};
             news.id_user = component.user.docente ? component.user.docente.id : component.user.segretario.id;
             news.content = component.news;
-            axios.post('/pubblicareNews', { news: news, })
-            .then(function (response) {
-                console.log(response.data);
-                if (response.data.status){
-                    component.getUserData();
-                    component.news = "";
-                }else{
-                    component.msgPubblicazione = "error";
-                }
-            })
+            if (news.content !== ""){
+                axios.post('/pubblicareNews', { news: news, })
+                .then(function (response) {
+                    console.log(response.data);
+                    if (response.data.status){
+                        component.getUserData();
+                        component.news = "";
+                    }else{
+                        component.msgPubblicazione = "error";
+                    }
+                })
+            }else{
+                setTimeout(function() {
+                    component.msgPubblicazione = "errorInput";
+                }, 1000);
+            }
         },
         inserireRisorsa: function(){
             var component = this;

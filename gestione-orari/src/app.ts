@@ -29,7 +29,9 @@ Server.post('/iscrizioneEsame', (request, response) => { return StudentiControll
 
 //Docenti
 Server.get('/getListaRisorse', (request, response) => { return DocentiController.getListaRisorse(request, response); });
+Server.post('/getListaRisorsePrenotate', (request, response) => { return DocentiController.getListaRisorsePrenotate(request, response); });
 Server.post('/prenotazioneRisorsa', (request, response) => { return DocentiController.prenotazioneRisorsa(request, response); });
+Server.post('/cancellarePrenotazione', (request, response) => { return DocentiController.cancellarePrenotazione(request, response); });
 
 //Docenti + Segretari
 Server.post('/pubblicareNews', (request, response) => { return User.pubblicareNews(request, response); });

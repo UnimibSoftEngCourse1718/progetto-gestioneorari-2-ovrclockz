@@ -90,6 +90,21 @@ export default class DocenteModel extends UserModel{
         })
     }
 
+    getListaRisorsePrenotate(id_docente : number,callback: Function){
+        Database.select('lista_prenotazioni_risorse.*','risorse.nome_risorsa')
+        .from('lista_prenotazioni_risorse')
+        .leftJoin('risorse','lista_prenotazioni_risorse.id_risorsa','risorse.id')
+        .where("lista_prenotazioni_risorse.id_docente", id_docente).orderByRaw('lista_prenotazioni_risorse.id DESC')
+        .then(function (row) {
+            //console.log(row);
+            callback([true,row]);
+        })
+        .catch(function(error){
+            console.log(error);
+            callback([false]);
+        })
+    }
+
     pubblicareNews(dati: any, callback: Function) {
         Database('pubblicazioni').insert([{ id_user: dati.id_user, testo_pubblicazione: dati.content }])
         .then(function (res) {

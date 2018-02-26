@@ -13,6 +13,7 @@
                             <button aria-readonly="true" class="btn btn-sm btn-block btn-primary" type="button" @click="pubblicareNews()">Pubblicare</button>
                         </div>
                         <div class="col-md-6 offset-md-3" style="text-align:center">
+                            <div v-show="msgPubblicazione === 'errorInput'" class="alert alert-danger" role="alert">Inserire testo valido!</div>
                             <div v-show="msgPubblicazione === 'error'" class="alert alert-danger" role="alert">Errore durante la pubblicazione!</div>
                         </div>
                     </div>
@@ -31,7 +32,6 @@
             </div>
         </transition>
         
-
         <!-- Pagina Calendario Corsi -->
         <transition name="fade" mode="out-in">
             <div class="col-md-12 page" v-if="page === 'pageCalendario'">
@@ -55,7 +55,6 @@
             </div>
         </transition>
         
-
         <!-- Pagina Iscrizione Esami -->
         <transition name="fade" mode="out-in">
             <div class="col-md-12 page" v-if="page === 'pageIscrizioneEsame'">
@@ -93,8 +92,19 @@
                             <button aria-readonly="true" class="btn btn-sm btn-block btn-primary" type="button" @click="prenotazioneRisorsa(risorsa)">Prenotare</button>
                         </div>
                     </div>
-                    <div v-show="prenotazioneSucces === 'error'" class="alert alert-danger" role="alert">Risorsa non disponible in quel momento!</div>
+                    <div v-show="prenotazioneSucces === 'error'" class="alert alert-danger" role="alert">Risorsa già prenotata per quella data!</div>
+                    <div v-show="prenotazioneSucces === 'dateError'" class="alert alert-danger" role="alert">Scegliere una data posteriore a quella di oggi e un orario!</div>
                     <div v-show="prenotazioneSucces === 'success'" class="alert alert-success" role="alert">Risorsa prenotata!</div>
+                    <div v-show="prenotazioneSucces === 'successCancel'" class="alert alert-success" role="alert">Prenotatazione cancellata!</div>
+                    <h1>Lista risorse prenotate</h1>
+                    <div class="row" v-for="risorsa in user.risorsePrenotate" style="margin: 50px auto">
+                        <div class="col-md-2">{{ risorsa.nome_risorsa }}</div>
+                        <div class="col-md-3">{{ risorsa.data_prenotazione }}</div>
+                        <div class="col-md-3">{{ risorsa.orario_prenotazione }}</div>
+                        <div class="col-md-3">
+                            <button aria-readonly="true" class="btn btn-sm btn-block btn-primary" type="button" @click="cancellarePrenotazione(risorsa)">Cancellare prenotazione</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </transition>
@@ -113,7 +123,7 @@
                             <button class="btn btn-sm btn-block btn-primary" type="button" @click="inserireRisorsa()">Inserire</button>
                         </div>
                         <div class="col-md-4">
-                            <div v-show="msgRisorsa === 'success'" class="alert alert-danger" role="alert">Risorsa inserita!</div>
+                            <div v-show="msgRisorsa === 'success'" class="alert alert-success" role="alert">Risorsa inserita!</div>
                             <div v-show="msgRisorsa === 'error'" class="alert alert-danger" role="alert">Inserire dato valido!</div>
                         </div>
                     </div><br><br>

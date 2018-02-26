@@ -25,7 +25,9 @@ server_1.default.get('/getPubblicazioni', function (request, response) { return 
 server_1.default.post('/iscrizioneEsame', function (request, response) { return StudentiController_1.default.iscrizioneEsame(request, response); });
 //Docenti
 server_1.default.get('/getListaRisorse', function (request, response) { return DocentiController_1.default.getListaRisorse(request, response); });
+server_1.default.post('/getListaRisorsePrenotate', function (request, response) { return DocentiController_1.default.getListaRisorsePrenotate(request, response); });
 server_1.default.post('/prenotazioneRisorsa', function (request, response) { return DocentiController_1.default.prenotazioneRisorsa(request, response); });
+server_1.default.post('/cancellarePrenotazione', function (request, response) { return DocentiController_1.default.cancellarePrenotazione(request, response); });
 //Docenti + Segretari
 server_1.default.post('/pubblicareNews', function (request, response) { return User.pubblicareNews(request, response); });
 //Segretari
