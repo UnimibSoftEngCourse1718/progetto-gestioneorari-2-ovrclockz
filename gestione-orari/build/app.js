@@ -17,6 +17,7 @@ server_1.default.post('/register', function (request, response) { return User.re
 //All
 server_1.default.get('/getUserData', function (request, response) { return User.getUserData(request, response); });
 server_1.default.get('/getPubblicazioni', function (request, response) { return User.getPubblicazioni(request, response); });
+server_1.default.post('/getPubblicazioniCorso', function (request, response) { return User.getPubblicazioniCorso(request, response); });
 //Studenti
 server_1.default.post('/iscrizioneEsame', function (request, response) { return Studente.iscrizioneEsame(request, response); });
 //Docenti
@@ -26,6 +27,7 @@ server_1.default.post('/prenotazioneRisorsa', function (request, response) { ret
 server_1.default.post('/cancellarePrenotazione', function (request, response) { return Docente.cancellarePrenotazione(request, response); });
 //Docenti + Segretari
 server_1.default.post('/pubblicareNews', function (request, response) { return User.pubblicareNews(request, response); });
+server_1.default.post('/pubblicareNewsCorso', function (request, response) { return Docente.pubblicareNewsCorso(request, response); });
 //Segretari
 server_1.default.post('/inserireRisorsa', function (request, response) { return Segretario.inserireRisorsa(request, response); });
 server_1.default.post('/inserireDocente', function (request, response) { return Segretario.inserireDocente(request, response); });

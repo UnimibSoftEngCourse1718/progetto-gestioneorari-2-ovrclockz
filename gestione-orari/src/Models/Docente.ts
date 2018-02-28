@@ -9,16 +9,26 @@ export default class DocenteModel extends UserModel{
         this.usertype = 2;
     }
 
-    save(callback: Function) {
+    save(dati:any,callback: Function) {
         let username = this.username;
         console.log("sto inserendo")
         Database('users').insert([{ usertype: this.usertype, username: this.username, password: this.password }])
         .then(function rows(row) {
             console.log("inserito record in users");
-            Database('docenti').insert([{ id_user: row[0] }]).then(function () {
+            Database('docenti').insert([{ id_user: row[0] }]).then(function (row) {
                 console.log("inserito record in docenti");
-                callback(true);
-            });
+                for (var i = 0; i < dati.corsi.length; i++) {
+                    if (dati.corsi[i].checked) {
+                        Database('lista_corsi_docente').insert([{ id_docente: row[0], id_corso: dati.corsi[i].id }])
+                        .then(function (res) {
+                            console.log(res)
+                            if (i === dati.corsi.length - 1) {
+                                callback(true);
+                            }
+                        }).catch(function (error) { console.log(error); callback(false) })
+                    }
+                }
+            })
         })
         .catch(function (error) {
             console.log(error);
@@ -44,8 +54,9 @@ export default class DocenteModel extends UserModel{
                     if(user.corsi.length){
                         for (let index = 0; index < user.corsi.length; index++) {
                             console.log('----------- ' + index);
-                            Database.select('lista_orari_corso.*', 'orari.*').from('lista_orari_corso')
+                            Database.select('lista_orari_corso.*', 'orari.*', 'aule.nome_aula').from('lista_orari_corso')
                             .leftJoin('orari', 'lista_orari_corso.id_orario', 'orari.id')
+                            .leftJoin('aule', 'lista_orari_corso.id_aula', 'aule.id')
                             .where({ 'lista_orari_corso.id_corso': user.corsi[index].id_corso })
                             .then(function (orari) {
                                 user.corsi[index].orari = orari;
@@ -107,6 +118,18 @@ export default class DocenteModel extends UserModel{
 
     pubblicareNews(dati: any, callback: Function) {
         Database('pubblicazioni').insert([{ id_user: dati.id_user, testo_pubblicazione: dati.content }])
+        .then(function (res) {
+            console.log(dati);
+            callback(true);
+        })
+        .catch(function (error) {
+            console.log(error);
+            callback(false);
+        })
+    }
+
+    pubblicareNewsCorso(id_corso: any ,dati: any, callback: Function) {
+        Database('pubblicazioni').insert([{ id_user: dati.id_user, id_corso: id_corso, testo_pubblicazione: dati.content }])
         .then(function (res) {
             console.log(dati);
             callback(true);

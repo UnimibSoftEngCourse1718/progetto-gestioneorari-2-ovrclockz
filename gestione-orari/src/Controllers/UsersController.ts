@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import Database from './../config/Database';
 import User from '../Models/User';
 import StudenteModel from '../Models/Studente';
 import DocenteModel from '../Models/Docente';
@@ -67,7 +68,7 @@ let Users = class UsersController{
                 }else{
                     console.log("Non trovato");
                     let newuser = Users.getUserType(usertype,username,password);
-                    newuser.save(function (success: Boolean) {
+                    newuser.save(request.body,function (success: Boolean,row:number) {
                         if (!success) {
                             console.log("Errore nella registrazione!");
                             return response.status(500).send();
@@ -98,6 +99,14 @@ let Users = class UsersController{
     getPubblicazioni(request: Request, response: Response) {
         if (this.auth(request)) {
             User.getPubblicazioni(function(pubblicazioni: any) {
+                response.json(pubblicazioni);
+            })
+        }
+    }
+
+    getPubblicazioniCorso(request: Request, response: Response) {
+        if (this.auth(request)) {
+            User.getPubblicazioniCorso(request.body.id_corso,function(pubblicazioni: any) {
                 response.json(pubblicazioni);
             })
         }

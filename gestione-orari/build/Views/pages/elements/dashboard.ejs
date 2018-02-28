@@ -6,7 +6,11 @@
         <transition name="fade" mode="out-in">
             <div v-if="page === 'pageHome'" class="col-md-12">
                 <div class="wrapper">
-                    <h1>News/Avvisi</h1>
+                    <h1 v-if="user.docente || user.studente">Lista dei tuoi corsi</h1>
+                    <div class="row" style="margin-top: 25px" v-if="user.docente || user.studente">
+                        <div class="col-md-2 link" v-for="(corso,index) in user.corsi" @click="schedaCorsi(index)">{{ corso.nome_corso }}</div>
+                    </div>
+                    <h1 style="margin-top: 25px">News/Avvisi</h1>
                     <div class="row" style="margin-top: 25px" v-if="user.docente || user.segretario">
                         <textarea v-model="news" rows="5" style="width:100%;resize: none;padding: 10px;margin:15px;"></textarea>
                         <div class="col-md-2 offset-md-10">
@@ -44,13 +48,44 @@
                         </tr>
                         <tr v-for="(orario,key,index) in calendar.lunedi">
                             <th>{{ key }}</th>
-                            <th>{{ calendar.lunedi[key] ? calendar.lunedi[key] : "" }}</th>
-                            <th>{{ calendar.martedi[key] ? calendar.martedi[key] : "" }}</th>
-                            <th>{{ calendar.mercoledi[key] ? calendar.mercoledi[key] : "" }}</th>
-                            <th>{{ calendar.giovedi[key] ? calendar.giovedi[key] : "" }}</th>
-                            <th>{{ calendar.venerdi[key] ? calendar.venerdi[key] : "" }}</th>
+                            <th v-html="calendar.lunedi[key] ? calendar.lunedi[key] : '' "></th>
+                            <th v-html="calendar.martedi[key] ? calendar.martedi[key] : '' "></th>
+                            <th v-html="calendar.mercoledi[key] ? calendar.mercoledi[key] : '' "></th>
+                            <th v-html="calendar.giovedi[key] ? calendar.giovedi[key] : '' "></th>
+                            <th v-html="calendar.venerdi[key] ? calendar.venerdi[key] : '' "></th>
                         </tr>
                     </table>
+                </div>
+            </div>
+        </transition>
+        
+        <!-- scheda corso -->
+        <transition name="fade" mode="out-in">
+            <div v-if="page === 'pageSchedaCorso'" class="col-md-12">
+                <div class="wrapper">
+                    <h1>Corso di {{ schedaCorso.nome_corso }}</h1>
+                    <h1 style="margin-top: 25px">News/Avvisi del corso</h1>
+                    <div class="row" style="margin-top: 25px" v-if="user.docente">
+                        <textarea v-model="news" rows="5" style="width:100%;resize: none;padding: 10px;margin:15px;"></textarea>
+                        <div class="col-md-2 offset-md-10">
+                            <button aria-readonly="true" class="btn btn-sm btn-block btn-primary" type="button" @click="pubblicareNews(schedaCorso.id_corso)">Pubblicare</button>
+                        </div>
+                        <div class="col-md-6 offset-md-3" style="text-align:center">
+                            <div v-show="msgPubblicazione === 'errorInput'" class="alert alert-danger" role="alert">Inserire testo valido!</div>
+                            <div v-show="msgPubblicazione === 'error'" class="alert alert-danger" role="alert">Errore durante la pubblicazione!</div>
+                        </div>
+                    </div>
+                    <div class="row" v-for="pubblicazione in schedaCorso.pubblicazioni" style="margin-top: 25px">
+                        <div class="col-md-2">
+                            {{ (pubblicazione.usertype === 1) ? "Segreteria studenti" : pubblicazione.username }}
+                        </div>
+                        <div class="col-md-8">
+                            {{ pubblicazione.testo_pubblicazione }}
+                        </div>
+                        <div class="col-md-2">
+                            {{ pubblicazione.data_pubblicazione }}
+                        </div>
+                    </div>
                 </div>
             </div>
         </transition>

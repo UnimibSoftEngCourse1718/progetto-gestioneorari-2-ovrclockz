@@ -65,6 +65,20 @@ let Docenti = class DocenteController extends UsersController{
             }
         }
     }
+
+    pubblicareNewsCorso(request: Request, response: Response) {
+        let session = request.session;
+        if (session !== undefined) {
+            if (session.user) {
+                let newuser = UsersController.getUserType(String(session.user.usertype), session.user.username, session.user.password);
+                console.log(newuser);
+                newuser.pubblicareNewsCorso(request.body.id_corso, request.body.news, function (status: boolean) {
+                    if (status) { response.json({ status: status }); }
+                    else { return response.status(500).send(); }
+                });
+            }
+        }
+    }
 }
 
 export default Docenti;

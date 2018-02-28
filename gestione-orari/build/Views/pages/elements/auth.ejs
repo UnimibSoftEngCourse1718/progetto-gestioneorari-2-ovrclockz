@@ -19,6 +19,12 @@
                     <label class="form-check-label" for="userType">Segretario</label>
                 </div>
             </div>
+            <div class="listaCorsi" v-if="userType === '2' || userType === '3'">
+                <div class="form-check" v-for="corso in corsi">
+                    <input class="form-check-input" type="checkbox" v-model="corso.checked" v-bind:value="true">
+                    <label class="form-check-label">{{ corso.nome_corso }}</label>
+                </div>
+            </div>
             <label for="inputEmail" class="sr-only">Username</label>
             <input type="email" class="form-control" placeholder="Username" autofocus v-model="username">
 

@@ -22,9 +22,9 @@ let Segretari = class SegretariController extends UsersController{
     }
 
     getListaCorsi(request: Request, response: Response) {
-        let session = request.session;
-        if (session !== undefined) {
-            if (session.user) {
+        //let session = request.session;
+        //if (session !== undefined) {
+            //if (session.user) {
                 Database.select('*').from('corsi')
                 .then(function (row) {
                     //console.log(row);
@@ -34,8 +34,8 @@ let Segretari = class SegretariController extends UsersController{
                     console.log(error);
                     return response.sendStatus(500);
                 })
-            }
-        }
+            //}
+        //}
     }
 
     inserireOrario(request: Request,response: Response){

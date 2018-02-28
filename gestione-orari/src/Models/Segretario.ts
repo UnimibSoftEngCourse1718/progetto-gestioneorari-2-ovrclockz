@@ -9,7 +9,7 @@ export default class SegretarioModel extends UserModel{
         this.usertype = 1;
     }
 
-    save(callback: Function) {
+    save(dati:any,callback: Function) {
         let username = this.username;
         console.log("sto inserendo")
         Database('users').insert([{ usertype: this.usertype, username: this.username, password: this.password }])

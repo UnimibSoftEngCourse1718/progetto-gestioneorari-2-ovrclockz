@@ -50,7 +50,17 @@ export default abstract class UserModel {
             callback(row);
         })
     }
+    static getPubblicazioniCorso(id_corso: any,callback: Function){
+        Database.select('pubblicazioni.*', 'users.usertype','users.username').from('pubblicazioni')
+            .leftJoin('users', 'pubblicazioni.id_user', 'users.id')
+            .where({ 'pubblicazioni.id_corso': id_corso })
+            .orderByRaw('pubblicazioni.id DESC')
+            .then(function (row) {
+            //console.log(row);
+            callback(row);
+        })
+    }
 
-    abstract save(callback: Function):void;
+    abstract save(dati:any,callback: Function):void;
     abstract getAllData(callback: Function):void;
 } 

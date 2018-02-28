@@ -7,6 +7,7 @@ const Auth = Vue.component('auth', {
             page: 'loginForm',
             username: null,
             password: null,
+            corsi: [],
             error: false,
             success: false,
             userExists: false,
@@ -20,7 +21,8 @@ const Auth = Vue.component('auth', {
                 axios.post('/register', {
                     usertype: component.userType,
                     username: component.username,
-                    password: component.password
+                    password: component.password,
+                    corsi: component.corsi
                 })
                 .then(function (response) {
                     console.log(response.data);
@@ -57,8 +59,13 @@ const Auth = Vue.component('auth', {
 
         validate: function(){
             return true;
+        },
+        getListaCorsi: function(){
+            var component = this;
+            axios.get('/getListaCorsi').then(function (res) { console.log(res.data); component.$set(component, 'corsi', res.data.value) })
         }
     },
+    created: function(){ this.getListaCorsi(); },
     mounted: function(){ document.getElementById('auth').remove(); }
 });
 
@@ -76,6 +83,7 @@ const Dashboard = Vue.component('Dashboard', {
                 venerdi: { '8:30 - 10:30': false, '10:30 - 12:30': false, '12:30 - 14:30': false, '14:30 - 16:30': false, '16:30 - 18:30': false },
             },
             user:{},
+            schedaCorso: {},
             nuovoDocente: { username: "", password: "", corsi: [] },
             docenti: {},
             corsi: {},
@@ -129,13 +137,19 @@ const Dashboard = Vue.component('Dashboard', {
                                     console.log("orario user " + this.user.corsi[i].orari[j].orario);
                                     console.log("orario calendario " + k);
                                     console.log(k === this.user.corsi[i].orari[j].orario);
-                                    this.$set(this.calendar[key], k, this.user.corsi[i].nome_corso);
+                                    this.$set(this.calendar[key], k, this.user.corsi[i].nome_corso + "<br>(" + this.user.corsi[i].orari[j].nome_aula + ")");
                                 }
                             }
                         }
                     }
                 }
             }
+        },
+        schedaCorsi: function(index){
+            var component = this;
+            this.page = 'pageSchedaCorso';
+            this.$set(this,'schedaCorso',this.user.corsi[index]);
+            axios.post('/getPubblicazioniCorso',{ id_corso: component.schedaCorso.id_corso }).then(function (res) { console.log(res.data); component.$set(component.schedaCorso, 'pubblicazioni', res.data) })
         },
         iscrizioneEsame: function(corso){
             let component = this;
@@ -189,22 +203,36 @@ const Dashboard = Vue.component('Dashboard', {
                 }
             })
         },
-        pubblicareNews: function(){
+        pubblicareNews: function(id_corso){
             let component = this;
             let news = {};
             news.id_user = component.user.docente ? component.user.docente.id : component.user.segretario.id;
             news.content = component.news;
             if (news.content !== ""){
-                axios.post('/pubblicareNews', { news: news, })
-                .then(function (response) {
-                    console.log(response.data);
-                    if (response.data.status){
-                        component.getUserData();
-                        component.news = "";
-                    }else{
-                        component.msgPubblicazione = "error";
-                    }
-                })
+                if(id_corso){
+                    axios.post('/pubblicareNewsCorso', { id_corso: id_corso, news: news, })
+                    .then(function (response) {
+                        console.log(response.data);
+                        if (response.data.status) {
+                            component.getUserData();
+                            component.news = "";
+                            axios.post('/getPubblicazioniCorso', { id_corso: component.schedaCorso.id_corso }).then(function (res) { console.log(res.data); component.$set(component.schedaCorso, 'pubblicazioni', res.data) })
+                        } else {
+                            component.msgPubblicazione = "error";
+                        }
+                    })
+                }else{
+                    axios.post('/pubblicareNews', { news: news, })
+                    .then(function (response) {
+                        console.log(response.data);
+                        if (response.data.status){
+                            component.getUserData();
+                            component.news = "";
+                        }else{
+                            component.msgPubblicazione = "error";
+                        }
+                    })
+                }
             }else{
                 setTimeout(function() {
                     component.msgPubblicazione = "errorInput";

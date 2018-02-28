@@ -9,7 +9,7 @@ export default class StudenteModel extends UserModel{
         this.usertype = 3;
     }
 
-    save(callback: Function) {
+    save(dati: any,callback: Function) {
         let username = this.username;
         console.log("sto inserendo");
         Database('users').insert([{ usertype: this.usertype, username: this.username, password: this.password }])
@@ -28,6 +28,17 @@ export default class StudenteModel extends UserModel{
             //console.log('matricola', newMatricola)
             Database('studenti').insert([{ id_user: id, matricola: newMatricola }]).then(function(row){
                 console.log("inserito record in studenti");
+                for (var i = 0; i < dati.corsi.length; i++) {
+                    if (dati.corsi[i].checked) {
+                        Database('lista_corsi_studente').insert([{ id_studente: row[0], id_corso: dati.corsi[i].id }])
+                        .then(function (res) {
+                            console.log(res)
+                            if (i === dati.corsi.length - 1) {
+                                callback(true);
+                            }
+                        }).catch(function (error) { console.log(error); callback(false) })
+                    }
+                }
                 callback(true);
             });
         })
@@ -52,8 +63,9 @@ export default class StudenteModel extends UserModel{
             }).then(function(user: any) {
                 for (let index = 0; index < user.corsi.length; index++) {
                     console.log('----------- ' + index);
-                    Database.select('lista_orari_corso.*', 'orari.*').from('lista_orari_corso')
+                    Database.select('lista_orari_corso.*', 'orari.*','aule.nome_aula').from('lista_orari_corso')
                     .leftJoin('orari', 'lista_orari_corso.id_orario', 'orari.id')
+                    .leftJoin('aule', 'lista_orari_corso.id_aula', 'aule.id')
                     .where({'lista_orari_corso.id_corso': user.corsi[index].id_corso })
                     .then(function(orari){
                         user.corsi[index].orari = orari;

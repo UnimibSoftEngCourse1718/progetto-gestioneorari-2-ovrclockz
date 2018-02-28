@@ -19,6 +19,7 @@ Server.post('/register', (request, response) => { return User.register(request,r
 //All
 Server.get('/getUserData', (request, response) => { return User.getUserData(request, response); });
 Server.get('/getPubblicazioni', (request, response) => { return User.getPubblicazioni(request, response); });
+Server.post('/getPubblicazioniCorso', (request, response) => { return User.getPubblicazioniCorso(request, response); });
 
 //Studenti
 Server.post('/iscrizioneEsame', (request, response) => { return Studente.iscrizioneEsame(request, response); });
@@ -31,6 +32,7 @@ Server.post('/cancellarePrenotazione', (request, response) => { return Docente.c
 
 //Docenti + Segretari
 Server.post('/pubblicareNews', (request, response) => { return User.pubblicareNews(request, response); });
+Server.post('/pubblicareNewsCorso', (request, response) => { return Docente.pubblicareNewsCorso(request, response); });
 
 //Segretari
 Server.post('/inserireRisorsa', (request, response) => { return Segretario.inserireRisorsa(request, response); });
