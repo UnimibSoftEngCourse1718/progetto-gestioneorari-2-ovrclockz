@@ -101,6 +101,7 @@ const Dashboard = Vue.component('Dashboard', {
         }
     },
     methods:{
+
         getUserData: function () {
             let component = this;
             axios.get('/getUserData').then(function(res){
@@ -123,6 +124,7 @@ const Dashboard = Vue.component('Dashboard', {
                 axios.get('/getPubblicazioni').then(function (res) { console.log(res.data); component.$set(component.user,'pubblicazioni', res.data) })
             })
         },
+
         createCalendar: function(){
             for (var key in this.calendar) {
                 // skip loop if the property is from prototype
@@ -145,12 +147,14 @@ const Dashboard = Vue.component('Dashboard', {
                 }
             }
         },
+
         schedaCorsi: function(index){
             var component = this;
             this.page = 'pageSchedaCorso';
             this.$set(this,'schedaCorso',this.user.corsi[index]);
             axios.post('/getPubblicazioniCorso',{ id_corso: component.schedaCorso.id_corso }).then(function (res) { console.log(res.data); component.$set(component.schedaCorso, 'pubblicazioni', res.data) })
         },
+
         iscrizioneEsame: function(corso){
             let component = this;
             axios.post('/iscrizioneEsame', {corso: corso,})
@@ -159,6 +163,7 @@ const Dashboard = Vue.component('Dashboard', {
                 component.getUserData();
             })
         },
+
         prenotazioneRisorsa: function(risorsa){
             let component = this;
             risorsa.id_docente = this.user.docente.id_docente;
@@ -188,6 +193,7 @@ const Dashboard = Vue.component('Dashboard', {
                 }, 2000);
             }
         },
+
         cancellarePrenotazione: function(risorsa){
             let component = this;
             axios.post('/cancellarePrenotazione', { risorsa: risorsa, })
@@ -203,6 +209,7 @@ const Dashboard = Vue.component('Dashboard', {
                 }
             })
         },
+
         pubblicareNews: function(id_corso){
             let component = this;
             let news = {};
@@ -239,6 +246,7 @@ const Dashboard = Vue.component('Dashboard', {
                 }, 1000);
             }
         },
+
         inserireRisorsa: function(){
             var component = this;
             if (component.nuovaRisorsa !== ""){
@@ -262,6 +270,7 @@ const Dashboard = Vue.component('Dashboard', {
                 
             }
         },
+
         inserireOrario: function(){
             var component = this;
             if (component.corsoDaGestire.id_aula !== "" && component.corsoDaGestire.id_corso && component.corsoDaGestire.id_orario){
@@ -290,6 +299,7 @@ const Dashboard = Vue.component('Dashboard', {
                 component.msgNuovoOrario = "errorInput";
             }
         },
+
         inserireDocente: function(){
             var component = this;
             let corsi = this.bindCorsi();
@@ -318,10 +328,12 @@ const Dashboard = Vue.component('Dashboard', {
                 component.msgNuovoDocente = "errorInput";
             }
         },
+
         gestireCorso: function(index){
             this.$set(this.corsoDaGestire, 'id_corso', this.corsi[index].id);
             this.corsoScelto = this.corsi[index].nome_corso;
         },
+
         bindCorsi: function(){
             let corsi = [];
             for (var i = 0; i < this.nuovoDocente.corsi.length; i++) {
@@ -329,12 +341,14 @@ const Dashboard = Vue.component('Dashboard', {
             }
             return corsi;
         },
+
         getListaOrariDisponibili: function(){
             var component = this;
             let id_aula = component.corsoDaGestire.id_aula;
             component.corsoDaGestire.id_orario = "";
             axios.post('/getListaOrariDisponibili', { id_aula: id_aula }).then(function (res) { console.log(res.data); component.$set(component, 'orariDisponibili', res.data.value) })
         },
+        
         logout: function(){
             window.location.replace('/logout');
         }

@@ -1,2 +1,1 @@
- npm i -D webpack webpack-dev-server cross-env typescript vue-loader vue-template-compiler ts-loader
- /*"start": "nodemon server.js"*/
+sonar-scanner.bat -Dsonar.projectKey=iudasfhiu43 -Dsonar.organization=ovrclockz-github -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=2903a058da2bbc140508730121e78b5cad5767d4
