@@ -1,55 +1,83 @@
 <template id="auth">
-    <div class="row">
+    <div class="row wrap">
         <%- include('menu') %>
         
         <!-- Registrazione -->
-        <form class="form-signin" v-if="page === 'registrazioneForm'">
-            <h2 class="form-signin-heading">Registrazione</h2>
-            <div class="usertype">
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="userType" v-model="userType" value="3">
-                    <label class="form-check-label" for="userType">Studente</label>
+        <transition name="fade" mode="out-in">
+            <form class="form-signin" v-if="page === 'registrazioneForm'">
+                <h2 class="form-signin-heading center">Registrazione</h2>
+                <div class="usertype row">
+                    <div class="form-check col-md-4 center">
+                        <input class="form-check-input" type="radio" name="userType" v-model="userType" value="3">
+                        <label class="form-check-label" for="userType">Studente</label>
+                    </div>
+                    <div class="form-check col-md-4 center">
+                        <input class="form-check-input" type="radio" name="userType" v-model="userType" value="2">
+                        <label class="form-check-label" for="userType">Docente</label>
+                    </div>
+                    <div class="form-check col-md-4 center">
+                        <input class="form-check-input" type="radio" name="userType" v-model="userType" value="1">
+                        <label class="form-check-label" for="userType">Segretario</label>
+                    </div>
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="userType" v-model="userType" value="2">
-                    <label class="form-check-label" for="userType">Docente</label>
+                <div class="row">
+                    <div class="col-md-8 offset-md-2 center">
+                        <label for="inputEmail" class="sr-only">Username</label>
+                        <input type="email" class="form-control" placeholder="Username" autofocus v-model="username">
+                    </div>
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="userType" v-model="userType" value="1">
-                    <label class="form-check-label" for="userType">Segretario</label>
+                <div class="row">
+                    <div class="col-md-8 offset-md-2 center">
+                        <label for="inputPassword" class="sr-only">Password</label>
+                        <input type="password" class="form-control" placeholder="Password" v-model="password">
+                    </div>
                 </div>
-            </div>
-            <div class="listaCorsi" v-if="userType === '2' || userType === '3'">
-                <div class="form-check" v-for="corso in corsi">
-                    <input class="form-check-input" type="checkbox" v-model="corso.checked" v-bind:value="true">
-                    <label class="form-check-label">{{ corso.nome_corso }}</label>
+                
+                <div class="row">
+                    <div class="col-md-8 offset-md-2 center">
+                        <div v-show="error" class="alert alert-danger center" role="alert">Dati non validi!</div>
+                        <div v-show="success" class="alert alert-success center" role="alert">Registrazione effettuata!</div>
+                        <div v-show="userExists" class="alert alert-danger center" role="alert">Utente già presente!</div>
+                        <button class="btn btn-sm btn-primary btn-block" type="button" @click="register">Registrati</button>
+                    </div>
                 </div>
-            </div>
-            <label for="inputEmail" class="sr-only">Username</label>
-            <input type="email" class="form-control" placeholder="Username" autofocus v-model="username">
-
-            <label for="inputPassword" class="sr-only">Password</label>
-            <input type="password" class="form-control" placeholder="Password" v-model="password">
-
-            <div v-show="error" class="alert alert-danger" role="alert">Dati non validi!</div>
-            <div v-show="success" class="alert alert-success" role="alert">Registrazione effettuata!</div>
-            <div v-show="userExists" class="alert alert-danger" role="alert">Utente già presente!</div>
-
-            <button class="btn btn-sm btn-primary btn-block" type="button" @click="register">Registrati</button>
-        </form>
+                
+                <div class="listaCorsi row" v-if="userType === '2' || userType === '3'">
+                    <div class="form-check col-md-6" v-for="corso in corsi">
+                        <input class="form-check-input" type="checkbox" v-model="corso.checked" v-bind:value="true">
+                        <label class="form-check-label">{{ corso.nome_corso }}</label>
+                    </div>
+                </div>
+            </form>
+        </transition> 
 
         <!-- Login -->
-        <form class="form-signin" v-if="page  === 'loginForm'">
-            <h2 class="form-signin-heading">Login</h2>
+        <transition name="fade" mode="out-in">
+            <form class="form-signin" v-if="page  === 'loginForm'">
+                <h2 class="form-signin-heading center">Login</h2>
 
-            <label for="inputEmail" class="sr-only">Username</label>
-            <input type="email" class="form-control" placeholder="Username" autofocus v-model="username">
+                <div class="row">
+                    <div class="col-md-8 offset-md-2 center">
+                        <label for="inputEmail" class="sr-only">Username</label>
+                        <input type="email" class="form-control" placeholder="Username" autofocus v-model="username">
+                    </div>
+                </div>
 
-            <label for="inputPassword" class="sr-only">Password</label>
-            <input type="password" class="form-control" placeholder="Password" v-model="password">
-
-            <div v-show="error" class="alert alert-danger" role="alert">Username o password sbagliata!</div>
-            <button class="btn btn-sm btn-primary btn-block" type="button" @click="login">Login</button>
-        </form>
+                <div class="row">
+                    <div class="col-md-8 offset-md-2 center">
+                        <label for="inputPassword" class="sr-only">Password</label>
+                        <input type="password" class="form-control" placeholder="Password" v-model="password">
+                    </div>
+                </div>
+                
+                
+                <div class="row">
+                    <div class="col-md-8 offset-md-2 center">
+                        <div v-show="error" class="alert alert-danger center" role="alert">Username o password sbagliata!</div>
+                        <button class="btn btn-sm btn-primary btn-block" type="button" @click="login">Login</button>
+                    </div>
+                </div>
+            </form>
+        </transition>
     </div>
 </template>

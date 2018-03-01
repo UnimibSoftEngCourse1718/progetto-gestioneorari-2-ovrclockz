@@ -1,0 +1,11 @@
+DELETE FROM users;
+DELETE FROM studenti;
+DELETE FROM docenti;
+DELETE FROM segretari;
+DELETE FROM risorse;
+DELETE FROM users;
+DELETE FROM lista_corsi_docente;
+DELETE FROM lista_corsi_studente;
+DELETE FROM lista_orari_corso;
+DELETE FROM lista_prenotazioni_risorse;
+DELETE FROM pubblicazioni; 

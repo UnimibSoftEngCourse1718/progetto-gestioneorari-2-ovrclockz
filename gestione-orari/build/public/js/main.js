@@ -5,8 +5,8 @@ const Auth = Vue.component('auth', {
             auth: false,
             userType: "3",
             page: 'loginForm',
-            username: null,
-            password: null,
+            username: "",
+            password: "",
             corsi: [],
             error: false,
             success: false,
@@ -26,13 +26,23 @@ const Auth = Vue.component('auth', {
                 })
                 .then(function (response) {
                     console.log(response.data);
-                        component.error = response.data.error;
-                        component.success = response.data.success;
-                        component.userExists = response.data.userExists;
+                    component.error = response.data.error;
+                    component.success = response.data.success;
+                    component.userExists = response.data.userExists;
+                    setTimeout(function() {
+                        component.error = "";
+                        component.success = "";
+                        component.userExists = "";    
+                    }, 1000);
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
+            }else{
+                component.error = "error";
+                setTimeout(function () {
+                    component.error = "";
+                }, 1000);
             }
         },
 
@@ -47,6 +57,9 @@ const Auth = Vue.component('auth', {
                 .then(function (response) {
                     console.log(response.data);
                     component.error = response.data.error;
+                    setTimeout(function () {
+                        component.error = "";
+                    }, 1000);
                     if (response.data.user){
                         window.location.replace('/dashboard');
                     }
@@ -54,11 +67,16 @@ const Auth = Vue.component('auth', {
                 .catch(function (error) {
                     console.log(error);
                 });
+            }else{
+                component.error = "error";
+                setTimeout(function () {
+                    component.error = "";
+                }, 1000);
             }
         },
 
         validate: function(){
-            return true;
+            return !this.username.match(/^\s*$/) && !this.password.match(/^\s*$/);
         },
         getListaCorsi: function(){
             var component = this;
@@ -101,7 +119,6 @@ const Dashboard = Vue.component('Dashboard', {
         }
     },
     methods:{
-
         getUserData: function () {
             let component = this;
             axios.get('/getUserData').then(function(res){
@@ -215,7 +232,7 @@ const Dashboard = Vue.component('Dashboard', {
             let news = {};
             news.id_user = component.user.docente ? component.user.docente.id : component.user.segretario.id;
             news.content = component.news;
-            if (news.content !== ""){
+            if (!news.content.match(/^\s*$/)){
                 if(id_corso){
                     axios.post('/pubblicareNewsCorso', { id_corso: id_corso, news: news, })
                     .then(function (response) {
@@ -241,15 +258,16 @@ const Dashboard = Vue.component('Dashboard', {
                     })
                 }
             }else{
+                component.msgPubblicazione = "errorInput";
                 setTimeout(function() {
-                    component.msgPubblicazione = "errorInput";
+                    component.msgPubblicazione = "";
                 }, 1000);
             }
         },
 
         inserireRisorsa: function(){
             var component = this;
-            if (component.nuovaRisorsa !== ""){
+            if (!component.nuovaRisorsa.match(/^\s*$/)){
                 axios.post('/inserireRisorsa', { nome_risorsa: component.nuovaRisorsa, })
                 .then(function (response) {
                     console.log(response.data);
@@ -303,7 +321,7 @@ const Dashboard = Vue.component('Dashboard', {
         inserireDocente: function(){
             var component = this;
             let corsi = this.bindCorsi();
-            if (component.nuovoDocente.username !== "" && component.nuovoDocente.password){
+            if (!component.nuovoDocente.username.match(/^\s*$/) && !component.nuovoDocente.password.match(/^\s*$/)){
                 axios.post('/inserireDocente', { username: component.nuovoDocente.username, password: component.nuovoDocente.password, corsi: corsi  })
                 .then(function (response) {
                     console.log(response.data);
@@ -326,6 +344,9 @@ const Dashboard = Vue.component('Dashboard', {
                 })
             }else{
                 component.msgNuovoDocente = "errorInput";
+                setTimeout(function () {
+                    component.msgNuovoDocente = "";
+                }, 2000);
             }
         },
 

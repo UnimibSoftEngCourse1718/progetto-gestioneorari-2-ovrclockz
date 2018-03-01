@@ -226,12 +226,14 @@
                         <h1>Aggiungere un orario per il corso di {{ corsoScelto }}</h1>
                         <div class="row" style="margin: 50px auto">
                             <div class="col-md-3" v-if="aule">
+                                <label>Aula: </label>
                                 <select class="form-control form-control-sm" v-model="corsoDaGestire.id_aula" @change="getListaOrariDisponibili()" style="width: 45%;display: inline-block">
                                     <option value="" selected>Selezionare l'aula</option>
                                     <option v-for="(aula,index) in aule" v-bind:value="aula.id">{{ aula.nome_aula }}</option>
                                 </select>
                             </div>
                             <div class="col-md-3" v-if="orariDisponibili">
+                                <label>Orario: </label>
                                 <select class="form-control form-control-sm" v-model="corsoDaGestire.id_orario" style="width: 45%;display: inline-block">
                                     <option value="" selected>Selezionare l'orario</option>
                                     <option v-for="(orario,index) in orariDisponibili" v-bind:value="orario.id">{{ orario.giorno + " - " + orario.orario }}</option>
