@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import UsersController from './UsersController';
 import UserModel from '../Models/User';
 import SegretarioModel from '../Models/Segretario';
+import DocenteModel from '../Models/Docente';
 
 const Segretari = class SegretariController extends UsersController{
     constructor(){
@@ -78,30 +79,12 @@ const Segretari = class SegretariController extends UsersController{
             if (session.user) {
                 UserModel.find(request.body.username, function(found: boolean){
                     if(!found){
-                        Database('users').insert([{ username: request.body.username, password: request.body.password, usertype: 2 }])
-                        .then(function (res) {
-                            console.log(res);
-                            Database('docenti').insert([{ id_user: res[0] }])
-                                .then(function (res) {
-                                    console.log(res);
-                                    if (request.body.corsi.length){
-                                        for (let i = 0; i < request.body.corsi.length; i++) {
-                                            Database('lista_corsi_docente').insert([{ id_docente: res[0], id_corso: request.body.corsi[i].id }])
-                                                .then(function (res) {
-                                                    console.log(res)
-                                                    if (i === request.body.corsi.length - 1) {
-                                                        return response.json({ status: true });
-                                                    }
-                                                })
-                                        }
-                                    }else{
-                                        return response.json({ status: true });
-                                    }
-                                })
-                        })
-                        .catch(function (error) {
-                            console.log(error);
-                            return response.sendStatus(500);
+                        new DocenteModel(request.body.username,request.body.password).inserireDocente(request.body,function(stat: boolean){
+                            if(stat){
+                                response.send({status: stat});
+                            }else{
+                                return response.send(500);
+                            }
                         })
                     }else{
                         return response.json({ status: false });

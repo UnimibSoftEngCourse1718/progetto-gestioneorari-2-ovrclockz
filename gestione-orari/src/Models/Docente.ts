@@ -142,4 +142,32 @@ export default class DocenteModel extends UserModel{
             callback(false);
         })
     }
+
+    inserireDocente(dati: any,callback: Function){
+        Database('users').insert([{ username: dati.username, password: dati.password, usertype: 2 }])
+        .then(function (res) {
+            console.log(res);
+            Database('docenti').insert([{ id_user: res[0] }])
+                .then(function (res) {
+                    console.log(res);
+                    if (dati.corsi.length) {
+                        for (let i = 0; i < dati.corsi.length; i++) {
+                            Database('lista_corsi_docente').insert([{ id_docente: res[0], id_corso: dati.corsi[i].id }])
+                                .then(function (ret) {
+                                    console.log(ret)
+                                    if (i === dati.corsi.length - 1) {
+                                        callback(true);
+                                    }
+                                })
+                        }
+                    } else {
+                        return callback(true);
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    callback(false);
+                })
+        })
+    }
 } 

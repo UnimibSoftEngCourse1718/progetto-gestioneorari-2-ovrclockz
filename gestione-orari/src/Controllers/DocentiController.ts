@@ -73,7 +73,7 @@ const Docenti = class DocenteController extends UsersController{
                 const newuser = UsersController.getUserType(String(session.user.usertype), session.user.username, session.user.password);
                 console.log(newuser);
                 newuser.pubblicareNewsCorso(request.body.id_corso, request.body.news, function (stat: boolean) {
-                    if (status) { response.json({ status: stat }); }
+                    if (stat) { response.json({ status: stat }); }
                     else { return response.status(500).send(); }
                 });
             }
