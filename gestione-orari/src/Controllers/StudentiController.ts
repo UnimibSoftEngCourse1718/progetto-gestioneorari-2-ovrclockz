@@ -3,13 +3,13 @@ import User from '../Models/User';
 import { Request, Response } from 'express';
 import StudenteModel from '../Models/Studente';
 
-let Studenti = class StudentiController extends UsersController{
+const Studenti = class StudentiController extends UsersController{
     constructor(){
         super();
     }
 
     iscrizioneEsame(request: Request,response: Response){
-        let session = request.session;
+        const session = request.session;
         if (session !== undefined) {
             if (session.user) {
                 StudenteModel.iscrizioneEsame(request.body,function (res: any) {

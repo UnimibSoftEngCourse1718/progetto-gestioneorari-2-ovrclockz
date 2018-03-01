@@ -10,14 +10,13 @@ export default class DocenteModel extends UserModel{
     }
 
     save(dati:any,callback: Function) {
-        let username = this.username;
         console.log("sto inserendo")
         Database('users').insert([{ usertype: this.usertype, username: this.username, password: this.password }])
         .then(function rows(row) {
             console.log("inserito record in users");
             Database('docenti').insert([{ id_user: row[0] }]).then(function (row) {
                 console.log("inserito record in docenti");
-                for (var i = 0; i < dati.corsi.length; i++) {
+                for (let i = 0; i < dati.corsi.length; i++) {
                     if (dati.corsi[i].checked) {
                         Database('lista_corsi_docente').insert([{ id_docente: row[0], id_corso: dati.corsi[i].id }])
                         .then(function (res) {
@@ -25,7 +24,10 @@ export default class DocenteModel extends UserModel{
                             if (i === dati.corsi.length - 1) {
                                 callback(true);
                             }
-                        }).catch(function (error) { console.log(error); callback(false) })
+                        }).catch(function (error) { 
+                            console.log(error);
+                            callback(false);
+                         })
                     }
                 }
             })
@@ -41,7 +43,7 @@ export default class DocenteModel extends UserModel{
         .leftJoin('docenti','docenti.id_user','users.id')
         .where({ 'users.username': this.username })
         .then(function (row) {
-            let user = { docente: row[0], corsi: {} };
+            const user = { docente: row[0], corsi: {} };
             Database.select('lista_corsi_docente.*', 'corsi.*').from('lista_corsi_docente')
                 .leftJoin('corsi', 'corsi.id', 'lista_corsi_docente.id_corso')
                 .where({ 'lista_corsi_docente.id_docente': user.docente.id_docente }).
@@ -60,8 +62,9 @@ export default class DocenteModel extends UserModel{
                             .where({ 'lista_orari_corso.id_corso': user.corsi[index].id_corso })
                             .then(function (orari) {
                                 user.corsi[index].orari = orari;
-                                //console.log(user);
-                                if (index === user.corsi.length - 1) { callback(user); }
+                                if (index === user.corsi.length - 1) { 
+                                    callback(user); 
+                                }
                             })
                         }
                     } else { callback(user); }
@@ -81,7 +84,9 @@ export default class DocenteModel extends UserModel{
             if(res.length){
                 callback([true,false]);
             }else{
-                Database('lista_prenotazioni_risorse').insert([{ id_risorsa: dati.id, id_docente : dati.id_docente , data_prenotazione: dati.giorno_richiesta_prenotazione, orario_prenotazione: dati.orario_richiesta_prenotazione }])
+                Database('lista_prenotazioni_risorse').insert([{
+                     id_risorsa: dati.id, id_docente : dati.id_docente ,data_prenotazione: dati.giorno_richiesta_prenotazione, 
+                     orario_prenotazione: dati.orario_richiesta_prenotazione }])
                 .then(function(res){
                     callback([true,true])
                 })
@@ -92,7 +97,6 @@ export default class DocenteModel extends UserModel{
     getListaRisorse(callback: Function){
         Database.select('*').from('risorse').orderByRaw('id DESC')
         .then(function (row) {
-            //console.log(row);
             callback([true,row]);
         })
         .catch(function(error){
@@ -101,13 +105,12 @@ export default class DocenteModel extends UserModel{
         })
     }
 
-    getListaRisorsePrenotate(id_docente : number,callback: Function){
+    getListaRisorsePrenotate(idDocente : number,callback: Function){
         Database.select('lista_prenotazioni_risorse.*','risorse.nome_risorsa')
         .from('lista_prenotazioni_risorse')
         .leftJoin('risorse','lista_prenotazioni_risorse.id_risorsa','risorse.id')
-        .where("lista_prenotazioni_risorse.id_docente", id_docente).orderByRaw('lista_prenotazioni_risorse.id DESC')
+        .where("lista_prenotazioni_risorse.id_docente", idDocente).orderByRaw('lista_prenotazioni_risorse.id DESC')
         .then(function (row) {
-            //console.log(row);
             callback([true,row]);
         })
         .catch(function(error){
@@ -128,8 +131,8 @@ export default class DocenteModel extends UserModel{
         })
     }
 
-    pubblicareNewsCorso(id_corso: any ,dati: any, callback: Function) {
-        Database('pubblicazioni').insert([{ id_user: dati.id_user, id_corso: id_corso, testo_pubblicazione: dati.content }])
+    pubblicareNewsCorso(idCorso: any ,dati: any, callback: Function) {
+        Database('pubblicazioni').insert([{ id_user: dati.id_user, id_corso: idCorso, testo_pubblicazione: dati.content }])
         .then(function (res) {
             console.log(dati);
             callback(true);

@@ -5,10 +5,10 @@ import StudentiController from './Controllers/StudentiController';
 import DocentiController from './Controllers/DocentiController';
 import SegretariController from './Controllers/SegretariController';
 
-let User = new UsersController();
-let Studente = new StudentiController();
-let Docente = new DocentiController();
-let Segretario = new SegretariController();
+const User = new UsersController();
+const Studente = new StudentiController();
+const Docente = new DocentiController();
+const Segretario = new SegretariController();
 
 Server.get('/', (request, response) => { return User.index(request,response);});
 Server.get('/dashboard', (request, response) => { return User.dashboard(request,response);});

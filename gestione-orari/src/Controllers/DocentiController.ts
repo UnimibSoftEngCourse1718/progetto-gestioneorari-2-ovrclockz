@@ -4,13 +4,13 @@ import User from '../Models/User';
 import { Request, Response } from 'express';
 import DocenteModel from '../Models/Docente';
 
-let Docenti = class DocenteController extends UsersController{
+const Docenti = class DocenteController extends UsersController{
     constructor(){
         super();
     }
 
     prenotazioneRisorsa(request: Request,response: Response){
-        let session = request.session;
+        const session = request.session;
         if (session !== undefined) {
             if (session.user) {
                 new DocenteModel(session.user.username, session.user.password).prenotazioneRisorsa(request.body.risorsa,function (res: any) {
@@ -24,7 +24,7 @@ let Docenti = class DocenteController extends UsersController{
     }
     
     cancellarePrenotazione(request: Request,response: Response){
-        let session = request.session;
+        const session = request.session;
         if (session !== undefined) {
             if (session.user) {
                 Database('lista_prenotazioni_risorse')
@@ -42,7 +42,7 @@ let Docenti = class DocenteController extends UsersController{
     }
 
     getListaRisorse(request: Request,response: Response){
-        let session = request.session;
+        const session = request.session;
         if (session !== undefined) {
             if (session.user) {
                 new DocenteModel(session.user.username, session.user.password).getListaRisorse(function (res: any) {
@@ -54,7 +54,7 @@ let Docenti = class DocenteController extends UsersController{
     }
 
     getListaRisorsePrenotate(request: Request,response: Response){
-        let session = request.session;
+        const session = request.session;
         if (session !== undefined) {
             if (session.user) {
                 console.log(request.body);
@@ -67,13 +67,13 @@ let Docenti = class DocenteController extends UsersController{
     }
 
     pubblicareNewsCorso(request: Request, response: Response) {
-        let session = request.session;
+        const session = request.session;
         if (session !== undefined) {
             if (session.user) {
-                let newuser = UsersController.getUserType(String(session.user.usertype), session.user.username, session.user.password);
+                const newuser = UsersController.getUserType(String(session.user.usertype), session.user.username, session.user.password);
                 console.log(newuser);
-                newuser.pubblicareNewsCorso(request.body.id_corso, request.body.news, function (status: boolean) {
-                    if (status) { response.json({ status: status }); }
+                newuser.pubblicareNewsCorso(request.body.id_corso, request.body.news, function (stat: boolean) {
+                    if (status) { response.json({ status: stat }); }
                     else { return response.status(500).send(); }
                 });
             }

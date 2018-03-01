@@ -10,30 +10,28 @@ export default abstract class UserModel {
     }
     
     static findAll(callback: Function){
-        let found: Boolean;
         Database('users').then(function(res){ 
             console.log( res ); 
             callback(res);
         })
     }
 
-    static find(username: string, callback: Function){
-        let found: Boolean;
+    static find(userName: string, callback: Function){
+        let found: boolean;
         Database('users').where({
-            username: username,
+            username: userName,
         }).then(function(res){ 
             console.log( res ); 
             found = res.length;
             callback(found);
         })
-        /*this.db.raw('select * from users').then(function (resp) { console.log(resp);});*/
     }
 
-    static authenticate(username: string, password: string, callback: Function){
-        let found: Boolean;
+    static authenticate(userName: string, passWord: string, callback: Function){
+        let found: boolean;
         Database('users').where({
-            username: username,
-            password: password,
+            username: userName,
+            password: passWord,
         }).then(function (res) {
             console.log(res);
             found = res.length;
@@ -46,17 +44,15 @@ export default abstract class UserModel {
             .leftJoin('users', 'pubblicazioni.id_user', 'users.id')
             .orderByRaw('pubblicazioni.id DESC')
             .then(function (row) {
-            //console.log(row);
             callback(row);
         })
     }
-    static getPubblicazioniCorso(id_corso: any,callback: Function){
+    static getPubblicazioniCorso(idCorso: any,callback: Function){
         Database.select('pubblicazioni.*', 'users.usertype','users.username').from('pubblicazioni')
             .leftJoin('users', 'pubblicazioni.id_user', 'users.id')
-            .where({ 'pubblicazioni.id_corso': id_corso })
+            .where({ 'pubblicazioni.id_corso': idCorso })
             .orderByRaw('pubblicazioni.id DESC')
             .then(function (row) {
-            //console.log(row);
             callback(row);
         })
     }

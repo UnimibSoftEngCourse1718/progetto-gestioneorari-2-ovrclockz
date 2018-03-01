@@ -4,13 +4,13 @@ import UsersController from './UsersController';
 import UserModel from '../Models/User';
 import SegretarioModel from '../Models/Segretario';
 
-let Segretari = class SegretariController extends UsersController{
+const Segretari = class SegretariController extends UsersController{
     constructor(){
         super();
     }
 
     getListaRisorse(request: Request, response: Response) {
-        let session = request.session;
+        const session = request.session;
         if (session !== undefined) {
             if (session.user) {
                 new SegretarioModel(session.user.username, session.user.password).getListaRisorse(function (res: any) {
@@ -22,24 +22,24 @@ let Segretari = class SegretariController extends UsersController{
     }
 
     getListaCorsi(request: Request, response: Response) {
-        //let session = request.session;
-        //if (session !== undefined) {
-            //if (session.user) {
+        const session = request.session;
+        if (session !== undefined) {
+            if (session.user) {
                 Database.select('*').from('corsi')
                 .then(function (row) {
-                    //console.log(row);
+                    console.log(row);
                     return response.json({ value: row });
                 })
                 .catch(function (error) {
                     console.log(error);
                     return response.sendStatus(500);
                 })
-            //}
-        //}
+            }
+        }
     }
 
     inserireOrario(request: Request,response: Response){
-        let session = request.session;
+        const session = request.session;
         if (session !== undefined) {
             if (session.user) {
                 Database('lista_orari_corso').insert([{ id_corso: request.body.dati.id_corso, id_aula: request.body.dati.id_aula, id_orario: request.body.dati.id_orario }])
@@ -56,7 +56,7 @@ let Segretari = class SegretariController extends UsersController{
     }
 
     inserireRisorsa(request: Request,response: Response){
-        let session = request.session;
+        const session = request.session;
         if (session !== undefined) {
             if (session.user) {
                 Database('risorse').insert([{ nome_risorsa: request.body.nome_risorsa }])
@@ -73,7 +73,7 @@ let Segretari = class SegretariController extends UsersController{
     }
 
     inserireDocente(request: Request,response: Response){
-        let session = request.session;
+        const session = request.session;
         if (session !== undefined) {
             if (session.user) {
                 UserModel.find(request.body.username, function(found: boolean){
@@ -112,13 +112,13 @@ let Segretari = class SegretariController extends UsersController{
     }
 
     getListaDocenti(request: Request, response: Response) {
-        let session = request.session;
+        const session = request.session;
         if (session !== undefined) {
             if (session.user) {
                 Database.select('*').from('docenti')
                 .leftJoin('users','users.id','docenti.id_user')
                 .then(function (row) {
-                    //console.log(row);
+                    console.log(row);
                     return response.json({ value: row });
                 })
                 .catch(function (error) {
@@ -130,14 +130,14 @@ let Segretari = class SegretariController extends UsersController{
     }
 
     getListaOrariDisponibili(request: Request, response: Response) {
-        let session = request.session;
-        let id_aula = request.body.id_aula;
+        const session = request.session;
+        const id_aula = request.body.id_aula;
         if (session !== undefined) {
             if (session.user) {
                 Database.select('*').from('orari')
                 .whereRaw("id not in (SELECT id_orario FROM lista_orari_corso WHERE id_aula = ?)",[id_aula])
                 .then(function (row) {
-                    //console.log(row);
+                    console.log(row);
                     return response.json({ value: row });
                 })
                 .catch(function (error) {
@@ -149,12 +149,12 @@ let Segretari = class SegretariController extends UsersController{
     }
 
     getListaAule(request: Request, response: Response) {
-        let session = request.session;
+        const session = request.session;
         if (session !== undefined) {
             if (session.user) {
                 Database.select('*').from('aule')
                 .then(function (row) {
-                    //console.log(row);
+                    console.log(row);
                     return response.json({ value: row });
                 })
                 .catch(function (error) {

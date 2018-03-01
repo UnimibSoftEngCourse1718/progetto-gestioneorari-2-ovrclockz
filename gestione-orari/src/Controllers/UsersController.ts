@@ -5,12 +5,12 @@ import StudenteModel from '../Models/Studente';
 import DocenteModel from '../Models/Docente';
 import SegretarioModel from '../Models/Segretario';
 
-let Users = class UsersController{
+const Users = class UsersController{
     constructor(){
     }
 
     auth(request: Request):boolean{
-        let session = request.session;
+        const session = request.session;
         if (session !== undefined) {
             if (session.user) {
                 return true;
@@ -38,11 +38,11 @@ let Users = class UsersController{
     
     login(request: Request, response: Response): void{
         if (request.body.username && request.body.password) {
-            let username = request.body.username;
-            let password = request.body.password;
+            const username = request.body.username;
+            const password = request.body.password;
             
-            User.authenticate(username, password, function (valid: Boolean,res: Object) {
-                let session = request.session;
+            User.authenticate(username, password, function (valid: boolean,res: Object) {
+                const session = request.session;
                 if (!valid) { response.json({ error: true }); }
                 else if(session !== undefined){
                     session.user = res;
@@ -57,18 +57,18 @@ let Users = class UsersController{
 
     register(request: Request, response: Response): void{
         if (request.body.username && request.body.password) {
-            let usertype = request.body.usertype;
-            let username = request.body.username;
-            let password = request.body.password;
+            const usertype = request.body.usertype;
+            const username = request.body.username;
+            const password = request.body.password;
 
-            User.find(username, function (found: Boolean) { 
+            User.find(username, function (found: boolean) { 
                 if(found){
                     console.log("Trovato");
                     response.json({ userExists: true });
                 }else{
                     console.log("Non trovato");
-                    let newuser = Users.getUserType(usertype,username,password);
-                    newuser.save(request.body,function (success: Boolean,row:number) {
+                    const newuser = Users.getUserType(usertype,username,password);
+                    newuser.save(request.body,function (success: boolean,row:number) {
                         if (!success) {
                             console.log("Errore nella registrazione!");
                             return response.status(500).send();
@@ -84,10 +84,10 @@ let Users = class UsersController{
     }
 
     getUserData(request: Request, response: Response){
-        let session = request.session;
+        const session = request.session;
         if (session !== undefined) {
             if (session.user) {
-                let newuser = Users.getUserType(String(session.user.usertype), session.user.username, session.user.password);
+                const newuser = Users.getUserType(String(session.user.usertype), session.user.username, session.user.password);
                 newuser.getAllData(function(user: any){
                     if(user){ return response.json({ user }); }
                     return response.status(500);
@@ -113,13 +113,13 @@ let Users = class UsersController{
     }
 
     pubblicareNews(request: Request, response: Response) {
-        let session = request.session;
+        const session = request.session;
         if (session !== undefined) {
             if (session.user) {
-                let newuser = Users.getUserType(String(session.user.usertype), session.user.username, session.user.password);
+                const newuser = Users.getUserType(String(session.user.usertype), session.user.username, session.user.password);
                 console.log(newuser);
-                newuser.pubblicareNews(request.body.news, function (status: boolean) {
-                    if (status) { response.json({ status: status }); }
+                newuser.pubblicareNews(request.body.news, function (stat: boolean) {
+                    if (status) { response.json({ status: stat }); }
                     else { return response.status(500).send(); }
                 });
             }
@@ -135,11 +135,13 @@ let Users = class UsersController{
         }
         else if(usertype === '1') {
             return new SegretarioModel(username, password);
+        }else{
+            return false;
         }
     }
 
     logout(request: Request, response: Response){
-        let session = request.session;
+        const session = request.session;
         if (session !== undefined) {
             if (session.user) {
                 delete session.user;

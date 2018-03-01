@@ -1,6 +1,6 @@
 import * as knex from 'knex';
 
-let Database = knex({
+const Database = knex({
     dialect: 'sqlite3',
     connection: {
         filename: __dirname + '/database.sqlite'

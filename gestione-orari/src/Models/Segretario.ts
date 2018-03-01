@@ -10,7 +10,6 @@ export default class SegretarioModel extends UserModel{
     }
 
     save(dati:any,callback: Function) {
-        let username = this.username;
         console.log("sto inserendo")
         Database('users').insert([{ usertype: this.usertype, username: this.username, password: this.password }])
         .then(function rows(row) {
@@ -30,7 +29,7 @@ export default class SegretarioModel extends UserModel{
         Database.select('users.id', 'users.usertype', 'users.username').from('users')
             .where({ 'users.username': this.username })
             .then(function (row) {
-                let user = { segretario: row[0]};
+                const user = { segretario: row[0]};
                 callback(user);
             })
             .catch(function (error) {
@@ -42,7 +41,6 @@ export default class SegretarioModel extends UserModel{
     getListaRisorse(callback: Function) {
         Database.select('*').from('risorse').orderByRaw('id DESC')
             .then(function (row) {
-                //console.log(row);
                 callback([true, row]);
             })
             .catch(function (error) {
