@@ -36,5 +36,7 @@ server_1.default.get('/getListaDocenti', function (request, response) { return S
 server_1.default.get('/getListaCorsi', function (request, response) { return Segretario.getListaCorsi(request, response); });
 server_1.default.post('/getListaOrariDisponibili', function (request, response) { return Segretario.getListaOrariDisponibili(request, response); });
 server_1.default.get('/getListaAule', function (request, response) { return Segretario.getListaAule(request, response); });
+//404
+server_1.default.get('*', function (request, response) { response.redirect('/'); });
 //Definizione porta di ascolto dell'applicazione
 server_1.default.listen(8080);

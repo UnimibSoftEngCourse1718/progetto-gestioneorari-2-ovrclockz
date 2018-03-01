@@ -43,5 +43,9 @@ Server.get('/getListaCorsi', (request, response) => { return Segretario.getLista
 Server.post('/getListaOrariDisponibili', (request, response) => { return Segretario.getListaOrariDisponibili(request, response); });
 Server.get('/getListaAule', (request, response) => { return Segretario.getListaAule(request, response); });
 
+//404
+Server.get('*', function (request, response) { response.redirect('/');});
+
+
 //Definizione porta di ascolto dell'applicazione
 Server.listen(8080)
