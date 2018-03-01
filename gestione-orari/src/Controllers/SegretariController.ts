@@ -23,20 +23,15 @@ const Segretari = class SegretariController extends UsersController{
     }
 
     getListaCorsi(request: Request, response: Response) {
-        const session = request.session;
-        if (session !== undefined) {
-            if (session.user) {
-                Database.select('*').from('corsi')
-                .then(function (row) {
-                    console.log(row);
-                    return response.json({ value: row });
-                })
-                .catch(function (error) {
-                    console.log(error);
-                    return response.sendStatus(500);
-                })
-            }
-        }
+        Database.select('*').from('corsi')
+        .then(function (row) {
+            console.log(row);
+            return response.json({ value: row });
+        })
+        .catch(function (error) {
+            console.log(error);
+            return response.sendStatus(500);
+        })
     }
 
     inserireOrario(request: Request,response: Response){

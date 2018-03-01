@@ -33,7 +33,7 @@ const Auth = Vue.component('auth', {
                         component.error = "";
                         component.success = "";
                         component.userExists = "";    
-                    }, 1000);
+                    }, 2000);
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -42,7 +42,7 @@ const Auth = Vue.component('auth', {
                 component.error = "error";
                 setTimeout(function () {
                     component.error = "";
-                }, 1000);
+                }, 2000);
             }
         },
 
@@ -59,7 +59,7 @@ const Auth = Vue.component('auth', {
                     component.error = response.data.error;
                     setTimeout(function () {
                         component.error = "";
-                    }, 1000);
+                    }, 2000);
                     if (response.data.user){
                         window.location.replace('/dashboard');
                     }
@@ -71,7 +71,7 @@ const Auth = Vue.component('auth', {
                 component.error = "error";
                 setTimeout(function () {
                     component.error = "";
-                }, 1000);
+                }, 2000);
             }
         },
 
@@ -261,7 +261,7 @@ const Dashboard = Vue.component('Dashboard', {
                 component.msgPubblicazione = "errorInput";
                 setTimeout(function() {
                     component.msgPubblicazione = "";
-                }, 1000);
+                }, 2000);
             }
         },
 
