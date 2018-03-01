@@ -1,3 +1,5 @@
 sonar-scanner -Dsonar.projectKey=iudasfhiu43 -Dsonar.organization=ovrclockz-github -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=2903a058da2bbc140508730121e78b5cad5767d4
 
-node_module/.bin/npm run app 
+node_module/.bin/npm run compile
+node_module/.bin/npm run server
+node_module/.bin/npm run sonar
