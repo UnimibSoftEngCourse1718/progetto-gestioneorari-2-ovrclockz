@@ -33,7 +33,7 @@ const Auth = Vue.component('auth', {
                         component.error = "";
                         component.success = "";
                         component.userExists = "";    
-                    }, 2000);
+                    }, 3000);
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -42,7 +42,7 @@ const Auth = Vue.component('auth', {
                 component.error = "error";
                 setTimeout(function () {
                     component.error = "";
-                }, 2000);
+                }, 3000);
             }
         },
 
@@ -59,7 +59,7 @@ const Auth = Vue.component('auth', {
                     component.error = response.data.error;
                     setTimeout(function () {
                         component.error = "";
-                    }, 2000);
+                    }, 3000);
                     if (response.data.user){
                         window.location.replace('/dashboard');
                     }
@@ -71,7 +71,7 @@ const Auth = Vue.component('auth', {
                 component.error = "error";
                 setTimeout(function () {
                     component.error = "";
-                }, 2000);
+                }, 3000);
             }
         },
 
@@ -202,19 +202,19 @@ const Dashboard = Vue.component('Dashboard', {
                         component.prenotazioneSucces = "success";
                         setTimeout(function(){
                             component.prenotazioneSucces = "";
-                        }, 2000);
+                        }, 3000);
                     } else { 
                         component.prenotazioneSucces = "error"; 
                         setTimeout(function () {
                             component.prenotazioneSucces = "";
-                        }, 2000);
+                        }, 3000);
                     }
                 })
             }else{
                 component.prenotazioneSucces = "dateError";
                 setTimeout(function () {
                     component.prenotazioneSucces = "";
-                }, 2000);
+                }, 3000);
             }
         },
 
@@ -228,7 +228,7 @@ const Dashboard = Vue.component('Dashboard', {
                     component.prenotazioneSucces = "successCancel";
                     setTimeout(function(){
                         component.prenotazioneSucces = "";
-                    }, 2000);
+                    }, 3000);
                     this.getUserData();
                 }
             })
@@ -268,7 +268,7 @@ const Dashboard = Vue.component('Dashboard', {
                 component.msgPubblicazione = "errorInput";
                 setTimeout(function() {
                     component.msgPubblicazione = "";
-                }, 2000);
+                }, 3000);
             }
         },
 
@@ -284,14 +284,14 @@ const Dashboard = Vue.component('Dashboard', {
                         component.msgRisorsa = "success";
                         setTimeout(function () {
                             component.msgRisorsa = "";
-                        }, 2000);
+                        }, 3000);
                     }
                 })
             }else{
                 component.msgRisorsa = "error";
                 setTimeout(function () {
                     component.msgRisorsa = "";
-                }, 2000);
+                }, 3000);
                 
             }
         },
@@ -312,12 +312,12 @@ const Dashboard = Vue.component('Dashboard', {
                         setTimeout(function () {
                             component.msgNuovoOrario = "";
                             component.corsoScelto = false;
-                        }, 2000);
+                        }, 3000);
                     }else{
                         component.msgNuovoOrario = "error";
                         setTimeout(function () {
                             component.msgNuovoOrario = "";
-                        }, 2000);
+                        }, 3000);
                     }
                 })
             }else{
@@ -341,19 +341,19 @@ const Dashboard = Vue.component('Dashboard', {
                         component.msgNuovoDocente = "success";
                         setTimeout(function () {
                             component.msgNuovoDocente = "";
-                        }, 2000);
+                        }, 3000);
                     }else{
                         component.msgNuovoDocente = "error";
                         setTimeout(function () {
                             component.msgNuovoDocente = "";
-                        }, 2000);
+                        }, 3000);
                     }
                 })
             }else{
                 component.msgNuovoDocente = "errorInput";
                 setTimeout(function () {
                     component.msgNuovoDocente = "";
-                }, 2000);
+                }, 3000);
             }
         },
 
@@ -372,27 +372,29 @@ const Dashboard = Vue.component('Dashboard', {
 
         inserireEsame: function(){
             var component = this;
-            if (this.nuovoEsame.id_aula !== "" && this.nuovoEsame.id_corso !== "" && this.nuovoEsame.data_esame !== ""){
+            var date = new Date(this.nuovoEsame.data_esame);
+            today = new Date();
+            if (this.nuovoEsame.id_aula !== "" && this.nuovoEsame.id_corso !== "" && this.nuovoEsame.data_esame !== "" && date > today){
                 axios.post('/inserireEsame', { esame: component.nuovoEsame })
                 .then(function (res) { 
-                    if(res.status){
+                    if(res.data.status){
                         component.getUserData();
                         component.esameMsg = "success";
                         setTimeout(function () {
                             component.esameMsg = "";
-                        }, 2000);
+                        }, 3000);
                     }else{
                         component.esameMsg = "errorExists";
                         setTimeout(function () {
                             component.esameMsg = "";
-                        }, 2000);        
+                        }, 3000);        
                     }    
                 })
             }else{
                 component.esameMsg = "error";
                 setTimeout(function(){
                     component.esameMsg = "";
-                }, 2000);
+                }, 3000);
             }
         },
 

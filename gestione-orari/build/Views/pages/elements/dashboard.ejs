@@ -122,7 +122,7 @@
                         <div class="col-md-2">
                             <button class="btn btn-sm btn-block btn-primary" type="button" @click="inserireEsame()">Inserire esame</button>
                         </div>
-                        <div v-show="esameMsg === 'error'" class="alert alert-danger" role="alert">Inserire dati validi!</div>
+                        <div v-show="esameMsg === 'error'" class="alert alert-danger" role="alert">Inserire dati validi e data posteriore a quella attuale!</div>
                         <div v-show="esameMsg === 'errorExists'" class="alert alert-danger" role="alert">Impossibile inserire l'esame per quella data e aula!</div>
                         <div v-show="esameMsg === 'success'" class="alert alert-success" role="alert">Esame inserito!</div>
                     </div>

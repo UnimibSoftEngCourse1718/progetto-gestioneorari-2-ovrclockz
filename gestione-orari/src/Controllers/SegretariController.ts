@@ -72,10 +72,22 @@ const Segretari = class SegretariController extends UsersController{
         const session = request.session;
         if (session !== undefined) {
             if (session.user) {
-                Database('lista_esami_corso').insert([{ id_corso: request.body.esame.id_corso, id_aula: request.body.esame.id_aula, data_esame: request.body.esame.data_esame }])
-                .then(function (res) {
-                    console.log(res);
-                    return response.json({status: true});
+                Database.select('*').from('lista_esami_corso').where({
+                    id_aula: request.body.esame.id_aula,
+                    data_esame: request.body.esame.data_esame
+                })
+                .then(function(row){
+                    console.log(row);
+                    if(!row.length){
+                        Database('lista_esami_corso').insert([{ id_corso: request.body.esame.id_corso, id_aula: request.body.esame.id_aula,
+                             data_esame: request.body.esame.data_esame }])
+                        .then(function (res) {
+                            console.log(res);
+                            return response.json({status: true});
+                        })
+                    }else{
+                        return response.json({ status: false });
+                    }
                 })
                 .catch(function (error) {
                     console.log(error);
