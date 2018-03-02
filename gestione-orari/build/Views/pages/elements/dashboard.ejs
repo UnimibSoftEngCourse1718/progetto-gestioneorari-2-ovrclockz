@@ -55,6 +55,11 @@
                             <th v-html="calendar.venerdi[key] ? calendar.venerdi[key] : '' "></th>
                         </tr>
                     </table>
+                    <div class="row" style="margin-top:25px">
+                        <div class="col-md-3 offset-md-9">
+                            <button class="btn btn-sm btn-block btn-primary" type="button" @click="print()">Stampare calendario</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </transition>

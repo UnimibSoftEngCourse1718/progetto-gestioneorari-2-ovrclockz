@@ -370,6 +370,10 @@ const Dashboard = Vue.component('Dashboard', {
             axios.post('/getListaOrariDisponibili', { id_aula: id_aula }).then(function (res) { console.log(res.data); component.$set(component, 'orariDisponibili', res.data.value) })
         },
         
+        print: function(){
+            window.print();
+        },
+
         logout: function(){
             window.location.replace('/logout');
         }
