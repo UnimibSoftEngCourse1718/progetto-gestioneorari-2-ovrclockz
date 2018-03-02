@@ -1,7 +1,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="#">Gestione Orari</a>
+        <span class="navbar-brand">Gestione Orari</span>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav ml-auto" v-if="auth">
                 <li class="nav-item" v-bind:class="{'active': page === 'pageHome'}" @click="page = 'pageHome'">
@@ -11,7 +11,7 @@
                     <a class="nav-link" href="#">Calendario corsi</a>
                 </li>
                 <li class="nav-item" v-bind:class="{'active': page === 'pageIscrizioneEsame'}" @click="page = 'pageIscrizioneEsame'" v-if="user.studente">
-                    <a class="nav-link" href="#">Iscrisione esame</a>
+                    <a class="nav-link" href="#">Iscrizione esame</a>
                 </li>
                 <li class="nav-item" v-bind:class="{'active': page === 'pagePrenotazioneRisorse'}" @click="page = 'pagePrenotazioneRisorse'" v-if="user.docente">
                     <a class="nav-link" href="#">Prenotazione Risorse</a>
