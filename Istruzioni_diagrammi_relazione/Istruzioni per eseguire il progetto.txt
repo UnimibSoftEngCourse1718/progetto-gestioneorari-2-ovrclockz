@@ -1,0 +1,6 @@
+- Installare Node.js e aggiungerlo al path per poter eseguire i comandi da console
+- posizionarsi nella cartella "gestione-orari"
+- eseguire in console il comando "npm install" (aspettare la fine dell'installazione delle dipendenze)
+- eseguire il comando "npm run app-win" oppure "npm run server" (per windows)
+- eseguire il comando "npm run app-linux" oppure "npm run server" (per linux)
+- rendersi sulla http://localhost:8080 per acedere a l'applicazione
