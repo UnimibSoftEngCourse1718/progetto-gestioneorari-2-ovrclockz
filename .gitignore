@@ -1,7 +1,4 @@
 gestione-orari/.scannerwork/
 gestione-orari/node_modules/
-gestione-orari/build/Controllers/
-gestione-orari/build/Interfaces/
-gestione-orari/build/Models/
-gestione-orari/build/app.js
-gestione-orari/build/server.js
+gestione-orari/npm-debug.log
+npm-debug.log

@@ -5,9 +5,10 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "compile": "tsc",
     "server": "nodemon ./build/app.js",
     "ts": "tsc -w",
+    "app-win": "start tsc && start nodemon ./build/app.js",
+    "app-linux": "tsc | nodemon ./build/app.js",
     "sonar": "sonar-scanner"
   },
   "author": "Serge Benissanh Date <Ovrclockz@gmail.com>",
