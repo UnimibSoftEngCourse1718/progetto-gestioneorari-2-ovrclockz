@@ -49,15 +49,4 @@ export default class SegretarioModel extends UserModel{
             })
     }
 
-    pubblicareNews(dati: any, callback: Function) {
-        Database('pubblicazioni').insert([{ id_user: dati.id_user, testo_pubblicazione: dati.content }])
-            .then(function (res) {
-                console.log(dati);
-                callback(true);
-            })
-            .catch(function (error) {
-                console.log(error);
-                callback(false);
-            })
-    }
 } 
