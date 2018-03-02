@@ -13,6 +13,9 @@
                 <li class="nav-item" v-bind:class="{'active': page === 'pageIscrizioneEsame'}" @click="page = 'pageIscrizioneEsame'" v-if="user.studente">
                     <a class="nav-link" href="#">Iscrizione esame</a>
                 </li>
+                <li class="nav-item" v-bind:class="{'active': page === 'pageIscrizioneEsame'}" @click="page = 'pageIscrizioneEsame'" v-if="!user.studente">
+                    <a class="nav-link" href="#">Lista esami</a>
+                </li>
                 <li class="nav-item" v-bind:class="{'active': page === 'pagePrenotazioneRisorse'}" @click="page = 'pagePrenotazioneRisorse'" v-if="user.docente">
                     <a class="nav-link" href="#">Prenotazione Risorse</a>
                 </li>

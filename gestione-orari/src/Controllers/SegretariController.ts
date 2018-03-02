@@ -68,6 +68,23 @@ const Segretari = class SegretariController extends UsersController{
         }
     }
 
+    inserireEsame(request: Request,response: Response){
+        const session = request.session;
+        if (session !== undefined) {
+            if (session.user) {
+                Database('lista_esami_corso').insert([{ id_corso: request.body.esame.id_corso, id_aula: request.body.esame.id_aula, data_esame: request.body.esame.data_esame }])
+                .then(function (res) {
+                    console.log(res);
+                    return response.json({status: true});
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    return response.sendStatus(500);
+                })
+            }
+        }
+    }
+
     inserireDocente(request: Request,response: Response){
         const session = request.session;
         if (session !== undefined) {

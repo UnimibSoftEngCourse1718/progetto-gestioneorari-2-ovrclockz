@@ -79,6 +79,24 @@ const Docenti = class DocenteController extends UsersController{
             }
         }
     }
+
+    getListaEsamiDocente(request: Request, response: Response) {
+        if (this.auth(request)) {
+            Database.select('lista_corsi_docente.*', 'corsi.nome_corso', 'lista_esami_corso.data_esame',
+                'lista_esami_corso.id as id_esame_real', 'aule.nome_aula').from('lista_corsi_docente')
+                .leftJoin('corsi', 'corsi.id', 'lista_corsi_docente.id_corso')
+                .leftJoin('lista_esami_corso', 'lista_esami_corso.id_corso', 'corsi.id')
+                .leftJoin('aule', 'aule.id', 'lista_esami_corso.id_aula')
+                .where({ 'lista_corsi_docente.id_docente': request.body.id_docente })
+                .then(function (rows) {
+                    response.json({ value: rows });
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    response.sendStatus(500);
+                })
+        }
+    }
 }
 
 export default Docenti;

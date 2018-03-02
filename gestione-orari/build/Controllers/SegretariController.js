@@ -78,6 +78,22 @@ var Segretari = /** @class */ (function (_super) {
             }
         }
     };
+    SegretariController.prototype.inserireEsame = function (request, response) {
+        var session = request.session;
+        if (session !== undefined) {
+            if (session.user) {
+                Database_1.default('lista_esami_corso').insert([{ id_corso: request.body.esame.id_corso, id_aula: request.body.esame.id_aula, data_esame: request.body.esame.data_esame }])
+                    .then(function (res) {
+                    console.log(res);
+                    return response.json({ status: true });
+                })
+                    .catch(function (error) {
+                    console.log(error);
+                    return response.sendStatus(500);
+                });
+            }
+        }
+    };
     SegretariController.prototype.inserireDocente = function (request, response) {
         var session = request.session;
         if (session !== undefined) {

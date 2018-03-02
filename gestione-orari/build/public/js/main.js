@@ -106,6 +106,7 @@ const Dashboard = Vue.component('Dashboard', {
             docenti: {},
             corsi: {},
             aule: {},
+            nuovoEsame: { id_corso: "",id_aula: "",data_esame: ""},
             orariDisponibili: {},
             corsoDaGestire: { id_orario: "",id_corso: "", id_aula: "" },
             news: "",
@@ -115,6 +116,7 @@ const Dashboard = Vue.component('Dashboard', {
             msgNuovoDocente: "",
             msgNuovoOrario: "",
             prenotazioneSucces: "",
+            esameMsg: "",
             corsoScelto: false
         }
     },
@@ -123,6 +125,9 @@ const Dashboard = Vue.component('Dashboard', {
             let component = this;
             axios.get('/getUserData').then(function(res){
                 console.log(res.data);component.user = res.data.user;
+                if (res.data.user.studente) {
+                    axios.post('/getListaEsamiStudente', { id_studente: res.data.user.studente.id_studente }).then(function (res) { console.log(res.data); component.$set(component.user, 'esami', res.data.value) })
+                }
                 if (res.data.user.docente || res.data.user.studente) {
                     component.createCalendar();
                 }
@@ -130,9 +135,11 @@ const Dashboard = Vue.component('Dashboard', {
                     axios.get('/getListaRisorse').then(function (res) { console.log(res.data); component.$set(component.user, 'risorse', res.data.value) })
                 }
                 if (res.data.user.docente){
+                    axios.post('/getListaEsamiDocente', { id_docente: res.data.user.docente.id_docente }).then(function (res) { console.log(res.data); component.$set(component.user, 'esami', res.data.value) })
                     axios.post('/getListaRisorsePrenotate', { id_docente: res.data.user.docente.id_docente }).then(function (res) { console.log(res.data); component.$set(component.user, 'risorsePrenotate', res.data.value) })
                 }
                 if (res.data.user.segretario) {
+                    axios.get('/getListaEsamiAll').then(function (res) { console.log(res.data); component.$set(component.user, 'esami', res.data.value) })
                     axios.get('/getListaDocenti').then(function (res) { console.log(res.data); component.$set(component, 'docenti', res.data.value) })
                     axios.get('/getListaCorsi').then(function (res) { console.log(res.data); component.$set(component, 'corsi', res.data.value) })
                     //axios.get('/getListaOrariDisponibili').then(function (res) { console.log(res.data); component.$set(component, 'orariDisponibili', res.data.value) })
@@ -172,9 +179,9 @@ const Dashboard = Vue.component('Dashboard', {
             axios.post('/getPubblicazioniCorso',{ id_corso: component.schedaCorso.id_corso }).then(function (res) { console.log(res.data); component.$set(component.schedaCorso, 'pubblicazioni', res.data) })
         },
 
-        iscrizioneEsame: function(corso){
+        iscrizioneEsame: function(esame){
             let component = this;
-            axios.post('/iscrizioneEsame', {corso: corso,})
+            axios.post('/iscrizioneEsame', {esame: esame,})
             .then(function (response) {
                 console.log(response.data);
                 component.getUserData();
@@ -361,6 +368,32 @@ const Dashboard = Vue.component('Dashboard', {
                 if (this.nuovoDocente.corsi[i]) { corsi.push(this.corsi[i]); }
             }
             return corsi;
+        },
+
+        inserireEsame: function(){
+            var component = this;
+            if (this.nuovoEsame.id_aula !== "" && this.nuovoEsame.id_corso !== "" && this.nuovoEsame.data_esame !== ""){
+                axios.post('/inserireEsame', { esame: component.nuovoEsame })
+                .then(function (res) { 
+                    if(res.status){
+                        component.getUserData();
+                        component.esameMsg = "success";
+                        setTimeout(function () {
+                            component.esameMsg = "";
+                        }, 2000);
+                    }else{
+                        component.esameMsg = "errorExists";
+                        setTimeout(function () {
+                            component.esameMsg = "";
+                        }, 2000);        
+                    }    
+                })
+            }else{
+                component.esameMsg = "error";
+                setTimeout(function(){
+                    component.esameMsg = "";
+                }, 2000);
+            }
         },
 
         getListaOrariDisponibili: function(){

@@ -23,8 +23,10 @@ Server.post('/getPubblicazioniCorso', (request, response) => { return User.getPu
 
 //Studenti
 Server.post('/iscrizioneEsame', (request, response) => { return Studente.iscrizioneEsame(request, response); });
+Server.post('/getListaEsamiStudente', (request, response) => { return Studente.getListaEsamiStudente(request, response); });
 
 //Docenti
+Server.post('/getListaEsamiDocente', (request, response) => { return Docente.getListaEsamiDocente(request, response); });
 Server.get('/getListaRisorse', (request, response) => { return Docente.getListaRisorse(request, response); });
 Server.post('/getListaRisorsePrenotate', (request, response) => { return Docente.getListaRisorsePrenotate(request, response); });
 Server.post('/prenotazioneRisorsa', (request, response) => { return Docente.prenotazioneRisorsa(request, response); });
@@ -35,6 +37,8 @@ Server.post('/pubblicareNews', (request, response) => { return User.pubblicareNe
 Server.post('/pubblicareNewsCorso', (request, response) => { return Docente.pubblicareNewsCorso(request, response); });
 
 //Segretari
+Server.get('/getListaEsamiAll', (request, response) => { return User.getListaEsamiAll(request, response); });
+Server.post('/inserireEsame', (request, response) => { return Segretario.inserireEsame(request, response); });
 Server.post('/inserireRisorsa', (request, response) => { return Segretario.inserireRisorsa(request, response); });
 Server.post('/inserireDocente', (request, response) => { return Segretario.inserireDocente(request, response); });
 Server.post('/inserireOrario', (request, response) => { return Segretario.inserireOrario(request, response); });

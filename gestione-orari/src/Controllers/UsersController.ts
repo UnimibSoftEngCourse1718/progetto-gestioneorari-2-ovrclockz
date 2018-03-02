@@ -126,6 +126,22 @@ const Users = class UsersController{
         }
     }
 
+    
+    getListaEsamiAll(request: Request, response: Response){
+        if (this.auth(request)) {
+            Database.select('lista_esami_corso.*', 'corsi.nome_corso', 'aule.nome_aula').from('lista_esami_corso')
+            .leftJoin('corsi', 'corsi.id','lista_esami_corso.id_corso')
+            .leftJoin('aule', 'aule.id','lista_esami_corso.id_aula')
+            .then(function(rows){
+                response.json({value: rows});
+            })
+            .catch(function(error){
+                console.log(error);
+                response.sendStatus(500);
+            })
+        }
+    }
+
     static getUserType(usertype: string, username: string,password: string): any{
         if(usertype === '3') {
             return new StudenteModel(username, password);

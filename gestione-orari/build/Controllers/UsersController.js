@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var Database_1 = require("./../config/Database");
 var User_1 = require("../Models/User");
 var Studente_1 = require("../Models/Studente");
 var Docente_1 = require("../Models/Docente");
@@ -123,6 +124,20 @@ var Users = /** @class */ (function () {
                     }
                 });
             }
+        }
+    };
+    UsersController.prototype.getListaEsamiAll = function (request, response) {
+        if (this.auth(request)) {
+            Database_1.default.select('lista_esami_corso.*', 'corsi.nome_corso', 'aule.nome_aula').from('lista_esami_corso')
+                .leftJoin('corsi', 'corsi.id', 'lista_esami_corso.id_corso')
+                .leftJoin('aule', 'aule.id', 'lista_esami_corso.id_aula')
+                .then(function (rows) {
+                response.json({ value: rows });
+            })
+                .catch(function (error) {
+                console.log(error);
+                response.sendStatus(500);
+            });
         }
     };
     UsersController.getUserType = function (usertype, username, password) {

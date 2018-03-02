@@ -99,11 +99,42 @@
         <transition name="fade" mode="out-in">
             <div class="col-md-12 page" v-if="page === 'pageIscrizioneEsame'">
                 <div class="wrapper">
-                    <h1>Lista esami</h1>
-                    <div class="row" v-for="corso in user.corsi" style="margin: 50px auto">
-                        <div class="col-md-3">{{ corso.nome_corso }}</div>
+                    <h1>Inserimento esami</h1>
+                    <div class="row">
+                        <div class="col-md-2" v-if="aule">
+                            <label>Aula: </label>
+                            <select class="form-control form-control-sm" v-model="nuovoEsame.id_aula" style="width: 45%;display: inline-block">
+                                <option value="" selected>Selezionare l'aula</option>
+                                <option v-for="(aula,index) in aule" v-bind:value="aula.id">{{ aula.nome_aula }}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2" v-if="corsi">
+                            <label>Corso: </label>
+                            <select class="form-control form-control-sm" v-model="nuovoEsame.id_corso" style="width: 45%;display: inline-block">
+                                <option value="" selected>Selezionare il corso</option>
+                                <option v-for="(corso,index) in corsi" v-bind:value="corso.id">{{ corso.nome_corso }}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-5" v-if="corsi">
+                            <label>Data esame: </label>
+                            <input type="date" style="display:inline-block;width:45%;" class="form-control" v-model="nuovoEsame.data_esame">
+                        </div>
                         <div class="col-md-2">
-                            <button class="btn btn-sm btn-block" v-bind:class="{'btn-danger': corso.studente_iscritto_esame, 'btn-primary': !corso.studente_iscritto_esame }" type="button" @click="iscrizioneEsame(corso)">{{ corso.studente_iscritto_esame ? "Annulla iscrizione" : "Iscriversi" }}</button>
+                            <button class="btn btn-sm btn-block btn-primary" type="button" @click="inserireEsame()">Inserire esame</button>
+                        </div>
+                        <div v-show="esameMsg === 'error'" class="alert alert-danger" role="alert">Inserire dati validi!</div>
+                        <div v-show="esameMsg === 'errorExists'" class="alert alert-danger" role="alert">Impossibile inserire l'esame per quella data e aula!</div>
+                        <div v-show="esameMsg === 'success'" class="alert alert-success" role="alert">Esame inserito!</div>
+                    </div>
+                    <h1>Lista esami</h1>
+                    <div class="row" v-for="esame in user.esami" style="margin: 50px auto">
+                        <div class="col-md-3">{{ esame.nome_corso }}</div>
+                        <div class="col-md-3">{{ esame.data_esame }}</div>
+                        <div class="col-md-3">{{ esame.nome_aula }}</div>
+                        <div v-if="user.studente" class="col-md-2">
+                            <!--button class="btn btn-sm btn-block" v-bind:class="{'btn-danger': (esame.id_esame && esame.id_esame === esame.id_esame_real), 'btn-primary': !esame.id_esame && esame.id_esame !== esame.id_esame_real }" type="button" @click="iscrizioneEsame(esame)">{{ esame.id_esame && esame.id_esame === esame.id_esame_real ? "Annulla iscrizione" : "Iscriversi" }}</button-->
+                            <button v-if="esame.id_esame && esame.id_esame === esame.id_esame_real" class="btn btn-sm btn-block btn-danger" type="button" @click="iscrizioneEsame(esame)">Annulla iscrizione</button>
+                            <button v-if="!esame.id_esame && esame.id_esame !== esame.id_esame_real" class="btn btn-sm btn-block btn-primary" type="button" @click="iscrizioneEsame(esame)">Iscriversi</button>
                         </div>
                     </div>
                 </div>

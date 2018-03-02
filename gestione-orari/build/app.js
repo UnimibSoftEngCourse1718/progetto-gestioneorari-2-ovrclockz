@@ -20,7 +20,9 @@ server_1.default.get('/getPubblicazioni', function (request, response) { return 
 server_1.default.post('/getPubblicazioniCorso', function (request, response) { return User.getPubblicazioniCorso(request, response); });
 //Studenti
 server_1.default.post('/iscrizioneEsame', function (request, response) { return Studente.iscrizioneEsame(request, response); });
+server_1.default.post('/getListaEsamiStudente', function (request, response) { return Studente.getListaEsamiStudente(request, response); });
 //Docenti
+server_1.default.post('/getListaEsamiDocente', function (request, response) { return Docente.getListaEsamiDocente(request, response); });
 server_1.default.get('/getListaRisorse', function (request, response) { return Docente.getListaRisorse(request, response); });
 server_1.default.post('/getListaRisorsePrenotate', function (request, response) { return Docente.getListaRisorsePrenotate(request, response); });
 server_1.default.post('/prenotazioneRisorsa', function (request, response) { return Docente.prenotazioneRisorsa(request, response); });
@@ -29,6 +31,8 @@ server_1.default.post('/cancellarePrenotazione', function (request, response) { 
 server_1.default.post('/pubblicareNews', function (request, response) { return User.pubblicareNews(request, response); });
 server_1.default.post('/pubblicareNewsCorso', function (request, response) { return Docente.pubblicareNewsCorso(request, response); });
 //Segretari
+server_1.default.get('/getListaEsamiAll', function (request, response) { return User.getListaEsamiAll(request, response); });
+server_1.default.post('/inserireEsame', function (request, response) { return Segretario.inserireEsame(request, response); });
 server_1.default.post('/inserireRisorsa', function (request, response) { return Segretario.inserireRisorsa(request, response); });
 server_1.default.post('/inserireDocente', function (request, response) { return Segretario.inserireDocente(request, response); });
 server_1.default.post('/inserireOrario', function (request, response) { return Segretario.inserireOrario(request, response); });

@@ -97,10 +97,10 @@ var StudenteModel = /** @class */ (function (_super) {
     };
     StudenteModel.iscrizioneEsame = function (dati, callback) {
         console.log(dati);
-        var value = dati.corso.studente_iscritto_esame ? 0 : 1;
+        var value = !dati.esame.id_esame ? dati.esame.id_esame_real : null;
         Database_1.default('lista_corsi_studente')
-            .where({ 'id_corso': dati.corso.id_corso, 'id_studente': dati.corso.id_studente })
-            .update('studente_iscritto_esame', value)
+            .where({ 'id': dati.esame.id, 'id_corso': dati.esame.id_corso, 'id_studente': dati.esame.id_studente })
+            .update('id_esame', value)
             .then(function () {
             callback([true, value]);
         })
